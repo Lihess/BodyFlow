@@ -1,3 +1,4 @@
 # BodyFlow
 React Native를 이용한 눈바디 기록 어플
-추후 추가 예정
+
+와이어 프레임 : https://ovenapp.io/view/2UtrUhnbbMMYAW3Mx0tycwFo2E1Mo6p6/
