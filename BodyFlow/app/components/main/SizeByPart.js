@@ -37,27 +37,24 @@ const sizeParts = [
     }
 ]
 
-export default class BodySize extends React.Component {
-    state = {
-        selectDay : new Date
-    }
-
-    render(){
-        return(
-            sizeParts.map((sizePart) => {
-                return (
-                    <View style={styles.box}>
-                        <Text style={styles.smallText}>{sizePart.part}</Text>
-                        <View style={common.textbox}>
-                            {/* 기본 단위는 cm. inch로 변환해야할 경우 변환하여 렌더링 */
-                                this.props.unit == 'cm' ?
-                                    <Text style={styles.size}>{sizePart.size}</Text>
-                                    : <Text style={styles.size}>{(sizePart.size / 2.54).toFixed(2)}</Text>
-                            }
-                            <Text style={styles.smallText}> {this.props.unit}</Text>
-                        </View>
+const BodySize = ({unit}) => {
+    return(
+        sizeParts.map((sizePart) => {
+            return (
+                <View style={styles.box}>
+                    <Text style={styles.smallText}>{sizePart.part}</Text>
+                    <View style={common.textbox}>
+                        {/* 기본 단위는 cm. inch로 변환해야할 경우 변환하여 렌더링 */
+                            unit == 'cm' ?
+                                <Text style={styles.size}>{sizePart.size}</Text>
+                                : <Text style={styles.size}>{(sizePart.size / 2.54).toFixed(2)}</Text>
+                        }
+                        <Text style={styles.smallText}> {unit}</Text>
                     </View>
-                );
-            })
-    )}
+                </View>
+            );
+        })
+    )
 }
+
+export default BodySize;

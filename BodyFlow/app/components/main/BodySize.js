@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image } from 'react-native';
+import { View, Image } from 'react-native';
 import SwitchSelector from 'react-native-switch-selector';
 // https://reactnativeexample.com/switch-selector-to-react-native/
 import SizeByPart from './SizeByPart.js';
