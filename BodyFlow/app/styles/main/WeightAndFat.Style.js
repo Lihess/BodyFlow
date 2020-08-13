@@ -1,0 +1,40 @@
+import {StyleSheet} from 'react-native';
+import {normalize, screenWidth} from '../ResponsiveFontSize.js'
+
+const styles = StyleSheet.create({
+    box : {
+        width : "48%",
+        marginTop : '4%',
+        padding : 15,
+        backgroundColor : 'white',
+        borderRadius : 10
+    },
+    icon : {
+        color : '#848484',
+    },
+    title : {
+        fontSize : screenWidth > 400 ? normalize(12) : normalize(14),
+        fontWeight : '700',
+        color : '#848484',
+        marginLeft : 8
+    },
+    weightBox : {
+        justifyContent : 'flex-end',
+        marginTop : 8
+    },
+    weight : {
+        flex : 1,
+        fontSize : screenWidth > 400 ? normalize(20) : normalize(22),
+        fontWeight : '700',
+        textAlign : 'right'
+    },
+    unit : {
+        fontSize : screenWidth > 400 ? normalize(14) : normalize(16),
+        fontWeight : '700',
+        color : '#848484',
+        paddingBottom : 2,
+        marginLeft : 5
+    }
+});
+
+export default styles;

@@ -1,10 +1,10 @@
 import {StyleSheet} from 'react-native';
 
-const commonStyles = StyleSheet.create({
-    Textbox : {
+const common = StyleSheet.create({
+    textbox : {
         flexDirection : 'row',
         alignItems : 'flex-end'
     }
 });
 
-export default commonStyles;
+export default common;

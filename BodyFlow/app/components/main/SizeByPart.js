@@ -2,9 +2,9 @@
 // 부위별 사이즈를 위한 컴포넌트로, 각 단위에 맞춰 변환된 값으로 렌더링.
 
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import styles from '../styles/SizeByPart.Style.js';
-import commonStyle from '../styles/Common.Style.js';
+import { View, Text } from 'react-native';
+import styles from '../../styles/main/SizeByPart.Style.js';
+import common from '../../styles/Common.Style.js';
 
 const sizeParts = [
     {
@@ -44,11 +44,11 @@ export default class BodySize extends React.Component {
 
     render(){
         return(
-            sizeParts.map(sizePart => {
+            sizeParts.map((sizePart) => {
                 return (
                     <View style={styles.box}>
                         <Text style={styles.smallText}>{sizePart.part}</Text>
-                        <View style={commonStyle.Textbox}>
+                        <View style={common.textbox}>
                             {/* 기본 단위는 cm. inch로 변환해야할 경우 변환하여 렌더링 */
                                 this.props.unit == 'cm' ?
                                     <Text style={styles.size}>{sizePart.size}</Text>

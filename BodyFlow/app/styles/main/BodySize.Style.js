@@ -1,9 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {normalize, screenWidth} from './ResponsiveFontSize.js'
+import {normalize, screenWidth} from '../ResponsiveFontSize.js'
 
 const styles = StyleSheet.create({
     container: {
-        flex : 1,
+        flex : 5,
         flexDirection : 'row',
         width : '90%',
         padding : 15,
