@@ -1,7 +1,14 @@
+// WeightAndFat.Style.js
+
 import {StyleSheet} from 'react-native';
 import {normalize, screenWidth} from '../ResponsiveFontSize.js'
 
 const styles = StyleSheet.create({
+    container : {
+        width : '90%', 
+        flexDirection:'row', 
+        justifyContent:'space-between'
+    },
     box : {
         width : "48%",
         marginTop : '4%',

@@ -1,12 +1,15 @@
+// Weight.js
+// 체중 표기를 위한 컴포넌트
+
 import React from 'react';
-import { Text, View, Image } from 'react-native';
+import { TouchableOpacity,Text, View, Image } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import styles from '../../styles/main/WeightAndFat.Style.js';
 import common from '../../styles/Common.Style.js';
 
-const Weight = () => {
+const Weight = ({onPress}) => {
     return(
-        <View style={styles.box}>
+        <TouchableOpacity style={styles.box} onPress={onPress}>
             <View style={[common.textbox, {alignItems : 'center'}]}>
                 <FontAwesome5 style={styles.icon} name={'weight'} size={16}/>
                 <Text style={styles.title}>체중</Text>
@@ -15,7 +18,7 @@ const Weight = () => {
                 <Text style={styles.weight}>150.6</Text>
                 <Text style={styles.unit}> kg</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 
