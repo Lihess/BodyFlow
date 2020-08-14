@@ -1,3 +1,5 @@
+// SizeByPart.Style.js
+
 import {StyleSheet} from 'react-native';
 import {normalize, screenWidth} from '../ResponsiveFontSize.js'
 

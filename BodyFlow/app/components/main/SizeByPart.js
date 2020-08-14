@@ -41,7 +41,8 @@ const BodySize = ({unit, onPress}) => {
     return(
         sizeParts.map((sizePart) => {
             return (
-                <TouchableOpacity style={styles.box} onPress={onPress}>
+                <TouchableOpacity style={styles.box} onPress={() => onPress(sizePart.part)}>
+                    {/* Record.js에 part를 넘기기 위해서 */}
                     <Text style={styles.smallText}>{sizePart.part}</Text>
                     <View style={common.textbox}>
                         {/* 기본 단위는 cm. inch로 변환해야할 경우 변환하여 렌더링 */

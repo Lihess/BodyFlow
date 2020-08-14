@@ -1,18 +1,16 @@
+// Main.js
+
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, StatusBar } from 'react-native';
 import BodySize from '../components/main/BodySize.js';
-import Weight from '../components/main/Weight.js';
-import PatPercentage from '../components/main/FatPercentage.js';
+import WeightAndFat from '../components/main/WeightAndFat.js';
 
 const Main = () => {
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar backgroundColor={'#f1f1f1'} barStyle="dark-content"/>
             <BodySize/>
-            <View style={{width : '90%', flexDirection:'row', justifyContent:'space-between'}}>
-                <Weight />
-                <PatPercentage />
-            </View>
+            <WeightAndFat/>
         </SafeAreaView>
     );
 }
