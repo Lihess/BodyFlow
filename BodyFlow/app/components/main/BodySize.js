@@ -4,15 +4,24 @@ import SwitchSelector from 'react-native-switch-selector';
 // https://reactnativeexample.com/switch-selector-to-react-native/
 import SizeByPart from './SizeByPart.js';
 import styles from '../../styles/main/BodySize.Style.js';
+import Record from '../record/Record.js';
 
 export default class BodySize extends React.Component {
     state = {
-        unit : 'cm'
+        unit : 'cm',
+        modalVisiable : false
     }
 
     selectUnit = (value) => {
         value == 0 ? this.setState({unit : 'cm'}) : this.setState({unit : 'in'});
     }
+
+  
+    toggleVisible = () => {
+        this.setState({modalVisiable : !this.state.modalVisiable})
+        console.log(this.state.modalVisiable)
+    }
+
 
     render(){
         return (
@@ -36,8 +45,9 @@ export default class BodySize extends React.Component {
                         selectedTextStyle={styles.switchFont}
                         onPress={value => this.selectUnit(value)} />
                     {/* 부위별 사이즈 */}
-                    <SizeByPart unit={this.state.unit}/>
+                    <SizeByPart unit={this.state.unit} onPress={this.toggleVisible}/>
                 </View>
+                <Record visible={this.state.modalVisiable} onBackdropPress={this.toggleVisible}/>
             </View>
         );
     }

@@ -2,7 +2,7 @@
 // 부위별 사이즈를 위한 컴포넌트로, 각 단위에 맞춰 변환된 값으로 렌더링.
 
 import React from 'react';
-import { View, Text } from 'react-native';
+import { TouchableOpacity, View, Text } from 'react-native';
 import styles from '../../styles/main/SizeByPart.Style.js';
 import common from '../../styles/Common.Style.js';
 
@@ -37,11 +37,11 @@ const sizeParts = [
     }
 ]
 
-const BodySize = ({unit}) => {
+const BodySize = ({unit, onPress}) => {
     return(
         sizeParts.map((sizePart) => {
             return (
-                <View style={styles.box}>
+                <TouchableOpacity style={styles.box} onPress={onPress}>
                     <Text style={styles.smallText}>{sizePart.part}</Text>
                     <View style={common.textbox}>
                         {/* 기본 단위는 cm. inch로 변환해야할 경우 변환하여 렌더링 */
@@ -51,7 +51,7 @@ const BodySize = ({unit}) => {
                         }
                         <Text style={styles.smallText}> {unit}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
             );
         })
     )

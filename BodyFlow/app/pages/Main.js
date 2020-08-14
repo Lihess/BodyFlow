@@ -5,13 +5,6 @@ import Weight from '../components/main/Weight.js';
 import PatPercentage from '../components/main/FatPercentage.js';
 
 const Main = () => {
-    onDayPress = (day) => {
-        this.setState({
-            selectDay : day
-        })
-        console.log(this.state.selectDay)
-    }
-
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar backgroundColor={'#f1f1f1'} barStyle="dark-content"/>
