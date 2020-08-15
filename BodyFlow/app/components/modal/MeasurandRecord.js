@@ -8,12 +8,13 @@ import Modal from 'react-native-modal';
 import { TouchableOpacity, View, TextInput, Text } from 'react-native';
 import SwitchSelector from 'react-native-switch-selector';
 import { AntDesign } from '@expo/vector-icons'; 
-import { common, modal } from '../../styles/Common.Style';
-import styles from '../../styles/record/MeasurandRecord.Style';
+import { common, modal } from '../../styles/Common.Style.js';
+import styles from '../../styles/modal/MeasurandRecord.Style.js';
 
 export default class MeasurandRecord extends React.Component {
     state = {
         visible : false,
+        day : new Date(),
         unit : 'cm',
         decimalInformation : false, // 소수점 관련 안내문구의 표기 여부
         rangeInformation : false, // 입력범위 관련 안내문구의 표기 여부
@@ -83,18 +84,24 @@ export default class MeasurandRecord extends React.Component {
         }
     }
 
+    // 입력 시 색상 변경 이벤트
     onFocusInput = () => {
         this.setState({
             foucsColor : "orange"
         })
     }
 
+    // 입력 시 색상 변경 이벤트
     onBlurInput = () => {
         this.setState({
             foucsColor : '#c4c4c4'
         })
     }
 
+    onSubmit = () => {
+        // 입력된 사이즈 저장
+        this.closedModal();
+    }
 
     render(){
         return(
@@ -107,8 +114,11 @@ export default class MeasurandRecord extends React.Component {
 
                 <View style={modal.box}>
                     <View style={modal.titleBox}>
-                        <Text style={modal.title}> {this.props.part} </Text>
-                        <AntDesign name="linechart" size={24} color="black" />
+                        <View style={[common.textBox, {alignItems : 'center'}]}>
+                            <Text style={modal.title}> {this.props.part} </Text>
+                            <AntDesign name="linechart" size={24} color="black" />
+                        </View>
+                        <Text style={modal.day} onPress={() => console.log('1')}>{this.state.day.toLocaleDateString()}</Text>
                     </View>
                     <View>
                         <View style={[styles.inputBox, {borderColor : this.state.foucsColor}]}>
@@ -146,6 +156,11 @@ export default class MeasurandRecord extends React.Component {
                                 <Text style={modal.information}> 2.0 ~ 300.0 사이 값만 입력하세요. </Text> : null
                         }
                         <Text style={{width:200, height:200, textAlign : 'center', textAlignVertical : 'center'}}>팁이 들어갈자리. 이미지 만들면 넣자</Text>
+                        <View style={{ alignItems : 'flex-end'}}>
+                            <TouchableOpacity style={modal.submit} onPress={this.onSubmit}> 
+                                <Text style={modal.submitText}>완료</Text>    
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </Modal>

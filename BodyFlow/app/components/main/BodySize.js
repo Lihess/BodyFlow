@@ -7,7 +7,7 @@ import SwitchSelector from 'react-native-switch-selector';
 // https://reactnativeexample.com/switch-selector-to-react-native/
 import SizeByPart from './SizeByPart.js';
 import styles from '../../styles/main/BodySize.Style.js';
-import Record from '../record/MeasurandRecord.js';
+import Record from '../modal/MeasurandRecord.js';
 
 export default class BodySize extends React.Component {
     state = {

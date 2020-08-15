@@ -22,18 +22,35 @@ const modal = StyleSheet.create({
     },
     titleBox : {
         flexDirection : 'row',
-        alignItems : 'center',
-        justifyContent : 'center'
+        alignItems : 'flex-end',
+        justifyContent : 'space-between'
     },
     title : {
         fontSize : screenWidth > 400 ? normalize(18) : normalize(20),
         fontWeight : '700',
         marginRight : 5
     },
+    day : {
+        color : 'orange',
+        fontSize : screenWidth > 400 ? normalize(12) : normalize(15),
+        fontWeight : '700',
+    },
     information : {
         color : "orange",
         fontWeight : '700',
         textAlign : 'right'
+    },
+    submit : {
+        width : '40%',
+        padding : 5,
+        borderRadius : 10,
+        backgroundColor : 'orange'
+    },
+    submitText : {
+        color : 'white',
+        fontSize : screenWidth > 400 ? normalize(12) : normalize(15),
+        fontWeight : '700',
+        textAlign : 'center'
     }
 })
 

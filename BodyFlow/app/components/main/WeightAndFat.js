@@ -6,8 +6,8 @@ import { View } from 'react-native';
 import styles from '../../styles/main/WeightAndFat.Style.js';
 import Weight from '../../components/main/Weight.js';
 import FatPercentage from './FatPercentage.js';
-import MeasurandRecord from '../record/MeasurandRecord.js';
-import FatReiremenetRecord from '../record/FatReqiremenetRecord.js';
+import MeasurandRecord from '../modal/MeasurandRecord.js';
+import FatReiremenetRecord from '../modal/FatReqiremenetRecord.js';
 
 class WeightAndFat extends React.Component {
     state = {

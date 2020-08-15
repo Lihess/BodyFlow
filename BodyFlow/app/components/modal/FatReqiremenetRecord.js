@@ -8,7 +8,7 @@ import Modal from 'react-native-modal';
 import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { common, modal } from '../../styles/Common.Style';
-import styles from '../../styles/record/FatReqiremenetRecord.Style';
+import styles from '../../styles/modal/FatReqiremenetRecord.Style';
 
 export default class FatReqirementRecord extends React.Component {
     state = {
@@ -88,7 +88,6 @@ export default class FatReqirementRecord extends React.Component {
         this.setState({
             foucsColor : "orange"
         })
-        console.log(this.state.foucsColor)
     }
 
     // 글자 기입시 색 변경을 위해
