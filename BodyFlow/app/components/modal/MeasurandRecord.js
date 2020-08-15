@@ -1,5 +1,6 @@
 // measurandRecord.js
 // 측정량 기입을 위한 입력 modal. 아래에 측정 팁도 함께 표기
+// 합칠 수 있으면 합치기.
 // 색상은 후에 생각해보기
 
 import React from 'react';
@@ -10,10 +11,12 @@ import SwitchSelector from 'react-native-switch-selector';
 import { AntDesign } from '@expo/vector-icons'; 
 import { common, modal } from '../../styles/Common.Style.js';
 import styles from '../../styles/modal/MeasurandRecord.Style.js';
+import CalendarModal from './CalenderModal.js';
 
 export default class MeasurandRecord extends React.Component {
     state = {
         visible : false,
+        calenderVisible : false,
         day : new Date(),
         unit : 'cm',
         decimalInformation : false, // 소수점 관련 안내문구의 표기 여부
@@ -44,6 +47,11 @@ export default class MeasurandRecord extends React.Component {
                 foucsColor : '#c4c4c4'
             })
         }
+    }
+
+    // 날짜 재지정
+    toggleCalenderVisible = () => {
+        this.setState({ calenderVisible : !this.state.calenderVisible })
     }
 
     // 단위 선택 시, 해당 단위로 state 값 변경
@@ -118,49 +126,50 @@ export default class MeasurandRecord extends React.Component {
                             <Text style={modal.title}> {this.props.part} </Text>
                             <AntDesign name="linechart" size={24} color="black" />
                         </View>
-                        <Text style={modal.day} onPress={() => console.log('1')}>{this.state.day.toLocaleDateString()}</Text>
+                        <Text style={modal.day} onPress={this.toggleCalenderVisible}>
+                            {this.state.day.toLocaleDateString()}
+                        </Text>
+                        <CalendarModal visible={this.state.toggleCalenderVisible} onBackdropPress={this.toggleCalenderVisible}/>
                     </View>
-                    <View>
-                        <View style={[styles.inputBox, {borderColor : this.state.foucsColor}]}>
-                            { this.props.part != '체중' ?
-                                <SwitchSelector 
-                                    style={[styles.switch, {borderColor : this.state.foucsColor}]}
-                                    options={[
-                                        {label : 'cm', value : '0'},
-                                        {label : 'inch', value : '1'}
-                                    ]} 
-                                    initial={0} 
-                                    buttonColor={this.state.foucsColor}
-                                    borderRadius={0}
-                                    height={30}
-                                    alignItems={'center'}
-                                    textStyle={styles.switchFont}
-                                    selectedTextStyle={styles.switchFont}
-                                    animationDuration={50}
-                                    onPress={value => this.onSelectUnit(value)} /> : null
-                            }
-                            <TextInput 
-                                style={styles.input} 
-                                keyboardType={'numeric'}
-                                placeholder={'0.0'}
-                                value={this.state.measurand}
-                                onChangeText={(text) => this.onChangeText(text)}
-                                onFocus={this.onFocusInput}
-                                onBlur={this.onBlurInput}/>
-                        </View>   
-                        {
-                            this.state.decimalInformation ?
-                                <Text style={modal.information}> 소수점 이하 2자리까지만 입력하세요. </Text> : null
-                        }{
-                            this.state.rangeInformation ?
-                                <Text style={modal.information}> 2.0 ~ 300.0 사이 값만 입력하세요. </Text> : null
+                    <View style={[styles.inputBox, {borderColor : this.state.foucsColor}]}>
+                        { this.props.part != '체중' ?
+                            <SwitchSelector 
+                                style={[styles.switch, {borderColor : this.state.foucsColor}]}
+                                options={[
+                                    {label : 'cm', value : '0'},
+                                    {label : 'inch', value : '1'}
+                                ]} 
+                                initial={0} 
+                                buttonColor={this.state.foucsColor}
+                                borderRadius={0}
+                                height={30}
+                                alignItems={'center'}
+                                textStyle={styles.switchFont}
+                                selectedTextStyle={styles.switchFont}
+                                animationDuration={50}
+                                onPress={value => this.onSelectUnit(value)} /> : null
                         }
-                        <Text style={{width:200, height:200, textAlign : 'center', textAlignVertical : 'center'}}>팁이 들어갈자리. 이미지 만들면 넣자</Text>
-                        <View style={{ alignItems : 'flex-end'}}>
-                            <TouchableOpacity style={modal.submit} onPress={this.onSubmit}> 
-                                <Text style={modal.submitText}>완료</Text>    
-                            </TouchableOpacity>
-                        </View>
+                        <TextInput 
+                            style={styles.input} 
+                            keyboardType={'numeric'}
+                            placeholder={'0.0'}
+                            value={this.state.measurand}
+                            onChangeText={(text) => this.onChangeText(text)}
+                            onFocus={this.onFocusInput}
+                            onBlur={this.onBlurInput}/>
+                    </View>   
+                    {
+                        this.state.decimalInformation ?
+                            <Text style={modal.information}> 소수점 이하 2자리까지만 입력하세요. </Text> : null
+                    }{
+                        this.state.rangeInformation ?
+                            <Text style={modal.information}> 2.0 ~ 300.0 사이 값만 입력하세요. </Text> : null
+                    }
+                    <Text style={{width:200, height:200, textAlign : 'center', textAlignVertical : 'center'}}>팁이 들어갈자리. 이미지 만들면 넣자</Text>
+                    <View style={{ alignItems : 'flex-end'}}>
+                        <TouchableOpacity style={modal.submit} onPress={this.onSubmit}> 
+                            <Text style={modal.submitText}>완료</Text>    
+                        </TouchableOpacity>
                     </View>
                 </View>
             </Modal>

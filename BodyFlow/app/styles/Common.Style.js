@@ -41,7 +41,7 @@ const modal = StyleSheet.create({
         textAlign : 'right'
     },
     submit : {
-        width : '40%',
+        width : '100%',
         padding : 5,
         borderRadius : 10,
         backgroundColor : 'orange'
