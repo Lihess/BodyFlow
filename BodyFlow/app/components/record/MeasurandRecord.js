@@ -1,10 +1,12 @@
 // measurandRecord.js
 // 측정량 기입을 위한 입력 modal. 아래에 측정 팁도 함께 표기
+// 색상은 후에 생각해보기
 
 import React from 'react';
 import Modal from 'react-native-modal';
 // https://github.com/react-native-community/react-native-modal
 import { TouchableOpacity, View, TextInput, Text } from 'react-native';
+import SwitchSelector from 'react-native-switch-selector';
 import { AntDesign } from '@expo/vector-icons'; 
 import common from '../../styles/Common.Style';
 import styles from '../../styles/record/MeasurandRecord.Style';
@@ -12,9 +14,11 @@ import styles from '../../styles/record/MeasurandRecord.Style';
 export default class MeasurandRecord extends React.Component {
     state = {
         visible : false,
+        unit : 'cm',
         decimalInformation : false, // 소수점 관련 안내문구의 표기 여부
         rangeInformation : false, // 입력범위 관련 안내문구의 표기 여부
-        measurand : ''
+        measurand : '',
+        foucsColor : '#c4c4c4'
     } 
 
     // props 값이 변경된 경우 state 값 변경
@@ -32,11 +36,18 @@ export default class MeasurandRecord extends React.Component {
             this.props.onBackdropPress()
             this.setState({
                 visible : false,
+                unit : 'cm',
                 decimalInformation : false,
                 rangeInformation : false,
-                measurand : ''
+                measurand : '',
+                inputBorderStyle : {borderColor : '#c4c4c4'}
             })
         }
+    }
+
+    // 단위 선택 시, 해당 단위로 state 값 변경
+    onSelectUnit = (value) => {
+        value == 0 ? this.setState({unit : 'cm'}) : this.setState({unit : 'in'});
     }
 
     // 입력된 값의 범위는 2.0 ~ 300.0 만 허용하기 위한 함수
@@ -73,6 +84,18 @@ export default class MeasurandRecord extends React.Component {
         }
     }
 
+    onFocusInput = () => {
+        this.setState({
+            foucsColor : "orange"
+        })
+    }
+
+    onBlurInput = () => {
+        this.setState({
+            foucsColor : '#c4c4c4'
+        })
+    }
+
     render(){
         return(
             <Modal 
@@ -83,26 +106,46 @@ export default class MeasurandRecord extends React.Component {
             backdropColor={'#1f1f1f'}>
 
                 <View style={styles.box}>
-                    <View style={common.textbox}>
-                        <Text> {this.props.part} </Text>
+                    <View style={[common.textbox, {alignItems : 'center'}]}>
+                        <Text style={styles.title}> {this.props.part} </Text>
                         <AntDesign name="linechart" size={24} color="black" />
                     </View>
                     <View>
-                        <TextInput 
-                            style={styles.input} 
-                            keyboardType={'numeric'}
-                            placeholder={'0.0'}
-                            value={this.state.measurand}
-                            onChangeText={(text) => this.onChangeText(text)}/>
-                            
+                        <View style={[styles.inputBox, {borderColor : this.state.foucsColor}]}>
+                            { this.props.part != '체중' ?
+                                <SwitchSelector 
+                                    style={[styles.switch, {borderColor : this.state.foucsColor}]}
+                                    options={[
+                                        {label : 'cm', value : '0'},
+                                        {label : 'inch', value : '1'}
+                                    ]} 
+                                    initial={0} 
+                                    buttonColor={this.state.foucsColor}
+                                    borderRadius={0}
+                                    height={30}
+                                    alignItems={'center'}
+                                    textStyle={styles.switchFont}
+                                    selectedTextStyle={styles.switchFont}
+                                    animationDuration={50}
+                                    onPress={value => this.onSelectUnit(value)} /> : null
+                            }
+                            <TextInput 
+                                style={styles.input} 
+                                keyboardType={'numeric'}
+                                placeholder={'0.0'}
+                                value={this.state.measurand}
+                                onChangeText={(text) => this.onChangeText(text)}
+                                onFocus={this.onFocusInput}
+                                onBlur={this.onBlurInput}/>
+                        </View>   
                         {
                             this.state.decimalInformation ?
-                                <Text> 소수점 이하 2자리까지만 입력할 수 있습니다. </Text> : null
-                        }
-                        {
+                                <Text style={styles.information}> 소수점 이하 2자리까지만 입력하세요. </Text> : null
+                        }{
                             this.state.rangeInformation ?
-                                <Text> 2.0 ~ 300.0 사이 값만 입력하세요. </Text> : null
+                                <Text style={styles.information}> 2.0 ~ 300.0 사이 값만 입력하세요. </Text> : null
                         }
+                        <Text style={{width:200, height:200, textAlign : 'center', textAlignVertical : 'center'}}>팁이 들어갈자리. 이미지 만들면 넣자</Text>
                     </View>
                 </View>
             </Modal>

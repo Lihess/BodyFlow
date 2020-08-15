@@ -17,7 +17,7 @@ export default class BodySize extends React.Component {
     }
 
     // 단위 선택 시, 해당 단위로 state 값 변경
-    selectUnit = (value) => {
+    onSelectUnit = (value) => {
         value == 0 ? this.setState({unit : 'cm'}) : this.setState({unit : 'in'});
     }
 
@@ -52,7 +52,7 @@ export default class BodySize extends React.Component {
                         alignItems={'center'}
                         textStyle={styles.switchFont}
                         selectedTextStyle={styles.switchFont}
-                        onPress={value => this.selectUnit(value)} />
+                        onPress={value => this.onSelectUnit(value)} />
                     {/* 부위별 사이즈 */}
                     <SizeByPart unit={this.state.unit} onPress={this.onPressButton}/>
                 </View>
