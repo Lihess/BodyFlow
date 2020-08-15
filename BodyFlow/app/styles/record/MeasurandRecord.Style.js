@@ -4,24 +4,8 @@ import {StyleSheet} from 'react-native';
 import {normalize, screenWidth} from '../ResponsiveFontSize.js'
 
 const styles = StyleSheet.create({
-    background : {
-        flex : 1,
-        alignItems : 'center',
-        justifyContent :  'center'
-    },
-    box : {
-        width : "85%",
-        padding : 15,
-        backgroundColor : 'white',
-        borderRadius : 10
-    },
-    title : {
-        fontSize : screenWidth > 400 ? normalize(18) : normalize(20),
-        fontWeight : '700',
-        marginRight : 5
-    },
     inputBox : {
-        marginTop : 15,
+        marginTop : 25,
         borderRadius : 10,
         borderWidth : 1,
         overflow : 'hidden'
@@ -39,11 +23,6 @@ const styles = StyleSheet.create({
         fontSize : screenWidth > 400 ? normalize(27) : normalize(30),
         fontWeight : '800',
         textAlign : 'center'
-    },
-    information : {
-        color : "orange",
-        fontWeight : '700',
-        textAlign : 'right'
     }
 });
 

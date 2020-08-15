@@ -8,7 +8,7 @@ import Modal from 'react-native-modal';
 import { TouchableOpacity, View, TextInput, Text } from 'react-native';
 import SwitchSelector from 'react-native-switch-selector';
 import { AntDesign } from '@expo/vector-icons'; 
-import common from '../../styles/Common.Style';
+import { common, modal } from '../../styles/Common.Style';
 import styles from '../../styles/record/MeasurandRecord.Style';
 
 export default class MeasurandRecord extends React.Component {
@@ -52,7 +52,6 @@ export default class MeasurandRecord extends React.Component {
 
     // 입력된 값의 범위는 2.0 ~ 300.0 만 허용하기 위한 함수
     checkRange = (text) => {
-        console.log(text);
         if (text === '0' || (text < 2 && text.length > 1)) {
             this.setState({ rangeInformation : true })
             return '2.0';
@@ -78,7 +77,7 @@ export default class MeasurandRecord extends React.Component {
                 decimalInformation : false,
             });
         }
-        // 소수점 둘째자리 이상 입력하면 안내문구나 출력되도록
+        // 소수점 둘째자리 초과 입력하면 안내문구나 출력되도록
         else if (/^(\d+)\.\d\d\d$/.test(text)){
             this.setState({ decimalInformation : true });
         }
@@ -96,18 +95,19 @@ export default class MeasurandRecord extends React.Component {
         })
     }
 
+
     render(){
         return(
             <Modal 
-            style={styles.background}
+            style={modal.background}
             isVisible={this.state.visible}
             onBackdropPress={this.closedModal} 
             onBackButtonPress={this.closedModal}
             backdropColor={'#1f1f1f'}>
 
-                <View style={styles.box}>
-                    <View style={[common.textbox, {alignItems : 'center'}]}>
-                        <Text style={styles.title}> {this.props.part} </Text>
+                <View style={modal.box}>
+                    <View style={modal.titleBox}>
+                        <Text style={modal.title}> {this.props.part} </Text>
                         <AntDesign name="linechart" size={24} color="black" />
                     </View>
                     <View>
@@ -140,10 +140,10 @@ export default class MeasurandRecord extends React.Component {
                         </View>   
                         {
                             this.state.decimalInformation ?
-                                <Text style={styles.information}> 소수점 이하 2자리까지만 입력하세요. </Text> : null
+                                <Text style={modal.information}> 소수점 이하 2자리까지만 입력하세요. </Text> : null
                         }{
                             this.state.rangeInformation ?
-                                <Text style={styles.information}> 2.0 ~ 300.0 사이 값만 입력하세요. </Text> : null
+                                <Text style={modal.information}> 2.0 ~ 300.0 사이 값만 입력하세요. </Text> : null
                         }
                         <Text style={{width:200, height:200, textAlign : 'center', textAlignVertical : 'center'}}>팁이 들어갈자리. 이미지 만들면 넣자</Text>
                     </View>

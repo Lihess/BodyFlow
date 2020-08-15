@@ -7,6 +7,7 @@ import styles from '../../styles/main/WeightAndFat.Style.js';
 import Weight from '../../components/main/Weight.js';
 import FatPercentage from './FatPercentage.js';
 import MeasurandRecord from '../record/MeasurandRecord.js';
+import FatReiremenetRecord from '../record/FatReqiremenetRecord.js';
 
 class WeightAndFat extends React.Component {
     state = {
@@ -31,7 +32,8 @@ class WeightAndFat extends React.Component {
                 <Weight onPress={this.toggleMeasurandVisible}/>
                 <MeasurandRecord visible={this.state.measurandVisible} part={'체중'} onBackdropPress={this.toggleMeasurandVisible}/>
             
-                <FatPercentage/>
+                <FatPercentage onPress={this.togglerequirementsVisiable}/>
+                <FatReiremenetRecord visible={this.state.requirementsVisiable} onBackdropPress={this.togglerequirementsVisiable}/>
             </View>
         );
     }
