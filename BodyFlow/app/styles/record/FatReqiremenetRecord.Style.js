@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     },
     inputBoxInText : {
         marginRight : 5,
-        width : '20%',
+        width : '25%',
         fontWeight : '700',
         fontSize : screenWidth > 400 ? normalize(13) : normalize(15)
     },
