@@ -40,7 +40,7 @@ export default class MeasurandRecord extends React.Component {
                 decimalInformation : false,
                 rangeInformation : false,
                 measurand : '',
-                inputBorderStyle : {borderColor : '#c4c4c4'}
+                foucsColor : '#c4c4c4'
             })
         }
     }
