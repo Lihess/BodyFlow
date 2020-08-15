@@ -126,11 +126,13 @@ export default class MeasurandRecord extends React.Component {
                             <Text style={modal.title}> {this.props.part} </Text>
                             <AntDesign name="linechart" size={24} color="black" />
                         </View>
+                        {/* 날짜를 클릭하면 캘린더가 나와서 원하는 날짜를 지정할 수 있도록. */}
                         <Text style={modal.day} onPress={this.toggleCalenderVisible}>
                             {this.state.day.toLocaleDateString()}
                         </Text>
                         <CalendarModal visible={this.state.toggleCalenderVisible} onBackdropPress={this.toggleCalenderVisible}/>
                     </View>
+                    
                     <View style={[styles.inputBox, {borderColor : this.state.foucsColor}]}>
                         { this.props.part != '체중' ?
                             <SwitchSelector 
