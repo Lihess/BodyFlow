@@ -4,6 +4,11 @@ import {StyleSheet} from 'react-native';
 import {normalize, screenWidth} from '../ResponsiveFontSize.js'
 
 const styles = StyleSheet.create({
+    titleBox : {
+        flexDirection : 'row',
+        alignItems : 'flex-end',
+        justifyContent : 'center'
+    },
     inputBox : {
         padding : 15,
         marginTop : 25,

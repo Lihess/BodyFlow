@@ -20,11 +20,6 @@ const modal = StyleSheet.create({
         backgroundColor : 'white',
         borderRadius : 10
     },
-    titleBox : {
-        flexDirection : 'row',
-        alignItems : 'flex-end',
-        justifyContent : 'space-between'
-    },
     title : {
         fontSize : screenWidth > 400 ? normalize(18) : normalize(20),
         fontWeight : '700',

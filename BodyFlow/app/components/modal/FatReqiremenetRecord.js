@@ -97,6 +97,11 @@ export default class FatReqirementRecord extends React.Component {
         })
     }
 
+    onSubmit = () => {
+        // 입력된 사이즈 저장
+        this.closedModal();
+    }
+
     render(){
         return(
             <Modal 
@@ -107,7 +112,7 @@ export default class FatReqirementRecord extends React.Component {
             backdropColor={'#1f1f1f'}>
 
                 <View style={modal.box}>
-                    <View style={modal.titleBox}>
+                    <View style={styles.titleBox}>
                         <Text style={modal.title}> 체지방률 </Text>
                         <AntDesign name="linechart" size={24} color="black" />
                     </View>
@@ -155,6 +160,11 @@ export default class FatReqirementRecord extends React.Component {
                             <Text style={modal.information}> 2.0 ~ 300.0 사이 값만 입력하세요. </Text> : null
                     }
                     <Text style={{width:200, height:200, textAlign : 'center', textAlignVertical : 'center'}}>팁이 들어갈자리. 이미지 만들면 넣자</Text>   
+                    <View style={{ alignItems : 'flex-end'}}>
+                        <TouchableOpacity style={modal.submit} onPress={this.onSubmit}> 
+                            <Text style={modal.submitText}>완료</Text>    
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </Modal>
         );

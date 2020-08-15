@@ -121,7 +121,7 @@ export default class MeasurandRecord extends React.Component {
             backdropColor={'#1f1f1f'}>
 
                 <View style={modal.box}>
-                    <View style={modal.titleBox}>
+                    <View style={styles.titleBox}>
                         <View style={[common.textBox, {alignItems : 'center'}]}>
                             <Text style={modal.title}> {this.props.part} </Text>
                             <AntDesign name="linechart" size={24} color="black" />
