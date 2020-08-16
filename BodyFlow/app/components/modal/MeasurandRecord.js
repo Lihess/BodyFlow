@@ -17,14 +17,14 @@ export default class MeasurandRecord extends React.Component {
     state = {
         visible : false,
         calenderVisible : false,
-        day : new Date(),
+        day : getToday(),
         unit : 'cm',
         decimalInformation : false, // 소수점 관련 안내문구의 표기 여부
         rangeInformation : false, // 입력범위 관련 안내문구의 표기 여부
         measurand : '',
         foucsColor : '#c4c4c4'
     } 
-
+    
     // props 값이 변경된 경우 state 값 변경
     // componentWillRecivedProps 에서 getDerivedStateFromProps로 변경됨.
     // 안에는 this 사용 불가. 변경할 state가 있다면 객체 형태로 반환
@@ -40,6 +40,8 @@ export default class MeasurandRecord extends React.Component {
             this.props.onBackdropPress()
             this.setState({
                 visible : false,
+                calenderVisible : false,
+                day : getToday(),
                 unit : 'cm',
                 decimalInformation : false,
                 rangeInformation : false,
@@ -49,7 +51,7 @@ export default class MeasurandRecord extends React.Component {
         }
     }
 
-    // 날짜 재지정
+    // 날짜 재지정을 위한 캘린더 modal open / close
     toggleCalenderVisible = () => {
         this.setState({ calenderVisible : !this.state.calenderVisible })
     }
@@ -111,6 +113,11 @@ export default class MeasurandRecord extends React.Component {
         this.closedModal();
     }
 
+    // 선택 날짜로 재지정
+    selectDay = (selectDay) => {
+        this.setState({ day : selectDay })
+    }
+
     render(){
         return(
             <Modal 
@@ -120,6 +127,7 @@ export default class MeasurandRecord extends React.Component {
             onBackButtonPress={this.closedModal}
             backdropColor={'#1f1f1f'}>
 
+           
                 <View style={modal.box}>
                     <View style={styles.titleBox}>
                         <View style={[common.textBox, {alignItems : 'center'}]}>
@@ -128,9 +136,8 @@ export default class MeasurandRecord extends React.Component {
                         </View>
                         {/* 날짜를 클릭하면 캘린더가 나와서 원하는 날짜를 지정할 수 있도록. */}
                         <Text style={modal.day} onPress={this.toggleCalenderVisible}>
-                            {this.state.day.toLocaleDateString()}
+                            {this.state.day}
                         </Text>
-                        <CalendarModal visible={this.state.toggleCalenderVisible} onBackdropPress={this.toggleCalenderVisible}/>
                     </View>
                     
                     <View style={[styles.inputBox, {borderColor : this.state.foucsColor}]}>
@@ -174,7 +181,21 @@ export default class MeasurandRecord extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+
+                { /* 날짜 선택시 해당 modal이 보이도록! */ }
+                <CalendarModal visible={this.state.calenderVisible} onBackdropPress={this.toggleCalenderVisible} onSubmit={(day) => this.selectDay(day)}/> 
             </Modal>
         );
     }
+}
+
+// 오늘 날짜를 형식에 맞추어 포맷팅하여 반환하는 함수
+const getToday = () => {
+    const today = new Date();
+
+    var year = today.getFullYear();
+    var month = today.getMonth() + 1;
+    var day = today.getDate();
+   
+    return year + (month > 8 ? '.' : '.0') + month + (day > 9 ? '.' : '.0') + day;
 }
