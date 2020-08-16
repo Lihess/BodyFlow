@@ -23,12 +23,6 @@ const modal = StyleSheet.create({
     title : {
         fontSize : screenWidth > 400 ? normalize(18) : normalize(20),
         fontWeight : '700',
-        marginRight : 5
-    },
-    day : {
-        color : 'orange',
-        fontSize : screenWidth > 400 ? normalize(12) : normalize(15),
-        fontWeight : '700',
     },
     information : {
         color : "orange",

@@ -8,7 +8,7 @@ import Modal from 'react-native-modal';
 // https://github.com/react-native-community/react-native-modal
 import { TouchableOpacity, View, TextInput, Text } from 'react-native';
 import SwitchSelector from 'react-native-switch-selector';
-import { AntDesign } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { common, modal } from '../../styles/Common.Style.js';
 import styles from '../../styles/modal/MeasurandRecord.Style.js';
 import CalendarModal from './CalenderModal.js';
@@ -136,10 +136,10 @@ export default class MeasurandRecord extends React.Component {
                     <View style={styles.titleBox}>
                         <View style={[common.textBox, {alignItems : 'center'}]}>
                             <Text style={modal.title}> {this.props.part} </Text>
-                            <AntDesign name="linechart" size={24} color="black" />
+                            <MaterialCommunityIcons name="chart-bar" size={27} color={'orange'} />
                         </View>
                         {/* 날짜를 클릭하면 캘린더가 나와서 원하는 날짜를 지정할 수 있도록. */}
-                        <Text style={modal.day} onPress={this.toggleCalenderVisible}>
+                        <Text style={styles.day} onPress={this.toggleCalenderVisible}>
                             {this.state.day}
                         </Text>
                     </View>
@@ -153,12 +153,13 @@ export default class MeasurandRecord extends React.Component {
                                     {label : 'inch', value : '1'}
                                 ]} 
                                 initial={0} 
-                                buttonColor={this.state.foucsColor}
+                                backgroundColor={'#e4e4e4'}
+                                buttonColor={'white'}
                                 borderRadius={0}
                                 height={30}
                                 alignItems={'center'}
                                 textStyle={styles.switchFont}
-                                selectedTextStyle={styles.switchFont}
+                                selectedTextStyle={[styles.switchFont, {color : 'orange'}]}
                                 animationDuration={50}
                                 onPress={value => this.onSelectUnit(value)} /> : null
                         }
@@ -170,7 +171,8 @@ export default class MeasurandRecord extends React.Component {
                             onChangeText={(text) => this.onChangeText(text)}
                             onFocus={this.onFocusInput}
                             onBlur={this.onBlurInput}/>
-                    </View>   
+                    </View> 
+                     
                     {
                         this.state.decimalInformation ?
                             <Text style={modal.information}> 소수점 이하 2자리까지만 입력하세요. </Text> : null

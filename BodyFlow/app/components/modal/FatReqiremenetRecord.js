@@ -6,7 +6,7 @@ import React from 'react';
 import Modal from 'react-native-modal';
 // https://github.com/react-native-community/react-native-modal
 import { View, TextInput, Text, TouchableOpacity } from 'react-native';
-import { AntDesign } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { common, modal } from '../../styles/Common.Style';
 import styles from '../../styles/modal/FatReqiremenetRecord.Style';
 
@@ -114,7 +114,7 @@ export default class FatReqirementRecord extends React.Component {
                 <View style={modal.box}>
                     <View style={styles.titleBox}>
                         <Text style={modal.title}> 체지방률 </Text>
-                        <AntDesign name="linechart" size={24} color="black" />
+                        <MaterialCommunityIcons name="chart-bar" size={27} color={'orange'} />
                     </View>
                     <View style={ styles.inputBox}>
                         {/* 성별 입력란 */}
