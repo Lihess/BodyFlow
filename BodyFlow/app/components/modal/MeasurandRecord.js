@@ -115,7 +115,11 @@ export default class MeasurandRecord extends React.Component {
 
     // 선택 날짜로 재지정
     selectDay = (selectDay) => {
-        this.setState({ day : selectDay })
+        if (selectDay == null) {
+            this.setState({ day : getToday() })
+        }
+        else
+            this.setState({ day : selectDay })
     }
 
     render(){
@@ -199,3 +203,4 @@ const getToday = () => {
    
     return year + (month > 8 ? '.' : '.0') + month + (day > 9 ? '.' : '.0') + day;
 }
+

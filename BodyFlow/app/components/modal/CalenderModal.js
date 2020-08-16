@@ -4,11 +4,12 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 // https://www.npmjs.com/package/react-native-calendars
 import { common, modal } from '../../styles/Common.Style.js';
+import styles from '../../styles/modal/CalenderModal.Style.js';
 
 export default class CalendarModal extends React.Component{
     state = {
         visible : false,
-        day : new Date()
+        day : null
     } 
 
     // props 값이 변경된 경우 state 값 변경
@@ -24,17 +25,34 @@ export default class CalendarModal extends React.Component{
             this.props.onBackdropPress()
             this.setState({
                 visible : false,
-                day : new Date()
+                day : null
             })
         }
     }
 
-    onDayPress = (day) => {
-        console.log(day);
+    onDayPress = (selectDay) => {
         this.setState( {
-            day : day.getFullYear() + '-' + (day.getMonth() + 1) + '-' + day.getDate()
-        } )
-        console.log(this.state.day);
+            day : selectDay.dateString
+        })
+    }
+
+    onSubmit = () => {
+        if (this.state.day === null){
+            this.props.onSubmit(null);
+        }
+        else {
+            // 외부에서 보이는 날짜 포맷은 'yyyy.MM.dd'이므로 변경!
+            this.props.onSubmit(this.state.day.replace(/-/g, '.'));
+        }
+        this.closedModal()
+    }
+
+    renderHeader = (date) => {
+        return (
+            <Text style={styles.header}> 
+                {date.getFullYear() + (date.getMonth() > 8 ? '.' : '.0') + (date.getMonth() + 1)} 
+            </Text>
+        );
     }
 
     render(){
@@ -46,11 +64,26 @@ export default class CalendarModal extends React.Component{
                 onBackButtonPress={this.closedModal}
                 backdropColor={'#1f1f1f'}>
 
-                <Calendar onDayPress={(day) => this.onDayPress}/>
-                <View style={{ alignItems : 'flex-end'}}>
-                    <TouchableOpacity style={modal.submit} onPress={this.onSubmit}> 
-                        <Text style={modal.submitText}>완료</Text>    
-                    </TouchableOpacity>
+                <View style={modal.box}>
+                    <View style={styles.calenderBox}>
+                    <Calendar 
+                    style={styles.calender}
+                        theme={{
+                            selectedDayBackgroundColor: 'orange',
+                            selectedDayTextColor: '#ffffff',
+                            todayTextColor: 'orange',
+                            arrowColor: 'orange',
+                        }}
+                        onDayPress={(day) => this.onDayPress(day)} 
+                        markedDates={{[this.state.day] : {selected: true}}}
+                        renderHeader={(date) => this.renderHeader(date)}/>
+                    </View>
+                    
+                    <View style={{ alignItems : 'flex-end'}}>
+                        <TouchableOpacity style={modal.submit} onPress={this.onSubmit}> 
+                            <Text style={modal.submitText}>완료</Text>    
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </Modal>
             

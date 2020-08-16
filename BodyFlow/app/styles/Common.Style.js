@@ -38,7 +38,7 @@ const modal = StyleSheet.create({
     submit : {
         width : '100%',
         padding : 5,
-        borderRadius : 10,
+        borderRadius : 5,
         backgroundColor : 'orange'
     },
     submitText : {

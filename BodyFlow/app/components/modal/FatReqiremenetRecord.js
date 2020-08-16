@@ -1,4 +1,4 @@
-// measurandRecord.js
+// FatReqirementRecord.js
 // 측정량 기입을 위한 입력 modal. 아래에 측정 팁도 함께 표기
 // 색상은 후에 생각해보기
 
@@ -157,7 +157,7 @@ export default class FatReqirementRecord extends React.Component {
                             <Text style={modal.information}> 소수점 이하 1자리까지만 입력하세요. </Text> : null
                     }{
                         this.state.rangeInformation ?
-                            <Text style={modal.information}> 2.0 ~ 300.0 사이 값만 입력하세요. </Text> : null
+                            <Text style={modal.information}> 10.0 ~ 250.0 사이 값만 입력하세요. </Text> : null
                     }
                     <Text style={{width:200, height:200, textAlign : 'center', textAlignVertical : 'center'}}>팁이 들어갈자리. 이미지 만들면 넣자</Text>   
                     <View style={{ alignItems : 'flex-end'}}>
