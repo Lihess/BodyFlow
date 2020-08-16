@@ -21,8 +21,9 @@ const modal = StyleSheet.create({
         borderRadius : 10
     },
     title : {
+        marginRight : 2,
         fontSize : screenWidth > 400 ? normalize(18) : normalize(20),
-        fontWeight : '700',
+        fontWeight : '700'
     },
     information : {
         color : "orange",
