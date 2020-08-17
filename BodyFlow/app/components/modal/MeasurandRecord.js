@@ -55,7 +55,7 @@ export default class MeasurandRecord extends React.Component {
     // Chart 페이지로 이동
     onPressIcon = () => {
         this.closedModal()
-        NavigationService.navigate('ChartPage')
+        NavigationService.navigate('ChartPage', {part : this.props.part})
     }
 
     // 날짜 재지정을 위한 캘린더 modal open / close
@@ -141,7 +141,7 @@ export default class MeasurandRecord extends React.Component {
            
                 <View style={modal.box}>
                     <View style={styles.titleBox}>
-                        <View style={[common.textBox, {alignItems : 'center'}]}>
+                        <View style={common.textBoxCenter}>
                             <Text style={modal.title}> {this.props.part} </Text>
                             <MaterialCommunityIcons name="chart-bar" size={27} color={'orange'} onPress={this.onPressIcon}/>
                         </View>

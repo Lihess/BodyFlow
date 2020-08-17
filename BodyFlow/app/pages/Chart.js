@@ -1,26 +1,27 @@
 
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, StatusBar } from 'react-native';;
+import { NavigationService } from '../router/service';
+import { SafeAreaView, StyleSheet, View, Text, StatusBar } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; 
+import { common } from '../styles/Common.Style';
+import styles from '../styles/chart/Chart.style';
 
 export default class Chart extends React.Component {
     static navigationOptions = { header: null };
 
+    state = {
+        part : this.props.navigation.state.params.part
+    }
+
     render(){
         return (
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={common.container}>
                 <StatusBar backgroundColor={'#f1f1f1'} barStyle="dark-content"/>
-                <Text>ggg</Text>
+                <View style={common.textBoxCenter}>
+                    <Ionicons name="ios-arrow-back" size={24} color="black" onPress={() => NavigationService.back()}/>
+                    <Text style={styles.title}>{this.state.part}</Text>
+                </View>
             </SafeAreaView>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex : 1,
-        padding : 10,
-        backgroundColor: '#f1f1f1',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
-});

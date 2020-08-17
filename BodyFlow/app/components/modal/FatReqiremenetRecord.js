@@ -48,7 +48,7 @@ export default class FatReqirementRecord extends React.Component {
     // Chart 페이지로 이동
     onPressIcon = () => {
         this.closedModal()
-        NavigationService.navigate('ChartPage')
+        NavigationService.navigate('ChartPage', {part : this.props.part})
     }
 
     // 선택한 성별로 state 값 변경
@@ -125,7 +125,7 @@ export default class FatReqirementRecord extends React.Component {
                     </View>
                     <View style={ styles.inputBox}>
                         {/* 성별 입력란 */}
-                        <View style={[common.textBox, {alignItems : 'center', marginBottom : 5}]}>
+                        <View style={[common.textBoxCenter, {marginBottom : 5}]}>
                             <Text style={styles.inputBoxInText}>성별</Text>
 
                             <TouchableOpacity 
@@ -146,7 +146,7 @@ export default class FatReqirementRecord extends React.Component {
                         </View>
 
                         {/* 키 입력란, 안내문구 */}
-                        <View style={common.textBox}>
+                        <View style={common.textBoxEnd}>
                             <Text style={styles.inputBoxInText}>키</Text>
                             <TextInput 
                                 style={[styles.input, {borderBottomColor : this.state.foucsColor}]} 
