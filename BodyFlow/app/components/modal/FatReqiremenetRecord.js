@@ -48,7 +48,7 @@ export default class FatReqirementRecord extends React.Component {
     // Chart 페이지로 이동
     onPressIcon = () => {
         this.closedModal()
-        NavigationService.navigate('ChartPage', {part : this.props.part})
+        NavigationService.navigate('ChartPage', {part : '체지방률'})
     }
 
     // 선택한 성별로 state 값 변경

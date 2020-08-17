@@ -20,17 +20,15 @@ const styles = StyleSheet.create({
         borderWidth : 1,
         overflow : 'hidden'
     },
-    switch : {
-        width : '100%',
-        backgroundColor : '#c4c4c4',
-    },
     switchFont : {
         color : '#b4b4b4',
         fontWeight : '700',
         fontSize : screenWidth > 400 ? normalize(13) : normalize(15)
     },
     switchSelect : {
-        color : 'orange'
+        color : 'orange',
+        fontWeight : '700',
+        fontSize : screenWidth > 400 ? normalize(13) : normalize(15)
     },
     input : {
         paddingVertical : 15,

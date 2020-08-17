@@ -29,7 +29,8 @@ const modal = StyleSheet.create({
         width : "85%",
         padding : 15,
         backgroundColor : 'white',
-        borderRadius : 10
+        borderRadius : 8,
+        overflow : 'hidden'
     },
     title : {
         marginRight : 2,

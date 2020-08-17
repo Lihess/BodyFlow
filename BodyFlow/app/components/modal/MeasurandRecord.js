@@ -154,7 +154,7 @@ export default class MeasurandRecord extends React.Component {
                     <View style={[styles.inputBox, {borderColor : this.state.foucsColor}]}>
                         { this.props.part != '체중' ?
                             <SwitchSelector 
-                                style={[styles.switch, {borderColor : this.state.foucsColor}]}
+                                style={{borderColor : this.state.foucsColor}}
                                 options={[
                                     {label : 'cm', value : '0'},
                                     {label : 'inch', value : '1'}
@@ -166,7 +166,7 @@ export default class MeasurandRecord extends React.Component {
                                 height={30}
                                 alignItems={'center'}
                                 textStyle={styles.switchFont}
-                                selectedTextStyle={styles.switchSelect, {color : 'orange'}}
+                                selectedTextStyle={styles.switchSelect}
                                 animationDuration={50}
                                 onPress={value => this.onSelectUnit(value)} /> : null
                         }
