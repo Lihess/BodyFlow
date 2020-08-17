@@ -6,6 +6,7 @@
 import React from 'react';
 import Modal from 'react-native-modal';
 // https://github.com/react-native-community/react-native-modal
+import { NavigationService } from '../../router/service';
 import { TouchableOpacity, View, TextInput, Text } from 'react-native';
 import SwitchSelector from 'react-native-switch-selector';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
@@ -49,6 +50,12 @@ export default class MeasurandRecord extends React.Component {
                 foucsColor : '#c4c4c4'
             })
         }
+    }
+
+    // Chart 페이지로 이동
+    onPressIcon = () => {
+        this.closedModal()
+        NavigationService.navigate('ChartPage')
     }
 
     // 날짜 재지정을 위한 캘린더 modal open / close
@@ -136,7 +143,7 @@ export default class MeasurandRecord extends React.Component {
                     <View style={styles.titleBox}>
                         <View style={[common.textBox, {alignItems : 'center'}]}>
                             <Text style={modal.title}> {this.props.part} </Text>
-                            <MaterialCommunityIcons name="chart-bar" size={27} color={'orange'} />
+                            <MaterialCommunityIcons name="chart-bar" size={27} color={'orange'} onPress={this.onPressIcon}/>
                         </View>
                         {/* 날짜를 클릭하면 캘린더가 나와서 원하는 날짜를 지정할 수 있도록. */}
                         <Text style={styles.day} onPress={this.toggleCalenderVisible}>
@@ -159,7 +166,7 @@ export default class MeasurandRecord extends React.Component {
                                 height={30}
                                 alignItems={'center'}
                                 textStyle={styles.switchFont}
-                                selectedTextStyle={[styles.switchFont, {color : 'orange'}]}
+                                selectedTextStyle={styles.switchSelect, {color : 'orange'}}
                                 animationDuration={50}
                                 onPress={value => this.onSelectUnit(value)} /> : null
                         }
@@ -205,4 +212,3 @@ const getToday = () => {
    
     return year + (month > 8 ? '.' : '.0') + month + (day > 9 ? '.' : '.0') + day;
 }
-

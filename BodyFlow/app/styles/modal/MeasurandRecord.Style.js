@@ -29,6 +29,9 @@ const styles = StyleSheet.create({
         fontWeight : '700',
         fontSize : screenWidth > 400 ? normalize(13) : normalize(15)
     },
+    switchSelect : {
+        color : 'orange'
+    },
     input : {
         paddingVertical : 15,
         fontSize : screenWidth > 400 ? normalize(27) : normalize(30),

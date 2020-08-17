@@ -1,8 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Main from './pages/Main.js'
+import Navigation from './router/AppNavigator';
+import { NavigationService } from './router/service';
 
 export default function App() {
-  return (<Main/>);
+  return( 
+    <Navigation
+      ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef);
+      }}/>
+    );
 }

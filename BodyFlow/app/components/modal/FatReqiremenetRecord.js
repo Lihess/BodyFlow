@@ -5,6 +5,7 @@
 import React from 'react';
 import Modal from 'react-native-modal';
 // https://github.com/react-native-community/react-native-modal
+import { NavigationService } from '../../router/service';
 import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { common, modal } from '../../styles/Common.Style';
@@ -42,6 +43,12 @@ export default class FatReqirementRecord extends React.Component {
                 foucsColor : '#c4c4c4'
             })
         }
+    }
+
+    // Chart 페이지로 이동
+    onPressIcon = () => {
+        this.closedModal()
+        NavigationService.navigate('ChartPage')
     }
 
     // 선택한 성별로 state 값 변경
@@ -114,7 +121,7 @@ export default class FatReqirementRecord extends React.Component {
                 <View style={modal.box}>
                     <View style={styles.titleBox}>
                         <Text style={modal.title}> 체지방률 </Text>
-                        <MaterialCommunityIcons name="chart-bar" size={27} color={'orange'} />
+                        <MaterialCommunityIcons name="chart-bar" size={27} color={'orange'} onPress={this.onPressIcon}/>
                     </View>
                     <View style={ styles.inputBox}>
                         {/* 성별 입력란 */}
