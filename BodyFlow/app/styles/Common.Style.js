@@ -30,7 +30,12 @@ const modal = StyleSheet.create({
         padding : 15,
         backgroundColor : 'white',
         borderRadius : 8,
-        overflow : 'hidden'
+        overflow : 'hidden',
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 4, },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9,
     },
     title : {
         marginRight : 2,
