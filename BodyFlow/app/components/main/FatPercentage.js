@@ -10,11 +10,11 @@ import {common} from '../../styles/Common.Style.js';
 const FatPercentage = ({onPress}) => {
     return(
         <TouchableOpacity style={styles.box} onPress={onPress}>
-            <View style={[common.textBox, {alignItems : 'center'}]}>
+            <View style={common.textBoxCenter}>
                 <Ionicons style={styles.icon} name={"md-body"} size={22}/>
                 <Text style={styles.title}>체지방률</Text>
             </View>
-            <View style={[common.textBox, styles.weightBox]}>
+            <View style={[common.textBoxEnd, styles.weightBox]}>
                 <Text style={styles.weight}>16</Text>
                 <Text style={styles.unit}> %</Text>
             </View>

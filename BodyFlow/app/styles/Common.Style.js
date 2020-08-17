@@ -2,9 +2,20 @@ import {StyleSheet} from 'react-native';
 import {normalize, screenWidth} from './ResponsiveFontSize.js'
 
 const common = StyleSheet.create({
-    textBox : {
+    container: {
+        flex : 1,
+        padding : 10,
+        backgroundColor: '#f1f1f1',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+    },
+    textBoxEnd : {
         flexDirection : 'row',
         alignItems : 'flex-end'
+    },
+    textBoxCenter : {
+        flexDirection : 'row',
+        alignItems : 'center'
     }
 });
 

@@ -10,11 +10,11 @@ import { common } from '../../styles/Common.Style.js';
 const Weight = ({onPress}) => {
     return(
         <TouchableOpacity style={styles.box} onPress={onPress}>
-            <View style={[common.textBox, {alignItems : 'center'}]}>
+            <View style={common.textBoxCenter}>
                 <FontAwesome5 style={styles.icon} name={'weight'} size={16}/>
                 <Text style={styles.title}>체중</Text>
             </View>
-            <View style={[common.textBox, styles.weightBox]}>
+            <View style={[common.textBoxEnd, styles.weightBox]}>
                 <Text style={styles.weight}>150.6</Text>
                 <Text style={styles.unit}> kg</Text>
             </View>

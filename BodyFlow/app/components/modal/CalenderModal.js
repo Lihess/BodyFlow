@@ -3,7 +3,7 @@ import Modal from 'react-native-modal';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 // https://www.npmjs.com/package/react-native-calendars
-import { common, modal } from '../../styles/Common.Style.js';
+import {  modal } from '../../styles/Common.Style.js';
 import styles from '../../styles/modal/CalenderModal.Style.js';
 
 export default class CalendarModal extends React.Component{
