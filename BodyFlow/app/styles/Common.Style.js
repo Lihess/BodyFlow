@@ -31,8 +31,9 @@ const modal = StyleSheet.create({
         backgroundColor : 'white',
         borderRadius : 8,
         overflow : 'hidden',
+        // https://ethercreative.github.io/react-native-shadow-generator/
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4, },
+        shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.32,
         shadowRadius: 5.46,
         elevation: 9,

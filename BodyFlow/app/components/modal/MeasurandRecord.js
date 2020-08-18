@@ -13,6 +13,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { common, modal } from '../../styles/Common.Style.js';
 import styles from '../../styles/modal/MeasurandRecord.Style.js';
 import CalendarModal from './CalenderModal.js';
+import { createSizeByPart } from '../../backend/Create';
 
 export default class MeasurandRecord extends React.Component {
     state = {
@@ -116,7 +117,8 @@ export default class MeasurandRecord extends React.Component {
     }
 
     onSubmit = () => {
-        // 입력된 사이즈 저장
+        // 입력된 정보를 DB에 저장
+        createSizeByPart(this.state.day, this.props.part, this.state.measurand);
         this.closedModal();
     }
 
@@ -147,7 +149,7 @@ export default class MeasurandRecord extends React.Component {
                         </View>
                         {/* 날짜를 클릭하면 캘린더가 나와서 원하는 날짜를 지정할 수 있도록. */}
                         <Text style={styles.day} onPress={this.toggleCalenderVisible}>
-                            {this.state.day}
+                            {this.state.day.replace(/\-/g, '.')}
                         </Text>
                     </View>
                     
@@ -210,5 +212,5 @@ const getToday = () => {
     var month = today.getMonth() + 1;
     var day = today.getDate();
    
-    return year + (month > 8 ? '.' : '.0') + month + (day > 9 ? '.' : '.0') + day;
+    return year + (month > 8 ? '-' : '-0') + month + (day > 9 ? '-' : '-0') + day;
 }

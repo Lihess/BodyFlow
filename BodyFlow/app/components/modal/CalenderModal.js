@@ -42,7 +42,7 @@ export default class CalendarModal extends React.Component{
         }
         else {
             // 외부에서 보이는 날짜 포맷은 'yyyy.MM.dd'이므로 변경!
-            this.props.onSubmit(this.state.day.replace(/-/g, '.'));
+            this.props.onSubmit(this.state.day);
         }
         this.closedModal()
     }
