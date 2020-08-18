@@ -10,6 +10,7 @@ import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { common, modal } from '../../styles/Common.Style';
 import styles from '../../styles/modal/FatReqiremenetRecord.Style';
+import { createUserInfo } from '../../backend/Create';
 
 export default class FatReqirementRecord extends React.Component {
     state = {
@@ -38,7 +39,7 @@ export default class FatReqirementRecord extends React.Component {
                 visible : false,
                 decimalInformation : false,
                 rangeInformation : false,
-                sex : null,
+                gender : null,
                 height : null,
                 foucsColor : '#c4c4c4'
             })
@@ -104,8 +105,10 @@ export default class FatReqirementRecord extends React.Component {
         })
     }
 
+    // DB에 정보 저장
     onSubmit = () => {
-        // 입력된 사이즈 저장
+        console.log('?')
+        createUserInfo(this.state.height, this.state.gender);
         this.closedModal();
     }
 

@@ -35,20 +35,21 @@ const createSizeByPart = (date, part, size) => {
     db.transaction(tx => {
         tx.executeSql(
             'SELECT * FROM size_by_part;', [], 
-            (tx, result) => console.log('result on insert: ', result),
+            (tx, {rows}) => console.log('result on insert: ', rows),
             (tx, err) => console.log('error on insert: ', err)
         );
     })
 }
 
-const createUserInfo = (date, height, gender) => {
+// user_info insert
+const createUserInfo = (height, gender) => {
     db.transaction(tx => {
         tx.executeSql(
-            'INSERT OR REPLACE INTO user_info VALUES (?, ?, ?);', [date, height, gender],
+            'INSERT OR REPLACE INTO user_info VALUES (date(\'now\'), ?, ?);', [height, gender]
         );
     })
 
-    userInfoInsertTR(date, height, gender)
+    userInfoInsertTR(height, gender)
     // 확인용
     db.transaction(tx => {
         tx.executeSql(
@@ -58,7 +59,5 @@ const createUserInfo = (date, height, gender) => {
         );
     })
 }
-
-
 
 export {createTables, createSizeByPart, createUserInfo}
