@@ -1,34 +1,66 @@
 
 // https://jhmdevdiary.tistory.com/10
 import React from 'react';
-import { readSizeByPartsLatestF } from '../backend/Read';
+import { readSizeByPartsLatestF, readUserInfoLatest, readWaistToday } from '../backend/Read';
 
 const FatContext = React.createContext({
     fatPercent : null,
-    getFatPercent : () => {},
-    setFatPercent : () => {}
+    height : null,
+    gender : null,
+    waist : null,
+    setFatPercentHG : () => {},
+    setFatPercentW : () => {}
 })
 
 export class FatProvider extends React.Component {
     state = {
         fatPercent : null,
-        setFatPercent : this.setFatPercent
+        height : null,
+        gender : null,
+        waist : null,
+        setFatPercentHG : this.setFatPercentHG,
+        setFatPercentW : this.setFatPercentW
     }
 
     componentDidMount(){
         readSizeByPartsLatestF(result => {
             this.setState({ 
                 fatPercent : result,
-                setFatPercent : this.setFatPercent
+                setFatPercentHG : this.setFatPercentHG,
+                setFatPercentW : this.setFatPercentW
             })   
+        })
+        readUserInfoLatest(result => {
+            if (result != null)
+                this.setState({
+                    height : result.height,
+                    gender : result.gender
+                })
+        })
+        readWaistToday(result => {
+            if (result != null)
+                this.setState({ waist : result })
         })
     }
 
-    setFatPercent = () => {
-        readSizeByPartsLatestF(result => {
-            this.setState({ fatPercent : result }) 
-            console.log('this.state.fatPercent : ', this.state.fatPercent)
-        })
+    // SQLite의 삽입 속도가 느려서.... 계산해서 출력하는걸로
+    setFatPercentHG = (height, gender) => {
+        if (this.state.waist != null) {
+            const fatPercent = (gender == 'M' ? 64 : 76) - (20 * (height / this.state.waist))
+            this.setState({
+                fatPercent : fatPercent.toFixed(1)
+            })
+        }
+    }
+
+    // SQLite의 삽입 속도가 느려서.... 계산해서 출력하는걸로
+    setFatPercentW = (waist) => {
+        if (this.state.height != null && this.state.gender != null){
+            const fatPercent = (this.state.gender == 'M' ? 64 : 76) - (20 * (this.state.height / waist))
+            this.setState({
+                fatPercent : fatPercent.toFixed(1)
+            })
+        }
     }
 
     render(){

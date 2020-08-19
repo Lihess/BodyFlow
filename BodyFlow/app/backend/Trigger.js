@@ -42,7 +42,8 @@ const userInfoInsertTR = ( height, gender) => {
     // 가장 최근에 입력된 사용자의 키와 성별을 불러옴
     db.transaction(tx => {
         tx.executeSql(
-            'SELECT size FROM size_by_part WHERE (date = date(\'now\')) AND (part = ?)', ['허리'],
+            'SELECT size FROM size_by_part WHERE (date = date(\'now\')) AND (part = \'허리\')',
+            [],
             (tx, { rows }) => { 
                 if(rows['_array'] != null) {
                     const size = rows["_array"][0].size;

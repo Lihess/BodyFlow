@@ -27,10 +27,10 @@ const readSizeByPartsLatest = (callback) => {
 }
 
 // 가장 최근 날짜에 기록된 size 중  체중, 체지방률만 반환
-const readSizeByPartsLatestWF = (callback) => {
+const readSizeByPartsLatestW = (callback) => {
     db.transaction(tx => {
         tx.executeSql(
-            'SELECT part, size FROM (SELECT * FROM size_by_part WHERE part = \'체중\' OR part = \'체지방률\' ORDER BY date DESC) GROUP BY part',
+            'SELECT size FROM size_by_part WHERE part = \'체중\' ORDER BY date DESC LIMIT 1',
             [],
             (tx, {rows}) => { 
                 const sizeParts = {'체중' : null, '체지방률' : null}
@@ -52,10 +52,33 @@ const readSizeByPartsLatestF = (callback) => {
         tx.executeSql(
             'SELECT size FROM size_by_part WHERE part = \'체지방률\' ORDER BY date DESC LIMIT 1',
             [],
-            (tx, {rows}) => { console.log(rows['_array'][0].size); callback(rows['_array'][0].size) },
+            (tx, {rows}) => { callback(rows['_array'][0].size) },
             (tx, err) => { console.log('err: ', err) }
         )
     })
 }
 
-export {readSizeByPartsLatest, readSizeByPartsLatestWF, readSizeByPartsLatestF};
+// 가장 최근 사용자 정보 반환
+const readUserInfoLatest = (callback) => {
+    db.transaction(tx => {
+        tx.executeSql(
+            'SELECT height, gender FROM user_info ORDER BY date DESC LIMIT 1',
+            [],
+            (tx, { rows }) => { callback(rows["_array"][0]) },
+        )
+    });
+}
+
+// 오늘 기입한 허리 사이즈 반환
+const readWaistToday = (callback) => {
+    db.transaction(tx => {
+        tx.executeSql(
+            'SELECT size FROM size_by_part WHERE (date = date(\'now\')) AND (part = \'허리\')',
+            [],
+            (tx, { rows }) => { callback(rows["_array"][0].size) },
+        )
+    });
+}
+
+export {readSizeByPartsLatest, readSizeByPartsLatestW, readSizeByPartsLatestF
+        , readUserInfoLatest, readWaistToday};

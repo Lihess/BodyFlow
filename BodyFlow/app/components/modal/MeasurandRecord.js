@@ -201,8 +201,8 @@ export default class MeasurandRecord extends React.Component {
                                 </TouchableOpacity>
                                 : <FatConsumer>
                                     {
-                                        ({setFatPercent}) => 
-                                        <TouchableOpacity style={modal.submit} onPress={() => {this.onSubmit(); setFatPercent()}}> 
+                                        ({setFatPercentW}) => 
+                                        <TouchableOpacity style={modal.submit} onPress={() => {this.onSubmit(); setFatPercentW(this.state.size)}}> 
                                             <Text style={modal.submitText}>완료</Text>    
                                         </TouchableOpacity>
                                     }

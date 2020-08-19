@@ -172,8 +172,8 @@ export default class FatReqirementRecord extends React.Component {
                     <Text style={{width:200, height:200, textAlign : 'center', textAlignVertical : 'center'}}>팁이 들어갈자리. 이미지 만들면 넣자</Text>   
                     <View style={{ alignItems : 'flex-end'}}>
                         <FatConsumer>
-                            {({setFatPercent}) => 
-                                <TouchableOpacity style={modal.submit} onPress={() => {this.onSubmit(); setFatPercent()}}> 
+                            {({setFatPercentHG}) => 
+                                <TouchableOpacity style={modal.submit} onPress={() => {this.onSubmit(); setFatPercentHG(this.state.height, this.state.gender)}}> 
                                     <Text style={modal.submitText}>완료</Text>    
                                 </TouchableOpacity>
                             }
