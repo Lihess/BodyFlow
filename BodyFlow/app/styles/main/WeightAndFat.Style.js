@@ -19,17 +19,20 @@ const styles = StyleSheet.create({
     icon : {
         color : '#848484',
     },
+    empty : {
+        color : '#848484'
+    },
     title : {
         fontSize : screenWidth > 400 ? normalize(12) : normalize(14),
         fontWeight : '700',
         color : '#848484',
         marginLeft : 8
     },
-    weightBox : {
+    sizeBox : {
         justifyContent : 'flex-end',
         marginTop : 8
     },
-    weight : {
+    size : {
         flex : 1,
         fontSize : screenWidth > 400 ? normalize(20) : normalize(22),
         fontWeight : '700',

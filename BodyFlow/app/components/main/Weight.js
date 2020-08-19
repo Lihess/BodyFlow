@@ -40,8 +40,10 @@ export default class Weight extends React.Component {
                         <FontAwesome5 style={styles.icon} name={'weight'} size={16}/>
                         <Text style={styles.title}>체중</Text>
                     </View>
-                    <View style={[common.textBoxEnd, styles.weightBox]}>
-                        <Text style={styles.weight}>{this.state.weight == null ? 0.0 : this.state.weight}</Text>
+                    <View style={[common.textBoxEnd, styles.sizeBox]}>
+                        <Text style={[styles.size, this.state.weight == null ? styles.empty : null]}>
+                            {this.state.weight == null ? 0.0 : this.state.weight}
+                        </Text>
                         <Text style={styles.unit}> kg</Text>
                     </View>
                 </TouchableOpacity>

@@ -27,10 +27,12 @@ export default class FatPercentage extends React.Component {
                         <Ionicons style={styles.icon} name={"md-body"} size={22}/>
                         <Text style={styles.title}>체지방률</Text>
                     </View>
-                    <View style={[common.textBoxEnd, styles.weightBox]}>
+                    <View style={[common.textBoxEnd, styles.sizeBox]}>
                         <FatConsumer>
                             { ({fatPercent}) => 
-                                <Text style={styles.weight}>{fatPercent == null ? 0.0 : fatPercent}</Text>
+                                <Text style={[styles.size, fatPercent == null ? styles.empty : null]}>
+                                    {fatPercent == null ? 0.0 : fatPercent}
+                                </Text>
                             }
                         </FatConsumer>
 
