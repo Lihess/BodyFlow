@@ -14,6 +14,7 @@ import { common, modal } from '../../styles/Common.Style.js';
 import styles from '../../styles/modal/MeasurandRecord.Style.js';
 import CalendarModal from './CalenderModal.js';
 import { createSizeByPart } from '../../backend/Create';
+import { FatConsumer } from '../FatContext';
 
 export default class MeasurandRecord extends React.Component {
     state = {
@@ -193,9 +194,20 @@ export default class MeasurandRecord extends React.Component {
                     }
                     <Text style={{width:200, height:200, textAlign : 'center', textAlignVertical : 'center'}}>팁이 들어갈자리. 이미지 만들면 넣자</Text>
                     <View style={{ alignItems : 'flex-end'}}>
-                        <TouchableOpacity style={modal.submit} onPress={this.onSubmit}> 
-                            <Text style={modal.submitText}>완료</Text>    
-                        </TouchableOpacity>
+                        {
+                            this.props.part != '허리' ?
+                                <TouchableOpacity style={modal.submit} onPress={this.onSubmit}> 
+                                    <Text style={modal.submitText}>완료</Text>    
+                                </TouchableOpacity>
+                                : <FatConsumer>
+                                    {
+                                        ({setFatPercent}) => 
+                                        <TouchableOpacity style={modal.submit} onPress={() => {this.onSubmit(); setFatPercent()}}> 
+                                            <Text style={modal.submitText}>완료</Text>    
+                                        </TouchableOpacity>
+                                    }
+                                </FatConsumer>
+                            }      
                     </View>
                 </View>
 

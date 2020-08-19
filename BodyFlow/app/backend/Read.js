@@ -52,7 +52,7 @@ const readSizeByPartsLatestF = (callback) => {
         tx.executeSql(
             'SELECT size FROM size_by_part WHERE part = \'체지방률\' ORDER BY date DESC LIMIT 1',
             [],
-            (tx, {rows}) => { console.log(rows);callback(rows['_array'].size) },
+            (tx, {rows}) => { console.log(rows['_array'][0].size); callback(rows['_array'][0].size) },
             (tx, err) => { console.log('err: ', err) }
         )
     })

@@ -6,8 +6,9 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import styles from '../../styles/main/WeightAndFat.Style.js';
 import {common} from '../../styles/Common.Style.js';
+import { FatConsumer } from '../FatContext.js';
 
-const FatPercentage = ({onPress, fat}) => {
+const FatPercentage = ({onPress}) => {
     return(
         <TouchableOpacity style={styles.box} onPress={onPress}>
             <View style={common.textBoxCenter}>
@@ -15,7 +16,12 @@ const FatPercentage = ({onPress, fat}) => {
                 <Text style={styles.title}>체지방률</Text>
             </View>
             <View style={[common.textBoxEnd, styles.weightBox]}>
-            <Text style={styles.weight}>{fat == null ? 0.0 : fat}</Text>
+                <FatConsumer>
+                    { ({fatPercent}) => 
+                        <Text style={styles.weight}>{fatPercent == null ? 0.0 : fatPercent}</Text>
+                    }
+                </FatConsumer>
+
                 <Text style={styles.unit}> %</Text>
             </View>
         </TouchableOpacity>

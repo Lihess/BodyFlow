@@ -65,6 +65,7 @@ export default class BodySize extends React.Component {
                         </TouchableOpacity>
                     );
                 })}
+                
                 <Record 
                     visible={this.state.modalVisiable} 
                     part={this.state.modalPart} 

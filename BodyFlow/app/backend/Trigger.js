@@ -9,7 +9,6 @@ const sizeByPartInsertTR = (date, part, size) => {
     if(part == '허리'){
         // 가장 최근에 입력된 사용자의 키와 성별을 불러옴
         db.transaction(tx => {
-            console.log('1')
             tx.executeSql(
                 'SELECT height, gender FROM user_info ORDER BY date DESC LIMIT 1',
                 [],
@@ -45,15 +44,17 @@ const userInfoInsertTR = ( height, gender) => {
         tx.executeSql(
             'SELECT size FROM size_by_part WHERE (date = date(\'now\')) AND (part = ?)', ['허리'],
             (tx, { rows }) => { 
-                const size = rows["_array"][0].size;
-
-                const fatPercent = (gender == 'M' ? 64 : 76) - (20 * (height / size));
- 
-                db.transaction(tx => {
-                    tx.executeSql(
-                        'INSERT OR REPLACE INTO size_by_part VALUES (date(\'now\'), ?, ?);', ['체지방률', fatPercent.toFixed(1)]
-                    )
-                })      
+                if(rows['_array'] != null) {
+                    const size = rows["_array"][0].size;
+                    
+                    const fatPercent = (gender == 'M' ? 64 : 76) - (20 * (height / size));
+                    
+                    db.transaction(tx => {
+                        tx.executeSql(
+                            'INSERT OR REPLACE INTO size_by_part VALUES (date(\'now\'), ?, ?);', ['체지방률', fatPercent.toFixed(1)]
+                        )
+                    })
+                }      
             }
         )
     });

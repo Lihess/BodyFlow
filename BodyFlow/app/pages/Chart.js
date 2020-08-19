@@ -8,7 +8,7 @@ import styles from '../styles/chart/Chart.style';
 import PartPicker from '../components/modal/PartPicker';
 
 export default class Chart extends React.Component {
-    static navigationOptions = { header: null };
+    static navigationOptions = { headerShown : false };
 
     state = {
         part : this.props.navigation.state.params.part,

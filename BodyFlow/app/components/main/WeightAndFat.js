@@ -8,7 +8,6 @@ import Weight from '../../components/main/Weight.js';
 import FatPercentage from './FatPercentage.js';
 import MeasurandRecord from '../modal/MeasurandRecord.js';
 import FatReiremenetRecord from '../modal/FatReqiremenetRecord.js';
-
 import { readSizeByPartsLatestWF, readSizeByPartsLatestF } from '../../backend/Read';
 
 class WeightAndFat extends React.Component {
@@ -35,15 +34,23 @@ class WeightAndFat extends React.Component {
         this.setState({requirementsVisiable : !this.state.requirementsVisiable})
     }
 
-    onChangeSize = (part, size) => {
+    onChangeWeight = (part, size) => {
+        console.log('2');
         const newSizeParts = this.state.sizeParts;
         newSizeParts[part] = size;
 
         this.setState({ sizeParts :  newSizeParts })
+        console.log('B :', this.state.sizeParts)
     }
 
     onChangeFat = () => {
-        readSizeByPartsLatestF(result => { this.onChangeSize('체지방률', result) })
+        console.log('1');
+        readSizeByPartsLatestF(result => { 
+            const newSizeParts = this.state.sizeParts;
+            newSizeParts['체지방률'] = result;
+
+            this.setState({ sizeParts :  newSizeParts }) 
+        })
     }
 
     render(){
@@ -54,13 +61,14 @@ class WeightAndFat extends React.Component {
                     visible={this.state.measurandVisible} 
                     part={'체중'} 
                     onBackdropPress={this.toggleMeasurandVisible}
-                    onSubmit={(part, size) => this.onChangeSize(part, size)}/>
+                    onSubmit={(part, size) => this.onChangeWeight(part, size)}/>
             
-                <FatPercentage onPress={this.togglerequirementsVisiable} fat={this.state.sizeParts['체지방률']}/>
+              
+                <FatPercentage onPress={this.togglerequirementsVisiable}/>
                 <FatReiremenetRecord 
                     visible={this.state.requirementsVisiable} 
-                    onBackdropPress={this.togglerequirementsVisiable}
-                    onSubmit={this.onChangeFat}/>
+                    onBackdropPress={this.togglerequirementsVisiable}/>
+             
             </View>
         );
     }

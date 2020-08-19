@@ -16,7 +16,7 @@ const Weight = ({onPress, weight}) => {
                 <Text style={styles.title}>체중</Text>
             </View>
             <View style={[common.textBoxEnd, styles.weightBox]}>
-            <Text style={styles.weight}>{weight == null ? 0.0 : weight}</Text>
+                <Text style={styles.weight}>{weight == null ? 0.0 : weight}</Text>
                 <Text style={styles.unit}> kg</Text>
             </View>
         </TouchableOpacity>
