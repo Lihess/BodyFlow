@@ -67,6 +67,11 @@ export default class MeasurandRecord extends React.Component {
 
     // 단위 선택 시, 해당 단위로 state 값 변경
     onSelectUnit = (value) => {
+        if (value == 0 && this.state.unit == 'inch')
+            this.setState({ size : (this.state.size / 2.54).toFixed(2) })
+        else if (value == 1 && this.state.unit == 'cm')
+            this.setState({ size : (this.state.size * 2.54).toFixed(2) })
+
         value == 0 ? this.setState({unit : 'cm'}) : this.setState({unit : 'in'});
     }
 
@@ -118,8 +123,10 @@ export default class MeasurandRecord extends React.Component {
     }
 
     onSubmit = () => {
+        // 기본 저장 형식은 cm
+        const size = this.state.unit == 'inch' ? (this.state.size * 2.54).toFixed(2) : this.state.size;
         // 입력된 정보를 DB에 저장
-        createSizeByPart(this.state.day, this.props.part, this.state.size);
+        createSizeByPart(this.state.day, this.props.part, size);
         
         this.props.onSubmit(this.props.part, this.state.size)
         this.closedModal();
