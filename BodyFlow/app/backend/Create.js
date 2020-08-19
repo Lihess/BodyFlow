@@ -39,6 +39,7 @@ const createSizeByPart = (date, part, size) => {
             (tx, err) => console.log('error on insert: ', err)
         );
     })
+    
 }
 
 // user_info insert

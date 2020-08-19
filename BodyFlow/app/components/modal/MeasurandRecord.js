@@ -23,7 +23,7 @@ export default class MeasurandRecord extends React.Component {
         unit : 'cm',
         decimalInformation : false, // 소수점 관련 안내문구의 표기 여부
         rangeInformation : false, // 입력범위 관련 안내문구의 표기 여부
-        measurand : '',
+        size : '',
         foucsColor : '#c4c4c4'
     } 
     
@@ -47,7 +47,7 @@ export default class MeasurandRecord extends React.Component {
                 unit : 'cm',
                 decimalInformation : false,
                 rangeInformation : false,
-                measurand : '',
+                size : '',
                 foucsColor : '#c4c4c4'
             })
         }
@@ -92,7 +92,7 @@ export default class MeasurandRecord extends React.Component {
             text = this.checkRange(text);
 
             this.setState({
-                measurand : text,
+                size : text,
                 decimalInformation : false,
             });
         }
@@ -118,7 +118,9 @@ export default class MeasurandRecord extends React.Component {
 
     onSubmit = () => {
         // 입력된 정보를 DB에 저장
-        createSizeByPart(this.state.day, this.props.part, this.state.measurand);
+        createSizeByPart(this.state.day, this.props.part, this.state.size);
+        
+        this.props.onSubmit(this.props.part, this.state.size)
         this.closedModal();
     }
 
@@ -176,12 +178,12 @@ export default class MeasurandRecord extends React.Component {
                             style={styles.input} 
                             keyboardType={'numeric'}
                             placeholder={'0.0'}
-                            value={this.state.measurand}
+                            value={this.state.size}
                             onChangeText={(text) => this.onChangeText(text)}
                             onFocus={this.onFocusInput}
                             onBlur={this.onBlurInput}/>
                     </View> 
-                     
+                    
                     {
                         this.state.decimalInformation ?
                             <Text style={modal.information}> 소수점 이하 2자리까지만 입력하세요. </Text> : null

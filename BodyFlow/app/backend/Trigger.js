@@ -9,6 +9,7 @@ const sizeByPartInsertTR = (date, part, size) => {
     if(part == '허리'){
         // 가장 최근에 입력된 사용자의 키와 성별을 불러옴
         db.transaction(tx => {
+            console.log('1')
             tx.executeSql(
                 'SELECT height, gender FROM user_info ORDER BY date DESC LIMIT 1',
                 [],
@@ -30,14 +31,14 @@ const sizeByPartInsertTR = (date, part, size) => {
         db.transaction(tx => {
             tx.executeSql(
                 'SELECT * FROM size_by_part;', [], 
-                (tx, result) => console.log('result on insert: ', result),
+                (tx, result) => console.log('5 result on insert: ', result),
                 (tx, err) => console.log('error on insert: ', err)
             );
         })
     }
 }
 
-// 허리 사이즈 추가 기입 시, 체지방률을 계산하여 삽입하는 트리거
+// 사용자 정보 추가 기입 시, 체지방률을 계산하여 삽입하는 트리거
 const userInfoInsertTR = ( height, gender) => {
     // 가장 최근에 입력된 사용자의 키와 성별을 불러옴
     db.transaction(tx => {
@@ -50,7 +51,7 @@ const userInfoInsertTR = ( height, gender) => {
  
                 db.transaction(tx => {
                     tx.executeSql(
-                        'INSERT OR REPLACE INTO size_by_part VALUES (date(\'now\'), ?, ?);', ['체지방률', fatPercent]
+                        'INSERT OR REPLACE INTO size_by_part VALUES (date(\'now\'), ?, ?);', ['체지방률', fatPercent.toFixed(1)]
                     )
                 })      
             }

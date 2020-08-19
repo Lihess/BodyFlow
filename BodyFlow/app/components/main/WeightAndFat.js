@@ -9,11 +9,20 @@ import FatPercentage from './FatPercentage.js';
 import MeasurandRecord from '../modal/MeasurandRecord.js';
 import FatReiremenetRecord from '../modal/FatReqiremenetRecord.js';
 
+import { readSizeByPartsLatestWF, readSizeByPartsLatestF } from '../../backend/Read';
+
 class WeightAndFat extends React.Component {
     state = {
         measurandVisible : false,
         requirementsVisiable : false,
-        part : ''
+        sizeParts : {'체중' : null, '체지방률' : null}
+    }
+
+    // 체중과 체지방률의 가장 최근 기록을 불러옴
+    componentDidMount = () => {
+        readSizeByPartsLatestWF(result => {
+            this.setState({sizeParts : result})
+        })
     }
 
     // SizeRecordVisible 값 변경
@@ -26,14 +35,32 @@ class WeightAndFat extends React.Component {
         this.setState({requirementsVisiable : !this.state.requirementsVisiable})
     }
 
+    onChangeSize = (part, size) => {
+        const newSizeParts = this.state.sizeParts;
+        newSizeParts[part] = size;
+
+        this.setState({ sizeParts :  newSizeParts })
+    }
+
+    onChangeFat = () => {
+        readSizeByPartsLatestF(result => { this.onChangeSize('체지방률', result) })
+    }
+
     render(){
         return(
             <View style={styles.container} >
-                <Weight onPress={this.toggleMeasurandVisible}/>
-                <MeasurandRecord visible={this.state.measurandVisible} part={'체중'} onBackdropPress={this.toggleMeasurandVisible}/>
+                <Weight onPress={this.toggleMeasurandVisible} weight={this.state.sizeParts['체중']}/>
+                <MeasurandRecord 
+                    visible={this.state.measurandVisible} 
+                    part={'체중'} 
+                    onBackdropPress={this.toggleMeasurandVisible}
+                    onSubmit={(part, size) => this.onChangeSize(part, size)}/>
             
-                <FatPercentage onPress={this.togglerequirementsVisiable}/>
-                <FatReiremenetRecord visible={this.state.requirementsVisiable} onBackdropPress={this.togglerequirementsVisiable}/>
+                <FatPercentage onPress={this.togglerequirementsVisiable} fat={this.state.sizeParts['체지방률']}/>
+                <FatReiremenetRecord 
+                    visible={this.state.requirementsVisiable} 
+                    onBackdropPress={this.togglerequirementsVisiable}
+                    onSubmit={this.onChangeFat}/>
             </View>
         );
     }

@@ -7,29 +7,15 @@ import SwitchSelector from 'react-native-switch-selector';
 // https://reactnativeexample.com/switch-selector-to-react-native/
 import SizeByPart from './SizeByPart.js';
 import styles from '../../styles/main/BodySize.Style.js';
-import Record from '../modal/MeasurandRecord.js';
 
 export default class BodySize extends React.Component {
     state = {
-        unit : 'cm',
-        modalVisiable : false,
-        modalPart : null
+        unit : 'cm'
     }
 
     // 단위 선택 시, 해당 단위로 state 값 변경
     onSelectUnit = (value) => {
         value == 0 ? this.setState({unit : 'cm'}) : this.setState({unit : 'in'});
-    }
-
-    // visible 값 변경
-    toggleVisible = () => {
-        this.setState({modalVisiable : !this.state.modalVisiable})
-    }
-
-    // 부위별 사이즈 박스를 눌렀을때 실행되는 함수
-    onPressButton = (part) => {
-        this.toggleVisible();
-        this.setState({ modalPart : part });
     }
 
     render(){
@@ -56,7 +42,6 @@ export default class BodySize extends React.Component {
                     {/* 부위별 사이즈 */}
                     <SizeByPart unit={this.state.unit} onPress={this.onPressButton}/>
                 </View>
-                <Record visible={this.state.modalVisiable} part={this.state.modalPart} onBackdropPress={this.toggleVisible}/>
             </View>
         );
     }

@@ -40,7 +40,7 @@ export default class PartPicker extends React.Component{
     }
 
     render(){
-        const parts = ['체중', '체지방', '어깨', '윗가슴', '팔뚝', '허리', '엉덩이', '허벅지', '종아리']
+        const parts = ['체중', '체지방률', '어깨', '윗가슴', '팔뚝', '허리', '엉덩이', '허벅지', '종아리']
 
         return (
             <Modal 
