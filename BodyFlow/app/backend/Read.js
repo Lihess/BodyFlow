@@ -26,20 +26,15 @@ const readSizeByPartsLatest = (callback) => {
     })
 }
 
-// 가장 최근 날짜에 기록된 size 중  체중, 체지방률만 반환
+// 가장 최근 날짜에 기록된 size 중  체중만 반환
 const readSizeByPartsLatestW = (callback) => {
     db.transaction(tx => {
         tx.executeSql(
             'SELECT size FROM size_by_part WHERE part = \'체중\' ORDER BY date DESC LIMIT 1',
             [],
-            (tx, {rows}) => { 
-                const sizeParts = {'체중' : null, '체지방률' : null}
-                
-                if (rows['_array'] != null)
-                    rows['_array'].map(row =>
-                        sizeParts[row.part] = row.size
-                    )
-                callback(sizeParts)
+            (tx, {rows}) =>  {
+                const size = rows['_array'] != null ? rows['_array'][0].size : null;
+                callback(size);
             },
             (tx, err) => { console.log('err: ', err) }
         )
@@ -52,7 +47,10 @@ const readSizeByPartsLatestF = (callback) => {
         tx.executeSql(
             'SELECT size FROM size_by_part WHERE part = \'체지방률\' ORDER BY date DESC LIMIT 1',
             [],
-            (tx, {rows}) => { callback(rows['_array'][0].size) },
+            (tx, {rows}) => { 
+                const size = rows['_array'] != null ? rows['_array'][0].size : null;
+                callback(size); 
+            },
             (tx, err) => { console.log('err: ', err) }
         )
     })
@@ -64,7 +62,10 @@ const readUserInfoLatest = (callback) => {
         tx.executeSql(
             'SELECT height, gender FROM user_info ORDER BY date DESC LIMIT 1',
             [],
-            (tx, { rows }) => { callback(rows["_array"][0]) },
+            (tx, { rows }) => { 
+                const size = rows['_array'] != null ? rows['_array'][0].size : null;
+                callback(size); 
+             },
         )
     });
 }
@@ -75,7 +76,10 @@ const readWaistToday = (callback) => {
         tx.executeSql(
             'SELECT size FROM size_by_part WHERE (date = date(\'now\')) AND (part = \'허리\')',
             [],
-            (tx, { rows }) => { callback(rows["_array"][0].size) },
+            (tx, { rows }) => { 
+                const size = rows['_array'] != null ? rows['_array'][0].size : null;
+                callback(size); 
+            }
         )
     });
 }

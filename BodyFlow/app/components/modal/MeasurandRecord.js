@@ -68,11 +68,11 @@ export default class MeasurandRecord extends React.Component {
     // 단위 선택 시, 해당 단위로 state 값 변경
     onSelectUnit = (value) => {
         if (value == 0 && this.state.unit == 'inch')
-            this.setState({ size : (this.state.size / 2.54).toFixed(2) })
-        else if (value == 1 && this.state.unit == 'cm')
             this.setState({ size : (this.state.size * 2.54).toFixed(2) })
+        else if (value == 1 && this.state.unit == 'cm')
+            this.setState({ size : (this.state.size / 2.54).toFixed(2) })
 
-        value == 0 ? this.setState({unit : 'cm'}) : this.setState({unit : 'in'});
+        value == 0 ? this.setState({unit : 'cm'}) : this.setState({unit : 'inch'});
     }
 
     // 입력된 값의 범위는 2.0 ~ 300.0 만 허용하기 위한 함수

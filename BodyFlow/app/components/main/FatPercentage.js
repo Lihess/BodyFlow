@@ -21,8 +21,8 @@ export default class FatPercentage extends React.Component {
 
     render(){
         return(
-            <View>
-                <TouchableOpacity style={styles.box} onPress={this.toggleVisiable}>
+            <View style={styles.box}>
+                <TouchableOpacity onPress={this.toggleVisiable}>
                     <View style={common.textBoxCenter}>
                         <Ionicons style={styles.icon} name={"md-body"} size={22}/>
                         <Text style={styles.title}>체지방률</Text>
@@ -30,7 +30,7 @@ export default class FatPercentage extends React.Component {
                     <View style={[common.textBoxEnd, styles.sizeBox]}>
                         <FatConsumer>
                             { ({fatPercent}) => 
-                                <Text style={[styles.size, fatPercent == null ? styles.empty : null]}>
+                                <Text style={[styles.size, fatPercent == null ? common.empty : null]}>
                                     {fatPercent == null ? 0.0 : fatPercent}
                                 </Text>
                             }

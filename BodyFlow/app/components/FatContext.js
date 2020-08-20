@@ -48,7 +48,9 @@ export class FatProvider extends React.Component {
         if (this.state.waist != null) {
             const fatPercent = (gender == 'M' ? 64 : 76) - (20 * (height / this.state.waist))
             this.setState({
-                fatPercent : fatPercent.toFixed(1)
+                fatPercent : fatPercent.toFixed(1),
+                height : height,
+                gender : gender
             })
         }
     }
@@ -58,7 +60,8 @@ export class FatProvider extends React.Component {
         if (this.state.height != null && this.state.gender != null){
             const fatPercent = (this.state.gender == 'M' ? 64 : 76) - (20 * (this.state.height / waist))
             this.setState({
-                fatPercent : fatPercent.toFixed(1)
+                fatPercent : fatPercent.toFixed(1),
+                waist : waist
             })
         }
     }

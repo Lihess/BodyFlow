@@ -16,6 +16,9 @@ const common = StyleSheet.create({
     textBoxCenter : {
         flexDirection : 'row',
         alignItems : 'center'
+    },
+    empty : {
+        color : '#c4c4c4'
     }
 });
 

@@ -12,9 +12,6 @@ const styles = StyleSheet.create({
         borderColor : '#c4c4c4',
         borderWidth : 1
     },
-    emptySize : {
-        color : '#848484'
-    },
     smallText : {
         fontSize : screenWidth > 400 ? normalize(10) : normalize(12),
         fontWeight : '700',

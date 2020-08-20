@@ -19,9 +19,6 @@ const styles = StyleSheet.create({
     icon : {
         color : '#848484',
     },
-    empty : {
-        color : '#848484'
-    },
     title : {
         fontSize : screenWidth > 400 ? normalize(12) : normalize(14),
         fontWeight : '700',

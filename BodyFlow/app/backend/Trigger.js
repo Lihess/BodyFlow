@@ -13,16 +13,18 @@ const sizeByPartInsertTR = (date, part, size) => {
                 'SELECT height, gender FROM user_info ORDER BY date DESC LIMIT 1',
                 [],
                 (tx, { rows }) => {
-                    const height = rows["_array"][0].height; 
-                    const gender = rows["_array"][0].gender;
-                    // 성별에 따라 다른 수식 사용
-                    const fatPercent = (gender == 'M' ? 64 : 76) - (20 * (height / size));
-
-                    db.transaction(tx => {
-                        tx.executeSql(
-                            'INSERT OR REPLACE INTO size_by_part (date, part, size) VALUES (?, ?, ?);', [date, '체지방률', fatPercent.toFixed(1)]
-                        )
-                    })
+                    if (rows["_array"] != null) {
+                        const height = rows["_array"][0].height; 
+                        const gender = rows["_array"][0].gender;
+                        // 성별에 따라 다른 수식 사용
+                        const fatPercent = (gender == 'M' ? 64 : 76) - (20 * (height / size));
+                        
+                        db.transaction(tx => {
+                            tx.executeSql(
+                                'INSERT OR REPLACE INTO size_by_part (date, part, size) VALUES (?, ?, ?);', [date, '체지방률', fatPercent.toFixed(1)]
+                            )
+                        })
+                    }
                 },
             )
         });

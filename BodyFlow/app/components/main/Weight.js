@@ -34,14 +34,14 @@ export default class Weight extends React.Component {
 
     render(){
         return(
-            <View>
-                <TouchableOpacity style={styles.box} onPress={this.toggleVisiable}>
+            <View style={styles.box}>
+                <TouchableOpacity onPress={this.toggleVisiable}>
                     <View style={common.textBoxCenter}>
                         <FontAwesome5 style={styles.icon} name={'weight'} size={16}/>
                         <Text style={styles.title}>체중</Text>
                     </View>
                     <View style={[common.textBoxEnd, styles.sizeBox]}>
-                        <Text style={[styles.size, this.state.weight == null ? styles.empty : null]}>
+                        <Text style={[styles.size, this.state.weight == null ? common.empty : null]}>
                             {this.state.weight == null ? 0.0 : this.state.weight}
                         </Text>
                         <Text style={styles.unit}> kg</Text>
