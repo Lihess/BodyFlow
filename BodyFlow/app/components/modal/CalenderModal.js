@@ -40,7 +40,7 @@ export default class CalendarModal extends React.Component{
     }
 
     onSubmit = () => {
-        if (this.state.day === null){
+        if (!this.state.day){
             this.props.onSubmit(null);
         }
         else {

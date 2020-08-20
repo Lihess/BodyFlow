@@ -31,21 +31,21 @@ export class FatProvider extends React.Component {
             })   
         })
         readUserInfoLatest(result => {
-            if (result != null)
+            if (result)
                 this.setState({
                     height : result.height,
                     gender : result.gender
                 })
         })
         readWaistToday(result => {
-            if (result != null)
+            if (result)
                 this.setState({ waist : result })
         })
     }
 
     // SQLite의 삽입 속도가 느려서.... 계산해서 출력하는걸로
     setFatPercentHG = (height, gender) => {
-        if (this.state.waist != null) {
+        if (this.state.waist) {
             const fatPercent = (gender == 'M' ? 64 : 76) - (20 * (height / this.state.waist))
             this.setState({
                 fatPercent : fatPercent.toFixed(1),
@@ -57,7 +57,7 @@ export class FatProvider extends React.Component {
 
     // SQLite의 삽입 속도가 느려서.... 계산해서 출력하는걸로
     setFatPercentW = (waist) => {
-        if (this.state.height != null && this.state.gender != null){
+        if (this.state.height && this.state.gender){
             const fatPercent = (this.state.gender == 'M' ? 64 : 76) - (20 * (this.state.height / waist))
             this.setState({
                 fatPercent : fatPercent.toFixed(1),

@@ -41,8 +41,8 @@ export default class Weight extends React.Component {
                         <Text style={styles.title}>체중</Text>
                     </View>
                     <View style={[common.textBoxEnd, styles.sizeBox]}>
-                        <Text style={[styles.size, this.state.weight == null ? common.empty : null]}>
-                            {this.state.weight == null ? 0.0 : this.state.weight}
+                        <Text style={[!styles.size, this.state.weight ? common.empty : null]}>
+                            {!this.state.weight ? 0.0 : this.state.weight}
                         </Text>
                         <Text style={styles.unit}> kg</Text>
                     </View>

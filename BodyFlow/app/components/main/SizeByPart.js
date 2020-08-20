@@ -57,11 +57,11 @@ export default class BodySize extends React.Component {
                             <View style={common.textBoxEnd}>
                                 {/* 기본 단위는 cm. inch로 변환해야할 경우 변환하여 렌더링 */
                                     this.props.unit == 'cm' ?
-                                        <Text style={[styles.size, this.state.sizeParts[part] == null ? common.empty : null]}>
-                                            {this.state.sizeParts[part] == null ? '0.0' : this.state.sizeParts[part]}
+                                        <Text style={[styles.size, !this.state.sizeParts[part] ? common.empty : null]}>
+                                            {this.state.sizeParts[part] ? '0.0' : this.state.sizeParts[part]}
                                         </Text> :
-                                        <Text style={[styles.size, this.state.sizeParts[part] == null ? common.empty : null]}>
-                                           {this.state.sizeParts[part] == null ? '0.0' : (this.state.sizeParts[part] / 2.54).toFixed(2)}
+                                        <Text style={[styles.size, !this.state.sizeParts[part] ? common.empty : null]}>
+                                           {this.state.sizeParts[part] ? '0.0' : (this.state.sizeParts[part] / 2.54).toFixed(2)}
                                         </Text>
                                 }
                                 <Text style={styles.smallText}> {this.props.unit}</Text>

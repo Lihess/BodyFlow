@@ -67,9 +67,9 @@ export default class MeasurandRecord extends React.Component {
 
     // 단위 선택 시, 해당 단위로 state 값 변경
     onSelectUnit = (value) => {
-        if (value == 0 && this.state.unit == 'inch')
+        if (value == 0 && this.state.unit == 'inch' && this.state.size )
             this.setState({ size : (this.state.size * 2.54).toFixed(2) })
-        else if (value == 1 && this.state.unit == 'cm')
+        else if (value == 1 && this.state.unit == 'cm' && this.state.size )
             this.setState({ size : (this.state.size / 2.54).toFixed(2) })
 
         value == 0 ? this.setState({unit : 'cm'}) : this.setState({unit : 'inch'});
@@ -134,7 +134,7 @@ export default class MeasurandRecord extends React.Component {
 
     // 선택 날짜로 재지정
     selectDay = (selectDay) => {
-        if (selectDay == null) {
+        if (!selectDay) {
             this.setState({ day : getToday() })
         }
         else
