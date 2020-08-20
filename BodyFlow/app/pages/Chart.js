@@ -1,4 +1,5 @@
-
+// Chart.js
+// 각 부위별 차트를 보여주는 페이지
 import React from 'react';
 import { NavigationService } from '../router/service';
 import { SafeAreaView, TouchableOpacity, View, Text, StatusBar } from 'react-native';
@@ -6,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { common } from '../styles/Common.Style';
 import styles from '../styles/chart/Chart.style';
 import PartPicker from '../components/modal/PartPicker';
+import ChartByPart from '../components/chart/ChartByPart';
 
 export default class Chart extends React.Component {
     static navigationOptions = { headerShown : false };
@@ -36,6 +38,8 @@ export default class Chart extends React.Component {
                         <Ionicons name="md-arrow-dropdown" size={20} color="black" />
                     </TouchableOpacity>
                 </View>
+
+                <ChartByPart/>
 
                 <PartPicker 
                     visible={this.state.modalVisiable} 

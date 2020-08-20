@@ -57,7 +57,7 @@ export default class PartPicker extends React.Component{
                                 <View style={[
                                     part == '종아리' ? styles.partBoxLast : styles.partBox,
                                     part == this.state.part ? styles.selectPartBox : null
-                                    ]}>
+                                    ]} key={i}>
                                     <Text 
                                         style={[styles.partFont, part == this.state.part ? styles.selectPart : null]} 
                                         onPress={()=>this.onSubmit([part])}>

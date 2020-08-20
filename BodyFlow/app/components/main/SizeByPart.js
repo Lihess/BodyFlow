@@ -49,9 +49,9 @@ export default class BodySize extends React.Component {
         
         return(
             <View>
-                { parts.map((part) => {
+                { parts.map((part, i) => {
                     return (
-                        <TouchableOpacity style={styles.box} onPress={() => this.onPress(part)}>
+                        <TouchableOpacity style={styles.box} key={i} onPress={() => this.onPress(part)}>
                             {/* Record.js에 part를 넘기기 위해서 */}
                             <Text style={styles.smallText}>{part}</Text>
                             <View style={common.textBoxEnd}>

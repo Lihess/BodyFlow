@@ -219,7 +219,11 @@ export default class MeasurandRecord extends React.Component {
                 </View>
 
                 { /* 날짜 선택시 해당 modal이 보이도록! */ }
-                <CalendarModal visible={this.state.calenderVisible} onBackdropPress={this.toggleCalenderVisible} onSubmit={(day) => this.selectDay(day)}/> 
+                <CalendarModal
+                    today={getToday()} 
+                    visible={this.state.calenderVisible} 
+                    onBackdropPress={this.toggleCalenderVisible} 
+                    onSubmit={(day) => this.selectDay(day)}/> 
             </Modal>
         );
     }

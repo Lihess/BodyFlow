@@ -9,7 +9,9 @@ import styles from '../../styles/modal/CalenderModal.Style.js';
 export default class CalendarModal extends React.Component{
     state = {
         visible : false,
-        day : null
+        today : this.props.today,
+        day : null,
+        disableArrowRight : true
     } 
 
     // props 값이 변경된 경우 state 값 변경
@@ -31,6 +33,7 @@ export default class CalendarModal extends React.Component{
     }
 
     onDayPress = (selectDay) => {
+
         this.setState( {
             day : selectDay.dateString
         })
@@ -48,6 +51,10 @@ export default class CalendarModal extends React.Component{
     }
 
     renderHeader = (date) => {
+        if ( (date.getFullYear() == this.state.today.substring(0,4)) && (date.getMonth() + 1 == this.state.today.substring(5,7))) 
+            this.setState( { disableArrowRight : true } )
+        else this.setState( { disableArrowRight : false } )
+
         return (
             <Text style={styles.header}> 
                 {date.getFullYear() + (date.getMonth() > 8 ? '.' : '.0') + (date.getMonth() + 1)} 
@@ -67,13 +74,16 @@ export default class CalendarModal extends React.Component{
                 <View style={modal.box}>
                     <View style={styles.calenderBox}>
                     <Calendar 
-                    style={styles.calender}
+                        maxDate={this.state.today}
+                        style={styles.calender}
                         theme={{
                             selectedDayBackgroundColor: 'orange',
                             selectedDayTextColor: '#ffffff',
+                            textSectionTitleDisabledColor: '#d9e1e8',
                             todayTextColor: 'orange',
                             arrowColor: 'orange',
                         }}
+                        disableArrowRight={this.state.disableArrowRight}
                         onDayPress={(day) => this.onDayPress(day)} 
                         markedDates={{[this.state.day] : {selected: true}}}
                         renderHeader={(date) => this.renderHeader(date)}/>
