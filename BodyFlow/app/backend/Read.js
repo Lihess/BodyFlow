@@ -13,8 +13,8 @@ const readSizeByPartsLatest = (callback) => {
                 (tx, {rows}) => { 
                     const sizeParts = {'어깨' : null, '윗가슴' : null, '팔뚝' : null,
                                         '허리' : null, '엉덩이' : null, '허벅지' : null, '종아리' : null}
-                
-                    if (rows['_array'].lenght)
+                   
+                    if (rows['_array'].length)
                         rows['_array'].map(row =>
                             sizeParts[row.part] = row.size
                         )
@@ -33,7 +33,7 @@ const readSizeByPartsLatestW = (callback) => {
             'SELECT size FROM size_by_part WHERE part = \'체중\' ORDER BY date DESC LIMIT 1',
             [],
             (tx, {rows}) =>  {
-                const size = rows['_array'].lenght ? rows['_array'][0].size : null;
+                const size = rows['_array'].length ? rows['_array'][0].size : null;
                 callback(size);
             },
             (tx, err) => { console.log('err: ', err) }
@@ -48,7 +48,7 @@ const readSizeByPartsLatestF = (callback) => {
             'SELECT size FROM size_by_part WHERE part = \'체지방률\' ORDER BY date DESC LIMIT 1',
             [],
             (tx, {rows}) => { 
-                const size = rows['_array'].lenght ? rows['_array'][0].size : null;
+                const size = rows['_array'].length ? rows['_array'][0].size : null;
                 callback(size); 
             },
             (tx, err) => { console.log('err: ', err) }
@@ -63,7 +63,7 @@ const readUserInfoLatest = (callback) => {
             'SELECT height, gender FROM user_info ORDER BY date DESC LIMIT 1',
             [],
             (tx, { rows }) => { 
-                const size = rows['_array'].lenght ? rows['_array'][0].size : null;
+                const size = rows['_array'].length ? rows['_array'][0] : null;
                 callback(size); 
              },
         )
@@ -77,12 +77,30 @@ const readWaistToday = (callback) => {
             'SELECT size FROM size_by_part WHERE (date = date(\'now\')) AND (part = \'허리\')',
             [],
             (tx, { rows }) => { 
-                const size = rows['_array'].lenght ? rows['_array'][0].size : null;
+                const size = rows['_array'].length ? rows['_array'][0].size : null;
                 callback(size); 
             }
         )
     });
 }
 
+// 입력받은 부위의 최근 8개의 데이터 반환
+const readSizeByPartsLimit8 = (part, callback) => {
+    console.log('anjdi', part)
+    db.transaction(tx => {
+        tx.executeSql(
+            'SELECT date, size as sizeByPart FROM size_by_part WHERE part=? ORDER BY date DESC LIMIT 8',
+            [part],
+            (tx, {rows}) => { 
+                console.log('! : ', rows);
+                const size = rows['_array'].length ? rows['_array'].reverse() : null;
+                console.log('! : ', size);
+                callback(size); 
+            },
+            (tx, err) => { console.log('err: ', err) }
+        )
+    })
+} 
+
 export {readSizeByPartsLatest, readSizeByPartsLatestW, readSizeByPartsLatestF
-        , readUserInfoLatest, readWaistToday};
+        , readUserInfoLatest, readWaistToday, readSizeByPartsLimit8};
