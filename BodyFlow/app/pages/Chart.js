@@ -36,10 +36,10 @@ export default class Chart extends React.Component {
                     <TouchableOpacity style={styles.titleBox} onPress={this.toggleVisible}>
                         <Text style={styles.title}>{this.state.part}</Text>
                         <Ionicons name="md-arrow-dropdown" size={20} color="black" />
-                    </TouchableOpacity>
+                    </TouchableOpacity> 
                 </View>
 
-                <ChartByPart/>
+                <ChartByPart part={this.state.part}/>
 
                 <PartPicker 
                     visible={this.state.modalVisiable} 

@@ -13,7 +13,7 @@ const sizeByPartInsertTR = (date, part, size) => {
                 'SELECT height, gender FROM user_info ORDER BY date DESC LIMIT 1',
                 [],
                 (tx, { rows }) => {
-                    if (rows["_array"].lenght) {
+                    if (rows["_array"].length) {
                         const height = rows["_array"][0].height; 
                         const gender = rows["_array"][0].gender;
                         // 성별에 따라 다른 수식 사용
@@ -47,7 +47,7 @@ const userInfoInsertTR = ( height, gender) => {
             'SELECT size FROM size_by_part WHERE (date = date(\'now\')) AND (part = \'허리\')',
             [],
             (tx, { rows }) => { 
-                if(rows['_array'].lenght) {
+                if(rows['_array'].length) {
                     const size = rows["_array"][0].size;
                     
                     const fatPercent = (gender == 'M' ? 64 : 76) - (20 * (height / size));

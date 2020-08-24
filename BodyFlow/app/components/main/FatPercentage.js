@@ -30,8 +30,8 @@ export default class FatPercentage extends React.Component {
                     <View style={[common.textBoxEnd, styles.sizeBox]}>
                         <FatConsumer>
                             { ({fatPercent}) => 
-                                <Text style={[!styles.size, fatPercent ? common.empty : null]}>
-                                    {fatPercent == null ? 0.0 : fatPercent}
+                                <Text style={[styles.size, !fatPercent ? common.empty : null]}>
+                                    {!fatPercent ? 0.0 : fatPercent}
                                 </Text>
                             }
                         </FatConsumer>

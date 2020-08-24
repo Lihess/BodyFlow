@@ -1,90 +1,51 @@
-import React from 'react'
-import { LineChart, Grid } from 'react-native-svg-charts'
-import * as shape from 'd3-shape'
-import { Circle, G, Line, Rect, Text } from 'react-native-svg'
+import React from 'react';
+import { StyleSheet, View, TouchableHighlightBase } from "react-native";
+import { VictoryChart, VictoryLine, VictoryScatter, VictoryAxis, VictoryTheme } from "victory-native";
+// https://formidable.com/open-source/victory/docs/victory-line
+import { readSizeByPartsLimit8 } from '../../backend/Read';
+
 
 export default class ChartByPart extends React.Component {
-
-    render() {
-
-        const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ]
-
-        /**
-         * Both below functions should preferably be their own React Components
-         */
-
-        const HorizontalLine = (({ y }) => (
-            <Line
-                key={ 'zero-axis' }
-                x1={ '0%' }
-                x2={ '100%' }
-                y1={ y(50) }
-                y2={ y(50) }
-                stroke={ 'grey' }
-                strokeDasharray={ [ 4, 8 ] }
-                strokeWidth={ 2 }
-            />
-        ))
-
-        const Tooltip = ({ x, y }) => (
-            <G
-                x={ x(5) - (75 / 2) }
-                key={ 'tooltip' }
-                onPress={ () => console.log('tooltip clicked') }
-            >
-                <G y={ 50 }>
-                    <Rect
-                        height={ 40 }
-                        width={ 75 }
-                        stroke={ 'grey' }
-                        fill={ 'white' }
-                        ry={ 10 }
-                        rx={ 10 }
-                    />
-                    <Text
-                        x={ 75 / 2 }
-                        dy={ 20 }
-                        alignmentBaseline={ 'middle' }
-                        textAnchor={ 'middle' }
-                        stroke={ 'rgb(134, 65, 244)' }
-                    >
-                        { `${data[5]}ºC` }
-                    </Text>
-                </G>
-                <G x={ 75 / 2 }>
-                    <Line
-                        y1={ 50 + 40 }
-                        y2={ y(data[ 5 ]) }
-                        stroke={ 'grey' }
-                        strokeWidth={ 2 }
-                    />
-                    <Circle
-                        cy={ y(data[ 5 ]) }
-                        r={ 6 }
-                        stroke={ 'rgb(134, 65, 244)' }
-                        strokeWidth={ 2 }
-                        fill={ 'white' }
-                    />
-                </G>
-            </G>
-        )
-
-        return (
-            <LineChart
-                style={{ height: 200 }}
-                data={ data }
-                svg={{
-                    stroke: 'rgb(134, 65, 244)',
-                    strokeWidth: 2,
-                }}
-                contentInset={{ top: 20, bottom: 20 }}
-                curve={ shape.curveLinear }
-            >
-                <Grid/>
-                <HorizontalLine/>
-                <Tooltip/>
-            </LineChart>
-        )
+    state = {
+        part : this.props.part,
+        data : []
     }
 
+    componentDidMount = () => {
+        readSizeByPartsLimit8(this.state.part, result => {
+            this.setState({data : result})
+        })
+    }
+
+    render() {
+        return (
+            <VictoryChart domainPadding={25} >
+                {/* victoryChart의 BAckgrounComponent를 이용해서 뒤에 스타일추가하기 */}
+                <VictoryAxis tickFormat = {(date) => `${date}`.replace(/\-/g, '.').substring(2, 10)}/>
+                <VictoryScatter
+                    style = {{data : {fill : '#c43a31'}}} 
+                    size = {7} 
+                    data={this.state.data ? this.state.data : []}
+                    x={'date'}
+                    y={'sizeByPart'}/>
+                <VictoryLine
+                    style={{
+                        data: { stroke: "#c43a31" },
+                        parent: { border: "1px solid #ccc"}
+                    }}      
+                    data={this.state.data ? this.state.data : []}
+                    x={"date"}
+                    y={"sizeByPart"}/> 
+            </VictoryChart>
+    );
+  }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5fcff"
+  }
+});
