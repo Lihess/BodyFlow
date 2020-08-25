@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Dimensions, View } from "react-native";
+import { Dimensions, View } from "react-native";
 import { VictoryChart, VictoryLine, VictoryScatter, VictoryAxis, LineSegment} from "victory-native";
 // https://formidable.com/open-source/victory/docs/victory-line
-import { Svg, Line } from 'react-native-svg';
 import { readSizeByPartsLimit8 } from '../../backend/Read';
 
 const { width: screenWidth } = Dimensions.get('window');
+const strokeDasharray = "10, 5";
 
 export default class ChartByPart extends React.Component {
     state = {
@@ -23,100 +23,46 @@ export default class ChartByPart extends React.Component {
         return (
             <VictoryChart 
                 height={250}
-                padding={{ top: 0, bottom: 50, right: 30, left: 10 }} 
-                domainPadding={30} 
-                domain={{ x : [1, 6] }}>
-                <VictoryAxis dependentAxis />
+                padding={{ top: 0, bottom: 50, right: 10, left: 10 }} 
+                domainPadding={{ y : 40, x : screenWidth / 8 * 0.6}} 
+                domain={{ x : [1, 7] }}>
+                <VictoryAxis dependentAxis style={{axis : {strokeWidth : 2}}}/>
                 {/* victoryChart의 BAckgrounComponent를 이용해서 뒤에 스타일추가하기 */}
                 <VictoryAxis
-                offsetX={40}
-                
-                    padding={30}
                     style={{
-                       grid: { stroke: 'orange' },
-                        ticks: {stroke: "grey", size: 5, paddingRight : 80},
-                        tickLabels : {borderRight : 'red', borderWidth : 2}
+                       grid:{stroke:'#c4c4c4'},
+                       axis : {strokeWidth : 2},
+                       tickLabels : { fontWeight : '800', padding : 4}
                     }}
-                    tickFormat = {(date) => `${date}`.replace(/\-/g, '.').substring(2, 10)}
+                    tickFormat = {(date) => `${date}`.replace(/\-/g, '.').substring(5, 10)}
                     gridComponent={
                         <View>
-                            <LineSegment x1={10 + screenWidth / 7 * 1} x2 = {10 + screenWidth / 7 * 1} y1={10} y2={200} style={{stroke:'red'}}/>
-                            <LineSegment x1={13 + screenWidth / 7 * 2} x2 = {13 + screenWidth / 7 * 2} y1={10} y2={200} style={{stroke:'red'}}/>
-                            <LineSegment x1={13 + screenWidth / 7 * 3} x2 = {13 + screenWidth / 7 * 3} y1={10} y2={200} style={{stroke:'red'}}/>
-                            <LineSegment x1={13 + screenWidth / 7 * 4} x2 = {13 + screenWidth / 7 * 4} y1={10} y2={200} style={{stroke:'red'}}/>
-                            <LineSegment x1={13 + screenWidth / 7 * 5} x2 = {13 + screenWidth / 7 * 5} y1={10} y2={200} style={{stroke:'red'}}/>
-                            <LineSegment x1={13 + screenWidth / 7 * 6} x2 = {13 + screenWidth / 7 * 6} y1={10} y2={200} style={{stroke:'red'}}/>
+                            <LineSegment x1={14 + screenWidth / 8 * 1} x2={14 + screenWidth / 8 * 1} y1={10} y2={200} style={{stroke:'#c4c4c4', strokeWidth: 2, strokeDasharray}}/>
+                            <LineSegment x1={18 + screenWidth / 8 * 2} x2={18 + screenWidth / 8 * 2} y1={10} y2={200} style={{stroke:'#c4c4c4', strokeWidth: 2, strokeDasharray}}/>
+                            <LineSegment x1={22 + screenWidth / 8 * 3} x2={22 + screenWidth / 8 * 3} y1={10} y2={200} style={{stroke:'#c4c4c4', strokeWidth: 2, strokeDasharray}}/>
+                            <LineSegment x1={24 + screenWidth / 8 * 4} x2={24 + screenWidth / 8 * 4} y1={10} y2={200} style={{stroke:'#c4c4c4', strokeWidth: 2, strokeDasharray}}/>
+                            <LineSegment x1={28 + screenWidth / 8 * 5} x2={28 + screenWidth / 8 * 5} y1={10} y2={200} style={{stroke:'#c4c4c4', strokeWidth: 2, strokeDasharray}}/>
+                            <LineSegment x1={32 + screenWidth / 8 * 6} x2={32 + screenWidth / 8 * 6} y1={10} y2={200} style={{stroke:'#c4c4c4', strokeWidth: 2, strokeDasharray}}/>
                         </View>
                     }/> 
                 <VictoryLine 
                     style={{
                         data: { stroke: "#c43a31", strokeWidth: 3 },
-                    }}      
-                    data={[
-                        {
-                           "date": "2020-08-18",
-                           "sizeByPart": 77,
-                         },
-                         {
-                           "date": "2020-08-19",
-                           "sizeByPart": 77,
-                         },
-                         {
-                           "date": "2020-08-20",
-                           "sizeByPart": 75,
-                         },{
-                           "date": "2020-08-25",
-                           "sizeByPart": 75,
-                         },{
-                           "date": "2020-08-04",
-                           "sizeByPart": 75,
-                         },{
-                           "date": "2020-08-14",
-                           "sizeByPart": 75,
-                         },
-                   ]}
+                    }} 
+                    data={this.state.data.length ? this.state.data : []}
                     x={"date"}
                     y={"sizeByPart"}/> 
                 <VictoryScatter 
-                    style = {{data : {stroke : '#c43a31',strokeWidth: 3, fill : '#c43a31'}}} 
+                    style = {{
+                        data : {stroke : '#c43a31',strokeWidth: 3, fill : '#c43a31'},
+                        labels : {fill : '#c43a31', fontWeight : '800'}
+                    }} 
                     size = {5} 
-                    data={[
-                         {
-                            "date": "2020-08-18",
-                            "sizeByPart": 77,
-                          },
-                          {
-                            "date": "2020-08-19",
-                            "sizeByPart": 77,
-                          },
-                          {
-                            "date": "2020-08-20",
-                            "sizeByPart": 75,
-                          },{
-                            "date": "2020-08-25",
-                            "sizeByPart": 75,
-                          },{
-                            "date": "2020-08-04",
-                            "sizeByPart": 75,
-                          },{
-                            "date": "2020-08-14",
-                            "sizeByPart": 75,
-                          },
-                    ]}
+                    data={this.state.data.length ? this.state.data : []}
                     x={'date'}
-                    y={'sizeByPart'}/>
+                    y={'sizeByPart'}
+                    labels={({ datum }) => `${datum["sizeByPart"]}`}  />
             </VictoryChart>
     );
   }
 }
-
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5fcff"
-  }
-});
