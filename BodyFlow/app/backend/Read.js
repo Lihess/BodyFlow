@@ -85,16 +85,30 @@ const readWaistToday = (callback) => {
 }
 
 // 입력받은 부위의 최근 8개의 데이터 반환
-const readSizeByPartsLimit8 = (part, callback) => {
+const readSizeByPartsLimit7 = (part, callback) => {
     console.log('anjdi', part)
     db.transaction(tx => {
         tx.executeSql(
-            'SELECT date, size as sizeByPart FROM size_by_part WHERE part=? ORDER BY date DESC LIMIT 8',
+            'SELECT date, size as sizeByPart FROM size_by_part WHERE part=? ORDER BY date DESC LIMIT 7',
             [part],
             (tx, {rows}) => { 
-                console.log('! : ', rows);
                 const size = rows['_array'].length ? rows['_array'].reverse() : null;
-                console.log('! : ', size);
+                callback(size); 
+            },
+            (tx, err) => { console.log('err: ', err) }
+        )
+    })
+} 
+
+// 입력받은 부위의 모든 데이터 반환
+const readSizeByPartsAll = (part, callback) => {
+    console.log('anjdi', part)
+    db.transaction(tx => {
+        tx.executeSql(
+            'SELECT date, size as sizeByPart FROM size_by_part WHERE part=? ORDER BY date DESC',
+            [part],
+            (tx, {rows}) => { 
+                const size = rows['_array'].length ? rows['_array'].reverse() : null;
                 callback(size); 
             },
             (tx, err) => { console.log('err: ', err) }
@@ -103,4 +117,4 @@ const readSizeByPartsLimit8 = (part, callback) => {
 } 
 
 export {readSizeByPartsLatest, readSizeByPartsLatestW, readSizeByPartsLatestF
-        , readUserInfoLatest, readWaistToday, readSizeByPartsLimit8};
+        , readUserInfoLatest, readWaistToday, readSizeByPartsLimit7, readSizeByPartsAll};

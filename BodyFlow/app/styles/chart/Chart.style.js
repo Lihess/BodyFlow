@@ -13,6 +13,11 @@ const styles = StyleSheet.create({
         fontSize : screenWidth > 400 ? normalize(20) : normalize(20),
         fontWeight : '700',
         textAlign : 'center'
+    },
+    selectorBox : {
+        flexDirection : 'row',
+        alignItems : 'center',
+        justifyContent : 'space-between'
     }
 })
 
