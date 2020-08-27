@@ -9,7 +9,7 @@ import { common } from '../styles/Common.Style';
 import styles from '../styles/chart/Chart.style';
 import PartPicker from '../components/modal/PartPicker';
 import ChartByPart from '../components/chart/ChartByPart';
-import DataBox from '../components/chart/DataBox'
+import DataByDate from '../components/chart/DataByDate'
 import { readSizeByPartsLimit7, readSizeByPartsAll } from '../backend/Read';
 import { cmToInch } from '../components/ChangeUnit'
 
@@ -32,9 +32,9 @@ export default class Chart extends React.Component {
     // props 변경 시 데이터를 다시 불러옴
     // prevProps, prevState, snapshot 순의 인자.
     componentDidUpdate = (prevProps, prevState) => {
-        if (this.props.part != prevState.part)
+        if (this.state.part != prevState.part)
             this.getData()
-        else if (this.props.period != prevState.period){
+        else if (this.state.period != prevState.period){
             // 최근 데이터가 7개 미만이면 전체 데이터가 최근 데이터랑 동일하므로
             if ((this.state.period == 'total' && this.state.data.length == 6) || (this.state.period == 'lately' && this.state.data.length > 6)) 
                 this.getData()
@@ -70,6 +70,15 @@ export default class Chart extends React.Component {
     // 기간 선택 시, 해당 기간으로 state 값 변경
     onSelectPeriod = (value) => {
         value == 0 ? this.setState({period : 'lately'}) : this.setState({period : 'total'})
+    }
+
+    onChangeData = (size, i) => {
+        const newDataObj = {date : this.state.data[i].date, sizeByPart : size}
+        
+        const newData = this.state.data
+        newData[i] = newDataObj
+        
+        this.setState({data : newData})
     }
 
     render(){
@@ -123,18 +132,22 @@ export default class Chart extends React.Component {
 
                 
                 {this.state.data.length && this.state.period == 'lately' ?
-                    <ScrollView>
+                    <View style={styles.dataBox}>
                         {this.state.data.map((data, i) => 
-                        <DataBox 
+                        <DataByDate 
                             date={data.date} 
                             part={this.state.part}
                             size={this.state.unit == 'cm' ? data.sizeByPart : cmToInch(data.sizeByPart)} 
+                            unit={this.state.unit}
                             variance={i == 0 ? 
                                         0 : 
                                         (this.state.unit == 'cm' ? 
                                             data.sizeByPart - this.state.data[i-1].sizeByPart 
-                                            : (cmToInch(data.sizeByPart) - cmToInch(this.state.data[i-1].sizeByPart)).toFixed(2))}/>)}
-                    </ScrollView> : null
+                                            : (cmToInch(data.sizeByPart) - cmToInch(this.state.data[i-1].sizeByPart)).toFixed(2))}
+                            last={i == this.state.data.length - 1 ? true : false}
+                            onChangeData={(size) => onChangeData(size, i)}                
+                            />)}
+                    </View> : null
                 }
                 
                 <PartPicker 

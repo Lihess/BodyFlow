@@ -25,7 +25,7 @@ export default class MeasurandRecord extends React.Component {
         unit : 'cm',
         decimalInformation : false, // 소수점 관련 안내문구의 표기 여부
         rangeInformation : false, // 입력범위 관련 안내문구의 표기 여부
-        size : '',
+        size : this.props.size ? this.props.size : '',
         foucsColor : '#c4c4c4'
     } 
     

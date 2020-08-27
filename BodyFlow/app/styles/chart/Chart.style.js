@@ -2,35 +2,48 @@ import {StyleSheet} from 'react-native';
 import {normalize, screenWidth} from '../ResponsiveFontSize.js'
 
 const styles = StyleSheet.create({
-    titleBox : {
+    partBox : {
+        width : '90%',
         flexDirection : 'row',
         alignItems : 'center',
-        justifyContent : 'center',
-        width : '90%'
+        justifyContent : 'center'
     },
-    title : {
+    part : {
         marginRight : 8,
         fontSize : screenWidth > 400 ? normalize(20) : normalize(20),
         fontWeight : '700',
         textAlign : 'center'
     },
-    selectorBox : {
+    switchBox : {
+        width : '100%',
         flexDirection : 'row',
-        alignItems : 'center',
-        justifyContent : 'space-between'
+        justifyContent : 'space-between',
+        marginTop : 20
     },
     switch : {
-        width : '90%',
-        borderRadius : 7,
-        borderColor : '#c4c4c4',
-        borderWidth : 1,
+        width : '30%',
         padding : 3,
         margin : 5,
         overflow : 'hidden'
     },
     switchFont : {
+        color : '#b4b4b4',
         fontWeight : '700',
         fontSize : screenWidth > 400 ? normalize(12) : normalize(14)
+    },
+    switchSelect : {
+        color : 'black',
+        fontWeight : '700',
+        fontSize : screenWidth > 400 ? normalize(13) : normalize(15)
+    },
+    dataBox : {
+        width : '100%',
+        backgroundColor : 'white',
+        borderColor : '#c4c4c4',
+        borderWidth : 1,
+        borderRadius : 10,
+        overflow : 'hidden',
+        zIndex : 2
     }
 })
 
