@@ -85,7 +85,7 @@ export default class Chart extends React.Component {
                             onPress={value => this.onSelectUnit(value)} /> : null }
                 </View>
 
-                <ChartByPart part={this.state.part} period={this.state.period}/>
+                <ChartByPart part={this.state.part} period={this.state.period} unit={this.state.unit}/>
 
                 <PartPicker 
                     visible={this.state.modalVisiable} 

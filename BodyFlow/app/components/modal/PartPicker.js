@@ -60,7 +60,7 @@ export default class PartPicker extends React.Component{
                                     ]} key={i}>
                                     <Text 
                                         style={[styles.partFont, part == this.state.part ? styles.selectPart : null]} 
-                                        onPress={()=>this.onSubmit([part])}>
+                                        onPress={()=>this.onSubmit(part)}>
                                         {part}
                                     </Text>
                                 </View>

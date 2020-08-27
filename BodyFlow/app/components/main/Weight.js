@@ -51,7 +51,7 @@ export default class Weight extends React.Component {
                 <Record 
                     visible={this.state.modalVisible} 
                     part={'체중'} 
-                    onBackdropPress={this.toggleVisible}
+                    onBackdropPress={this.toggleVisiable}
                     onSubmit={(size) => this.onChangeWeight(size)}/>
             </View>
         );

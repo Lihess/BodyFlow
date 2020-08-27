@@ -18,6 +18,19 @@ const styles = StyleSheet.create({
         flexDirection : 'row',
         alignItems : 'center',
         justifyContent : 'space-between'
+    },
+    switch : {
+        width : '90%',
+        borderRadius : 7,
+        borderColor : '#c4c4c4',
+        borderWidth : 1,
+        padding : 3,
+        margin : 5,
+        overflow : 'hidden'
+    },
+    switchFont : {
+        fontWeight : '700',
+        fontSize : screenWidth > 400 ? normalize(12) : normalize(14)
     }
 })
 
