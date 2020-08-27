@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, View } from "react-native";
 import { VictoryChart, VictoryLine, VictoryScatter, VictoryAxis, LineSegment} from "victory-native";
 // https://formidable.com/open-source/victory/docs/victory-line
-import { cmToinch } from '../ChangeUnit'
+import { cmToInch } from '../ChangeUnit'
 
 const { width: screenWidth } = Dimensions.get('window');
 const strokeDasharray = "10, 5";
@@ -72,7 +72,7 @@ const ChartByPart = ({data, period, unit}) => {
                          dataLen ? (period == 'total' ? dataStartLast : data) : []}
                     x={'date'}
                     y={'sizeByPart'}
-                    labels={({ datum }) => unit == 'cm' ? `${datum["sizeByPart"]}` : `${cmToinch(datum["sizeByPart"])}` }/>
+                    labels={({ datum }) => unit == 'cm' ? `${datum["sizeByPart"]}` : `${cmToInch(datum["sizeByPart"])}` }/>
             </VictoryChart>
     );
 }

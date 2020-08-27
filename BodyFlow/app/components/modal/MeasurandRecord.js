@@ -15,12 +15,13 @@ import styles from '../../styles/modal/MeasurandRecord.Style.js';
 import CalendarModal from './CalenderModal.js';
 import { createSizeByPart } from '../../backend/Create';
 import { FatConsumer } from '../FatContext';
+import { cmToInch, inchToCm} from '../ChangeUnit'
 
 export default class MeasurandRecord extends React.Component {
     state = {
         visible : false,
         calenderVisible : false,
-        day : getToday(),
+        day : this.props.day ? this.props.day : getToday(),
         unit : 'cm',
         decimalInformation : false, // 소수점 관련 안내문구의 표기 여부
         rangeInformation : false, // 입력범위 관련 안내문구의 표기 여부
@@ -68,9 +69,9 @@ export default class MeasurandRecord extends React.Component {
     // 단위 선택 시, 해당 단위로 state 값 변경
     onSelectUnit = (value) => {
         if (value == 0 && this.state.unit == 'inch' && this.state.size )
-            this.setState({ size : (this.state.size * 2.54).toFixed(2) })
+            this.setState({ size : inchToCm(this.state.size) })
         else if (value == 1 && this.state.unit == 'cm' && this.state.size )
-            this.setState({ size : (this.state.size / 2.54).toFixed(2) })
+            this.setState({ size : cmToInch(this.state.size)})
 
         value == 0 ? this.setState({unit : 'cm'}) : this.setState({unit : 'inch'});
     }
@@ -124,7 +125,7 @@ export default class MeasurandRecord extends React.Component {
 
     onSubmit = () => {
         // 기본 저장 형식은 cm
-        const size = this.state.unit == 'inch' ? (this.state.size * 2.54).toFixed(2) : this.state.size;
+        const size = this.state.unit == 'inch' ? inchToCm(this.state.size) : this.state.size;
         // 입력된 정보를 DB에 저장
         createSizeByPart(this.state.day, this.props.part, size);
         
@@ -158,7 +159,7 @@ export default class MeasurandRecord extends React.Component {
                             <MaterialCommunityIcons name="chart-bar" size={27} color={'orange'} onPress={this.onPressIcon}/>
                         </View>
                         {/* 날짜를 클릭하면 캘린더가 나와서 원하는 날짜를 지정할 수 있도록. */}
-                        <Text style={styles.day} onPress={this.toggleCalenderVisible}>
+                        <Text style={styles.day} onPress={this.props.day ? null : this.toggleCalenderVisible}>
                             {this.state.day.replace(/\-/g, '.')}
                         </Text>
                     </View>

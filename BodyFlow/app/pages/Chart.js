@@ -2,7 +2,7 @@
 // 각 부위별 차트를 보여주는 페이지
 import React from 'react';
 import { NavigationService } from '../router/service';
-import { SafeAreaView, TouchableOpacity, View, Text, StatusBar } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View, ScrollView, Text, StatusBar } from 'react-native';
 import SwitchSelector from 'react-native-switch-selector';
 import { Ionicons } from '@expo/vector-icons'; 
 import { common } from '../styles/Common.Style';
@@ -11,6 +11,7 @@ import PartPicker from '../components/modal/PartPicker';
 import ChartByPart from '../components/chart/ChartByPart';
 import DataBox from '../components/chart/DataBox'
 import { readSizeByPartsLimit7, readSizeByPartsAll } from '../backend/Read';
+import { cmToInch } from '../components/ChangeUnit'
 
 export default class Chart extends React.Component {
     static navigationOptions = { headerShown : false };
@@ -122,15 +123,18 @@ export default class Chart extends React.Component {
 
                 
                 {this.state.data.length && this.state.period == 'lately' ?
-                    <View>
+                    <ScrollView>
                         {this.state.data.map((data, i) => 
                         <DataBox 
                             date={data.date} 
                             part={this.state.part}
-                            size={this.state.unit == 'cm' ? data.sizeByPart : (data.sizeByPart / 2.54).toFixed(2)} 
-                            variance={i == 0 ? 0 : 
-                                        (this.state.unit == 'cm' ? data.sizeByPart - this.state.data[i-1].sizeByPart : ((data.sizeByPart/ 2.54).toFixed(2) - (this.state.data[i-1].sizeByPart) / 2.54).toFixed(2))}/>)}
-                    </View> : null
+                            size={this.state.unit == 'cm' ? data.sizeByPart : cmToInch(data.sizeByPart)} 
+                            variance={i == 0 ? 
+                                        0 : 
+                                        (this.state.unit == 'cm' ? 
+                                            data.sizeByPart - this.state.data[i-1].sizeByPart 
+                                            : (cmToInch(data.sizeByPart) - cmToInch(this.state.data[i-1].sizeByPart)).toFixed(2))}/>)}
+                    </ScrollView> : null
                 }
                 
                 <PartPicker 

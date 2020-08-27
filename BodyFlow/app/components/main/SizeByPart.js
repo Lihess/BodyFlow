@@ -7,6 +7,7 @@ import { readSizeByPartsLatest } from '../../backend/Read';
 import Record from '../modal/MeasurandRecord.js';
 import styles from '../../styles/main/SizeByPart.Style.js';
 import { common } from '../../styles/Common.Style.js';
+import { cmToInch } from '../ChangeUnit'
 
 export default class BodySize extends React.Component {
     state = {
@@ -61,7 +62,7 @@ export default class BodySize extends React.Component {
                                             {!this.state.sizeParts[part] ? '0.0' : this.state.sizeParts[part]}
                                         </Text> :
                                         <Text style={[styles.size, !this.state.sizeParts[part] ? common.empty : null]}>
-                                           {!this.state.sizeParts[part] ? '0.0' : (this.state.sizeParts[part] / 2.54).toFixed(2)}
+                                           {!this.state.sizeParts[part] ? '0.0' : cmToInch(this.state.sizeParts[part])}
                                         </Text>
                                 }
                                 <Text style={styles.smallText}> {this.props.unit}</Text>
