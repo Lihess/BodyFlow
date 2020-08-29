@@ -24,13 +24,14 @@ export default class Chart extends React.Component {
         data : []
     }
 
-     // 선택된 기간에 맞게 데이터 불러오기
-     componentDidMount = () => {
+    // 선택된 기간에 맞게 데이터 불러오기
+    componentDidMount = () => {
         this.getData()
     }
 
-    // 데이터를 불러옴
-    getData = async() => {
+    // 데이터 불러오기.
+    // 중복을 최소화하고 싶었으나, state 값을 data가 아닌 다른것도 바꿔야 하는 경우 통일 불가
+    getData = () => {
         this.state.period == 'lately' ?
             readSizeByPartsLimit7(this.state.part, result => {
                 this.setState({data : result})
@@ -47,8 +48,13 @@ export default class Chart extends React.Component {
 
     // part 변경
     onChangPart = async(selectPart) => {
-        await this.setState({part : selectPart})
-        this.getData()
+        this.state.period == 'lately' ?
+            readSizeByPartsLimit7(selectPart, result => {
+                this.setState({data : result, part : selectPart})
+            }) 
+            : readSizeByPartsAll(selectPart, result => {
+                this.setState({data : result, part : selectPart})
+            })
     }
 
     // 단위 선택 시, 해당 단위로 state 값 변경
@@ -56,17 +62,24 @@ export default class Chart extends React.Component {
         value == 0 ? this.setState({unit : 'cm'}) : this.setState({unit : 'in'});
     }
 
-    // 기간 선택 시, 해당 기간으로 state 값 변경
-    onSelectPeriod = async(value) => {
-        await value == 0 ? this.setState({period : 'lately'}) : this.setState({period : 'total'})
-
-        // 최근 데이터가 7개 미만이면 전체 데이터가 최근 데이터랑 동일하므로
-        if ((this.state.period == 'total' && this.state.data.length == 7) || (this.state.period == 'lately' && this.state.data.length > 7)) 
-            this.getData()
-    }
-
-    onChangeData = () => {
-        this.getData()
+    // 기간 선택 시, 해당 기간으로 state 값을 변경하고 데이터의 길이에 따라 데이터를 다시 불러옴
+    onSelectPeriod = (value) => {
+        if (value == 0) {
+            // 전체 데이터가 7개 이상하면 최근 데이터를 다시 불러와야 함!
+            if (this.state.data.length > 7)
+                readSizeByPartsLimit7(this.state.part, result => {
+                    this.setState({data : result, period : 'lately'})
+                }) 
+            else this.setState({period : 'lately'})
+        }
+        else {
+            // 최근 데이터가 7개면 전체 데이터는 더 많이 존재할 수 있으므로!
+            if (this.state.data.length = 7) 
+                readSizeByPartsAll(this.state.part, result => {
+                    this.setState({data : result, period : 'total'})
+                })
+            else this.setState({period : 'total'})
+        }
     }
     
     render(){
@@ -134,7 +147,7 @@ export default class Chart extends React.Component {
                                             (data.sizeByPart - this.state.data[i-1].sizeByPart).toFixed(2)
                                             : (cmToInch(data.sizeByPart) - cmToInch(this.state.data[i-1].sizeByPart)).toFixed(2))}
                             last={i == this.state.data.length - 1 ? true : false}
-                            onChangeData={this.onChangeData}                
+                            onChangeData={this.getData}                
                             />)}
                     </ScrollView> : null
                 }
