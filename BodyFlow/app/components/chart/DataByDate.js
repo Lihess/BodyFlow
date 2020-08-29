@@ -15,8 +15,8 @@ export default class DataByDate extends React.Component {
         this.setState({modalVisiable : !this.state.modalVisiable})
     }
 
-    onChangeSize = ( size ) => {
-        this.props.onChangeData(size);
+    onChangeSize = () => {
+        this.props.onChangeData();
     }
 
     render(){
@@ -37,7 +37,7 @@ export default class DataByDate extends React.Component {
                     day={this.props.date}
                     size={this.props.size}
                     onBackdropPress={this.toggleVisible}
-                    onSubmit={(size) => this.onChangeSize(size)}/>
+                    onSubmit={this.onChangeSize}/>
             </View>
         );
     }

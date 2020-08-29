@@ -17,6 +17,11 @@ export default class Weight extends React.Component {
 
      // 체중과 체지방률의 가장 최근 기록을 불러옴
     componentDidMount = () => {
+        this.getData()
+    }
+
+    // 데이터를 불러옴
+    getData = () => {
         readSizeByPartsLatestW(result => {
             this.setState({weight : result})
         })
@@ -29,7 +34,7 @@ export default class Weight extends React.Component {
  
     // 체중 값 변경
     onChangeWeight = (newWeight) => {
-        this.setState({ weight : newWeight })
+        this.getData()
     }    
 
     render(){
@@ -52,7 +57,7 @@ export default class Weight extends React.Component {
                     visible={this.state.modalVisible} 
                     part={'체중'} 
                     onBackdropPress={this.toggleVisiable}
-                    onSubmit={(size) => this.onChangeWeight(size)}/>
+                    onSubmit={this.onChangeWeight}/>
             </View>
         );
     }

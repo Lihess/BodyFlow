@@ -43,7 +43,9 @@ export default class MeasurandRecord extends React.Component {
         if (this.state.visible) { 
             this.props.onBackdropPress()
             this.setState({
-                visible : false,
+                visible : false
+            })
+            this.setState({
                 calenderVisible : false,
                 day : getToday(),
                 unit : 'cm',
@@ -129,7 +131,7 @@ export default class MeasurandRecord extends React.Component {
         // 입력된 정보를 DB에 저장
         createSizeByPart(this.state.day, this.props.part, size);
         
-        this.props.onSubmit(this.props.part, this.state.size)
+        this.props.onSubmit();
         this.closedModal();
     }
 

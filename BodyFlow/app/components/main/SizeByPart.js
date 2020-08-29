@@ -21,6 +21,11 @@ export default class BodySize extends React.Component {
     // componentWillMount의 사용을 권장하지 않으므로, 대신하여 componentdidMount 사용
     // https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
     componentDidMount = () => {
+        this.getData();
+    }
+
+    // 데이터를 불러옴
+    getData = () => {
         readSizeByPartsLatest(result => {
             console.log(result)
             this.setState({sizeParts : result})
@@ -38,11 +43,9 @@ export default class BodySize extends React.Component {
         this.setState({ modalPart : part });
     }
 
-    onChangeSize = (part, size) => {
-        const newSizeParts = this.state.sizeParts;
-        newSizeParts[part] = size;
-
-        this.setState({ sizeParts :  newSizeParts })
+    // 입력한 사이즈에 변화가 생겼다면 데이터를 다시 불러옴.
+    onChangeSize = () => {
+        this.getData()
     }
 
     render(){
@@ -75,7 +78,7 @@ export default class BodySize extends React.Component {
                     visible={this.state.modalVisiable} 
                     part={this.state.modalPart} 
                     onBackdropPress={this.toggleVisible}
-                    onSubmit={(part, size) => this.onChangeSize(part, size)}/>
+                    onSubmit={this.onChangeSize}/>
             </View>
         )
     }

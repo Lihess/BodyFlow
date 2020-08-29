@@ -29,20 +29,8 @@ export default class Chart extends React.Component {
         this.getData()
     }
 
-    // props 변경 시 데이터를 다시 불러옴
-    // prevProps, prevState, snapshot 순의 인자.
-    componentDidUpdate = (prevProps, prevState) => {
-        if (this.state.part != prevState.part)
-            this.getData()
-        else if (this.state.period != prevState.period){
-            // 최근 데이터가 7개 미만이면 전체 데이터가 최근 데이터랑 동일하므로
-            if ((this.state.period == 'total' && this.state.data.length == 6) || (this.state.period == 'lately' && this.state.data.length > 6)) 
-                this.getData()
-        }
-    }
-
     // 데이터를 불러옴
-    getData = () => {
+    getData = async() => {
         this.state.period == 'lately' ?
             readSizeByPartsLimit7(this.state.part, result => {
                 this.setState({data : result})
@@ -58,8 +46,9 @@ export default class Chart extends React.Component {
     }
 
     // part 변경
-    onChangPart = (selectPart) => {
-        this.setState({part : selectPart})
+    onChangPart = async(selectPart) => {
+        await this.setState({part : selectPart})
+        this.getData()
     }
 
     // 단위 선택 시, 해당 단위로 state 값 변경
@@ -68,19 +57,18 @@ export default class Chart extends React.Component {
     }
 
     // 기간 선택 시, 해당 기간으로 state 값 변경
-    onSelectPeriod = (value) => {
-        value == 0 ? this.setState({period : 'lately'}) : this.setState({period : 'total'})
+    onSelectPeriod = async(value) => {
+        await value == 0 ? this.setState({period : 'lately'}) : this.setState({period : 'total'})
+
+        // 최근 데이터가 7개 미만이면 전체 데이터가 최근 데이터랑 동일하므로
+        if ((this.state.period == 'total' && this.state.data.length == 7) || (this.state.period == 'lately' && this.state.data.length > 7)) 
+            this.getData()
     }
 
-    onChangeData = (size, i) => {
-        const newDataObj = {date : this.state.data[i].date, sizeByPart : size}
-        
-        const newData = this.state.data
-        newData[i] = newDataObj
-        
-        this.setState({data : newData})
+    onChangeData = () => {
+        this.getData()
     }
-
+    
     render(){
         return (
             <SafeAreaView style={common.container}>
@@ -97,8 +85,8 @@ export default class Chart extends React.Component {
                     <SwitchSelector 
                             style={styles.switch}
                             options={[
-                                {label : '최근', value : '0'},
-                                {label : '전체', value : '1'}
+                                {label : '최근', value : 0},
+                                {label : '전체', value : 1}
                             ]} 
                             initial={0} 
                             backgroundColor={'#f1f1f1'}
@@ -114,8 +102,8 @@ export default class Chart extends React.Component {
                         <SwitchSelector 
                             style={styles.switch}
                             options={[
-                                {label : 'cm', value : '0'},
-                                {label : 'inch', value : '1'}
+                                {label : 'cm', value : 0},
+                                {label : 'inch', value : 1}
                             ]} 
                             initial={0} 
                             backgroundColor={'#f1f1f1'}
@@ -132,9 +120,10 @@ export default class Chart extends React.Component {
 
                 
                 {this.state.data.length && this.state.period == 'lately' ?
-                    <View style={styles.dataBox}>
+                    <ScrollView style={styles.dataBox}>
                         {this.state.data.map((data, i) => 
                         <DataByDate 
+                            key={i}
                             date={data.date} 
                             part={this.state.part}
                             size={this.state.unit == 'cm' ? data.sizeByPart : cmToInch(data.sizeByPart)} 
@@ -142,12 +131,12 @@ export default class Chart extends React.Component {
                             variance={i == 0 ? 
                                         0 : 
                                         (this.state.unit == 'cm' ? 
-                                            data.sizeByPart - this.state.data[i-1].sizeByPart 
+                                            (data.sizeByPart - this.state.data[i-1].sizeByPart).toFixed(2)
                                             : (cmToInch(data.sizeByPart) - cmToInch(this.state.data[i-1].sizeByPart)).toFixed(2))}
                             last={i == this.state.data.length - 1 ? true : false}
-                            onChangeData={(size) => onChangeData(size, i)}                
+                            onChangeData={this.onChangeData}                
                             />)}
-                    </View> : null
+                    </ScrollView> : null
                 }
                 
                 <PartPicker 
