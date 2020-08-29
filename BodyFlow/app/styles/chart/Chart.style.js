@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     },
     dataBox : {
         width : '100%',
+        marginTop : 20,
         backgroundColor : 'white',
         borderColor : '#c4c4c4',
         borderWidth : 1,

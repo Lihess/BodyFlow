@@ -24,11 +24,16 @@ export default class DataByDate extends React.Component {
             <View>
                 <TouchableOpacity style={[styles.box, this.props.last ? null : styles.bottomLine]} onPress={this.toggleVisible}>
                     <Text style={styles.date}>{this.props.date.replace(/\-/g, '.')}</Text>
-                    <View style={common.textBoxEnd}>
+                    <View style={styles.sizeBox}>
                         <Text style={styles.size}>{this.props.size}</Text>
                         <Text style={styles.unit}> {this.props.unit}</Text>
                     </View>
-                    <Text>{this.props.variance}</Text>
+                    <Text 
+                        style={[styles.variance, 
+                            this.props.variance < 0 ? {color : 'green'} 
+                                : ( this.props.variance != 0 ? {color : 'red'} : null )]}>
+                        {this.props.variance}
+                    </Text>
                 </TouchableOpacity>
 
                 <Record 

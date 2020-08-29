@@ -142,7 +142,7 @@ export default class Chart extends React.Component {
                             size={this.state.unit == 'cm' ? data.sizeByPart : cmToInch(data.sizeByPart)} 
                             unit={this.state.unit}
                             variance={i == 0 ? 
-                                        0 : 
+                                        '0.00' : 
                                         (this.state.unit == 'cm' ? 
                                             (data.sizeByPart - this.state.data[i-1].sizeByPart).toFixed(2)
                                             : (cmToInch(data.sizeByPart) - cmToInch(this.state.data[i-1].sizeByPart)).toFixed(2))}
