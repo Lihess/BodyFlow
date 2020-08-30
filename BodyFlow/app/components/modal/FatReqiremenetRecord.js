@@ -155,7 +155,7 @@ export default class FatReqirementRecord extends React.Component {
                                 style={[styles.input, {borderBottomColor : this.state.foucsColor}]} 
                                 keyboardType={'numeric'}
                                 placeholder={'0.0'}
-                                value={this.state.height}
+                                value={String(this.state.height)}
                                 onChangeText={(text) => this.onChangeText(text)}
                                 onFocus={this.onFocusInput}
                                 onBlur={this.onBlurInput}/>
