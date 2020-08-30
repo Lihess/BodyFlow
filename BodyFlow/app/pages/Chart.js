@@ -47,7 +47,7 @@ export default class Chart extends React.Component {
     }
 
     // part 변경
-    onChangPart = async(selectPart) => {
+    onChangPart = (selectPart) => {
         this.state.period == 'lately' ?
             readSizeByPartsLimit7(selectPart, result => {
                 this.setState({data : result, part : selectPart})
@@ -83,6 +83,8 @@ export default class Chart extends React.Component {
     }
     
     render(){
+        const dataReverse = this.state.data.slice().reverse();
+        
         return (
             <SafeAreaView style={common.container}>
                 <StatusBar backgroundColor={'#f1f1f1'} barStyle="dark-content"/>
@@ -130,27 +132,24 @@ export default class Chart extends React.Component {
                 </View>
 
                 <ChartByPart data={this.state.data} period={this.state.period} unit={this.state.unit}/>
-
                 
-                {this.state.data.length && this.state.period == 'lately' ?
-                    <ScrollView style={styles.dataBox}>
-                        {this.state.data.map((data, i) => 
-                        <DataByDate 
-                            key={i}
-                            date={data.date} 
-                            part={this.state.part}
-                            size={this.state.unit == 'cm' ? data.sizeByPart : cmToInch(data.sizeByPart)} 
-                            unit={this.state.unit}
-                            variance={i == 0 ? 
-                                        '0.00' : 
-                                        (this.state.unit == 'cm' ? 
-                                            (data.sizeByPart - this.state.data[i-1].sizeByPart).toFixed(2)
-                                            : (cmToInch(data.sizeByPart) - cmToInch(this.state.data[i-1].sizeByPart)).toFixed(2))}
-                            last={i == this.state.data.length - 1 ? true : false}
-                            onChangeData={this.getData}                
-                            />)}
-                    </ScrollView> : null
-                }
+                <ScrollView style={styles.dataBox}>
+                    {dataReverse.map((data, i) => 
+                    <DataByDate 
+                        key={i}
+                        date={data.date} 
+                        part={this.state.part}
+                        size={this.state.unit == 'cm' ? data.sizeByPart : cmToInch(data.sizeByPart)} 
+                        unit={this.state.unit}
+                        variance={i == 0 ? 
+                                    '0.00' : 
+                                    (this.state.unit == 'cm' ? 
+                                        (data.sizeByPart - this.state.data[i-1].sizeByPart).toFixed(2)
+                                        : (cmToInch(data.sizeByPart) - cmToInch(this.state.data[i-1].sizeByPart)).toFixed(2))}
+                        last={(i == this.state.length - 1 && i > 7) ? true : false}
+                        onChangeData={this.getData}                
+                        />)}
+                </ScrollView>
                 
                 <PartPicker 
                     visible={this.state.modalVisiable} 
