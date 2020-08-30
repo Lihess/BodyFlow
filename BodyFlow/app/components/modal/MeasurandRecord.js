@@ -21,11 +21,11 @@ export default class MeasurandRecord extends React.Component {
     state = {
         visible : false,
         calenderVisible : false,
-        day : this.props.day ? this.props.day : getToday(),
+        day : getToday(),
         unit : 'cm',
         decimalInformation : false, // 소수점 관련 안내문구의 표기 여부
         rangeInformation : false, // 입력범위 관련 안내문구의 표기 여부
-        size : this.props.size ? this.props.size : '',
+        size : '',
         foucsColor : '#c4c4c4'
     } 
     
@@ -33,9 +33,16 @@ export default class MeasurandRecord extends React.Component {
     // componentWillRecivedProps 에서 getDerivedStateFromProps로 변경됨.
     // 안에는 this 사용 불가. 변경할 state가 있다면 객체 형태로 반환
     static getDerivedStateFromProps = (nextProps, prevState) => {
-        if(nextProps.visible != prevState.visible) 
-            return { visible : nextProps.visible };
-        else return null;
+        const state = {};
+   
+        if(nextProps.visible != prevState.visible)
+            state.visible = nextProps.visible;
+        if (nextProps.day && nextProps.day != prevState.day) 
+            state.day = nextProps.day;
+        if (nextProps.size && nextProps.size != prevState.size)
+            state.size = nextProps.size
+        
+        return state;
     }
 
     // Modal이 열려있을때만 실행되는 함수
@@ -43,9 +50,7 @@ export default class MeasurandRecord extends React.Component {
         if (this.state.visible) { 
             this.props.onBackdropPress()
             this.setState({
-                visible : false
-            })
-            this.setState({
+                visible : false,
                 calenderVisible : false,
                 day : getToday(),
                 unit : 'cm',
@@ -130,7 +135,7 @@ export default class MeasurandRecord extends React.Component {
         const size = this.state.unit == 'inch' ? inchToCm(this.state.size) : this.state.size;
         // 입력된 정보를 DB에 저장
         createSizeByPart(this.state.day, this.props.part, size);
-        
+
         this.props.onSubmit();
         this.closedModal();
     }
@@ -188,8 +193,8 @@ export default class MeasurandRecord extends React.Component {
                         <TextInput 
                             style={styles.input} 
                             keyboardType={'numeric'}
-                            placeholder={'0.0'}
-                            value={this.state.size}
+                            placeholder={this.state.size ? (this.state.unit == 'cm' ? `${this.state.size}` : `${cmToInch(this.state.size)}`) : '0.0'}
+                            value={String(this.state.size)}
                             onChangeText={(text) => this.onChangeText(text)}
                             onFocus={this.onFocusInput}
                             onBlur={this.onBlurInput}/>
