@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
         flexDirection : 'row',
         width : '90%',
         padding : 15,
+        paddingBottom : 25,
         backgroundColor : 'white',
         alignItems: 'center',
         justifyContent: 'space-between',
