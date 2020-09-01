@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bodyflow-dev-222501-authRole",
+      "UnauthRoleArn": "arn:aws:iam::746232383522:role/amplify-bodyflow-dev-222501-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::746232383522:role/amplify-bodyflow-dev-222501-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-bodyflow-dev-222501-deployment",
+      "UnauthRoleName": "amplify-bodyflow-dev-222501-unauthRole",
+      "StackName": "amplify-bodyflow-dev-222501",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:746232383522:stack/amplify-bodyflow-dev-222501/8adc56e0-ec56-11ea-a7c9-067951d64fea",
+      "AmplifyAppId": "dq3lonsfyfujj"
+    },
+    "categories": {
+      "auth": {
+        "bodyflow2afcaf61": {}
+      }
+    }
+  }
+}

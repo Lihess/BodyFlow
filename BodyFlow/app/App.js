@@ -2,8 +2,13 @@ import React from 'react';
 import Navigation from './router/AppNavigator';
 import { NavigationService } from './router/service';
 import { createTables } from './backend/Create'
+import { withAuthenticator } from 'aws-amplify-react-native'
+import Amplify from 'aws-amplify'
+import config from './aws-exports'
 
-export default class App extends React.Component {
+Amplify.configure(config)
+
+class App extends React.Component {
     componentDidMount(){
         createTables()
     }
@@ -17,3 +22,5 @@ export default class App extends React.Component {
         );
     }
 }
+
+export default withAuthenticator(App, { includeGreetings: true })

@@ -5,19 +5,23 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import styles from '../../styles/main/Gallery.Style'
 
-var AWS = require('aws-sdk/dist/aws-sdk-react-native');
+// https://dingcodingco.tistory.com/14
+// https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#manual-setup-import-storage-bucket
+import Amplify, { Auth, Storage } from 'aws-amplify';
 
-AWS.config.update({
-    region: bucketRegion,
-    credentials: new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: 'ap-northeast-2:dc345757-8b24-4ea7-956e-932ae11f8a91'
-    })
+Amplify.configure({
+    Auth: {
+        identityPoolId: 'ap-northeast-2:fcc31825-3672-46c3-896c-8386f6890f03', //REQUIRED - Amazon Cognito Identity Pool ID
+        region: 'ap-northeast-2', // REQUIRED - Amazon Cognito Region
+    },
+
+   Storage: {
+       AWSS3: {
+           bucket: 'body-flow', //REQUIRED - Amazon S3 bucket
+           region: 'ap-northeast-2', //OPTIONAL - Amazon service region
+       }
+   }
 });
-
-const s3 = new AWS.S3({
-    apiVersion: '2006-03-01'
-})
-
 
 export default class Gallery extends React.Component {
     state = {
@@ -37,7 +41,7 @@ export default class Gallery extends React.Component {
         try {
           let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
+            allowsEditing: false,
             aspect: [4, 3],
             quality: 3,
           });
@@ -53,15 +57,17 @@ export default class Gallery extends React.Component {
       };
     
     updateImage = async() => {
-        const response1 = await fetch(this.state.image) //this.state.photo 에는 사진의 uri가 들어가면 됨. 
-        const blob = await response1.blob()
-        var params = {Bucket: 'body-flow', Key: `'1'.jpeg`, Body: blob, ACL: 'public-read'}
-        s3.upload(params, function(err, data) {
-            if (err) {
-                return alert('There was an error uploading your photo: ', err.message);
-            }
-            alert('Successfully uploaded photo.');
-        });
+        try {
+            const response = await fetch(this.state.image)
+            const blob = await response.blob()
+            
+            Storage.put(`1.jpeg`, blob, {
+                 contentType: 'image/jpeg',
+            })
+            console.log('success!')
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     toggleVisible = () => {

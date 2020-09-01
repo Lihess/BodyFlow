@@ -1,0 +1,16 @@
+{
+  "auth": {
+    "bodyflow2afcaf61": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "storage": {
+    "s387e4d944": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  }
+}
