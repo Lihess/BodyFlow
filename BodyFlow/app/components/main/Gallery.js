@@ -1,13 +1,13 @@
 import React from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity,Image, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import styles from '../../styles/main/Gallery.Style'
 
 // https://dingcodingco.tistory.com/14
 // https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#manual-setup-import-storage-bucket
-import Amplify, { Auth, Storage } from 'aws-amplify';
+import Amplify, { Storage } from 'aws-amplify';
 
 Amplify.configure({
     Auth: {
@@ -40,10 +40,8 @@ export default class Gallery extends React.Component {
       await Permissions.askAsync(Permissions.CAMERA_ROLL);
         try {
           let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: false,
-            aspect: [4, 3],
-            quality: 3,
+            base64 : true,
+            allowsEditing: false
           });
           if (!result.cancelled) {
             this.setState({ image: result.uri });
@@ -58,13 +56,16 @@ export default class Gallery extends React.Component {
     
     updateImage = async() => {
         try {
-            const response = await fetch(this.state.image)
-            const blob = await response.blob()
-            
-            Storage.put(`1.jpeg`, blob, {
-                 contentType: 'image/jpeg',
+          console.log(this.state.image)
+            fetch(this.state.image).then(response => {
+              response.blob().then(blob => {
+                Storage.put(`images/7.png`, blob, {
+                  contentType: 'image/png',
+             }).then(data => console.log(data))
+             .catch(err => console.log(err))
+              })
             })
-            console.log('success!')
+            
         } catch (err) {
             console.log(err)
         }
@@ -78,6 +79,7 @@ export default class Gallery extends React.Component {
     render(){
         return (
             <View style={styles.container}>
+              <Image style={{width:'60%', backgroundColor : 'red'}} source={{uri :'https://body-flow.s3.ap-northeast-2.amazonaws.com/public/images/1.png'}}></Image>
                 <Text style={styles.placeholder}> 당신의 몸을 기록해보세요 </Text>
                 <TouchableOpacity style={styles.button} onPress={this._pickImage}>
                     <MaterialCommunityIcons name="camera-plus" size={30} color="white" />

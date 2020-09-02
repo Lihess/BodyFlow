@@ -19,7 +19,7 @@ export default class FatReqirementRecord extends React.Component {
         decimalInformation : false,
         rangeInformation : false,
         gender : null,
-        height : null,
+        height : '',
         foucsColor : '#c4c4c4'
     } 
 
@@ -41,7 +41,7 @@ export default class FatReqirementRecord extends React.Component {
                 decimalInformation : false,
                 rangeInformation : false,
                 gender : null,
-                height : null,
+                height : '',
                 foucsColor : '#c4c4c4'
             })
         }
