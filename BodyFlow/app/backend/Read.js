@@ -114,5 +114,19 @@ const readSizeByPartsAll = (part, callback) => {
     })
 } 
 
+const readtPhotoAll = (callback) => {
+    db.transaction(tx => {
+        tx.executeSql(
+            'SELECT * FROM photo ORDER BY date DESC',
+            [],
+            (tx, {rows}) => { 
+                const photo = rows['_array'].length ? rows['_array'].reverse() : [];
+                callback(photo); 
+            }
+        )
+    })
+}
+
 export {readSizeByPartsLatest, readSizeByPartsLatestW, readSizeByPartsLatestF
-        , readUserInfoLatest, readWaistToday, readSizeByPartsLimit7, readSizeByPartsAll};
+        , readUserInfoLatest, readWaistToday, readSizeByPartsLimit7, readSizeByPartsAll,
+        readtPhotoAll};
