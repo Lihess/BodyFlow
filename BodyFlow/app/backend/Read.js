@@ -114,13 +114,22 @@ const readSizeByPartsAll = (part, callback) => {
     })
 } 
 
+// 모든 사진 데이터를 반환. 이때, 날짜별로 배열을 만들어 반환함
 const readtPhotoAll = (callback) => {
     db.transaction(tx => {
         tx.executeSql(
             'SELECT * FROM photo ORDER BY date DESC',
             [],
             (tx, {rows}) => { 
-                const photo = rows['_array'].length ? rows['_array'].reverse() : [];
+                const photo = []
+                
+                // 날짜별로 사진의 경로를 배열로 만들어서 반환함
+                if(rows['_array'].length){
+                    rows['_array'].map((row, i) => {
+                        (i == 0) || (rows['_array'][i-1].date != row.date) ?
+                            photo.push({date : row.date, paths : [row.path]}) : photo[photo.length -1].paths.push(row.path)
+                        })
+                }
                 callback(photo); 
             }
         )
