@@ -15,7 +15,7 @@ const createTables = () => {
             'CREATE TABLE IF NOT EXISTS user_info ( date TEXT NOT NULL, height REAL NOT NULL, gender TEXT NOT NULL, PRIMARY KEY(date));'
         );
         tx.executeSql(
-            'CREATE TABLE IF NOT EXISTS photo ( date TEXT NOT NULL, photo_ornu	INTEGER NOT NULL, path TEXT NOT NULL, PRIMARY KEY(date, photo_ornu));'
+            'CREATE TABLE IF NOT EXISTS photo ( date TEXT NOT NULL, photo_ornu INTEGER NOT NULL, path VARCHAR(255) NOT NULL, PRIMARY KEY(date, photo_ornu));'
         );
     });
 }
@@ -30,16 +30,6 @@ const createSizeByPart = (date, part, size) => {
 
     // 트리거
     sizeByPartInsertTR(date, part, size);
-
-    // 확인용
-    db.transaction(tx => {
-        tx.executeSql(
-            'SELECT * FROM size_by_part;', [], 
-            (tx, {rows}) => console.log('result on insert: ', rows),
-            (tx, err) => console.log('error on insert: ', err)
-        );
-    })
-    
 }
 
 // user_info insert
@@ -51,14 +41,27 @@ const createUserInfo = (height, gender) => {
     })
 
     userInfoInsertTR(height, gender)
-    // 확인용
+}
+
+// insert photo. 
+const createPhoto = (path) => {
+    console.log('path : ', path)
     db.transaction(tx => {
         tx.executeSql(
-            'SELECT * FROM user_info;', [], 
-            (tx, result) => console.log('result on insert: ', result),
-            (tx, err) => console.log('error on insert: ', err)
+            'SELECT photo_ornu FROM photo WHERE date = date(\'now\') ORDER BY date DESC, photo_ornu DESC LIMIT 1',
+            [],
+            (tx, { rows }) => {
+                // 다음 순번 계산
+                const ornu = rows['_array'].length ? rows['_array'][0].photo_ornu + 1 : 1;
+                db.transaction(tx => {
+                    tx.executeSql(
+                        'INSERT INTO photo VALUES (date(\'now\'), ?, ?)',
+                        [ornu, path]
+                    )
+                })
+            }
         );
     })
 }
 
-export {createTables, createSizeByPart, createUserInfo}
+export {createTables, createSizeByPart, createUserInfo, createPhoto}
