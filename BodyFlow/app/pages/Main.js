@@ -13,17 +13,8 @@ import Gallery from '../components/main/Gallery.js';
 export default class Main extends React.Component {
     static navigationOptions = { headerShown: false };
 
-    componentDidMount() {
-        //Here is the Trick
-        const { navigation } = this.props;
-        //Adding an event listner om focus
-        //So whenever the screen will have focus it will set the state to zero
-        this.focusListener = navigation.addListener('didFocus', () => {
-            this.setState({ count: 0 });
-        });
-    }
-
     render(){
+        console.log('this.props.navigation.state.params : ', this.props.navigation.state.params)
         return (
             <SafeAreaView style={common.container}>
                 <StatusBar backgroundColor={'#f1f1f1'} barStyle="dark-content"/>
@@ -31,7 +22,7 @@ export default class Main extends React.Component {
                 <FatProvider>
                     <Swiper style={styles.wrapper} paginationStyle={styles.dotPosition} activeDotColor={'orange'}>
                         <BodySize/>
-                        <Gallery />
+                        <Gallery reset={this.props.navigation.state.params ? this.props.navigation.state.params.reset : false}/>
                     </Swiper>
                     <WeightAndFat/>
                 </FatProvider>

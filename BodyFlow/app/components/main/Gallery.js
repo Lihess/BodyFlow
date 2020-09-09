@@ -1,64 +1,53 @@
 import React from 'react';
-import * as ImagePicker from 'expo-image-picker';
-import { ImageBrowser } from 'expo-image-picker-multiple';
 import { NavigationService } from '../../router/service';
-import * as Permissions from 'expo-permissions';
 import { View, TouchableOpacity, Image, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import Amplify, { Storage } from 'aws-amplify';
 // https://dingcodingco.tistory.com/14
 // https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#manual-setup-import-storage-bucket
 import styles from '../../styles/main/Gallery.Style'
-import { createPhoto } from '../../backend/Create'
 import { readtPhotoAll } from '../../backend/Read'
-
-Amplify.configure({
-    Auth: {
-        identityPoolId: 'ap-northeast-2:fcc31825-3672-46c3-896c-8386f6890f03', //REQUIRED - Amazon Cognito Identity Pool ID
-        region: 'ap-northeast-2', // REQUIRED - Amazon Cognito Region
-    },
-    Storage: {
-        AWSS3: {
-           bucket: 'body-flow', //REQUIRED - Amazon S3 bucket
-           region: 'ap-northeast-2', //OPTIONAL - Amazon service region
-       }
-   }
-});
 
 export default class Gallery extends React.Component {
     state = {
-        resetData : false,
-        photos : []
+        reset : false,
+        photos : [],
+        date : getToday()
     }
+
+    //static getDerivedStateFromProps = (nextProps, prevState) => {
+    //    if(nextProps.reset != prevState.reset)
+    //        return { reset : !prevState.reset }
+    //}
 
     componentDidMount = async() => {
         this.getData()
-        await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    }
+
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.date != getToday()){
+            this.setState({ date : getToday() })
+        }
+       //if(prevProps.reset != prevState.reset){
+       //    this.getData()
+       //    this.setState({ reset : true })
+       //}
     }
 
     getData = () => {
-        console.log('!')
         readtPhotoAll(result => {
             this.setState({ photos : result })
         })
     }
 
-    // 파일 선택
-    //pickImage = async () => {
-    //    await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    //    try {
-    //        let result = await ImagePicker.launchImageLibraryAsync({
-    //          allowsEditing: false
-    //        });
-    //        if (!result.cancelled) {
-    //          this.updateImage(result.uri);
-    //        }
-    //    } catch (E) {
-    //        console.log(E);
-    //    }
-    //};
     onPeress = () => { 
-        NavigationService.navigate('ImagePicker', {getData : this.getData()})
+        var photoCount = 0;
+console.log(this.state.photos[0].date, getToday())
+        if (this.state.photos[0].date == getToday()) {
+            photoCount = this.state.photos[0].paths.length
+        }
+        console.log(photoCount)
+        NavigationService.navigate('ImagePicker', {photoCount : photoCount})
     }
 
     render(){
@@ -70,20 +59,20 @@ export default class Gallery extends React.Component {
                 </TouchableOpacity> 
  
             <View>
-            {this.state.photos.length ?
-                    this.state.photos.map(photo => {
-                        return (
-                            <View style={{flexDirection : 'row'}}>
-                                {photo.paths.map(photo => {
-                                    return(<Image style={{width: 50, height: 50}} source={{uri : photo}}/>)
-                                })}
-                            </View>
-                        
-                            )
-                      
-                      
-                    }) : null
-                }
+            {//this.state.photos.length ?
+             //       this.state.photos.map(photo => {
+             //           return (
+             //               <View style={{flexDirection : 'row'}}>
+             //                   {photo.paths.map(photo => {
+             //                       return(<Image style={{width: 50, height: 50}} source={{uri : photo}}/>)
+             //                   })}
+             //               </View>
+             //           
+             //               )
+             //         
+             //         
+             //       }) : null
+               }
             </View>
                 
             </View>
@@ -91,10 +80,13 @@ export default class Gallery extends React.Component {
     }
 }
 
-// 파일 이름을 유니크하게 하기 위한 함수
-function guid() {
-        function _s4() {
-            return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
-    }
-    return _s4() + _s4() + '-' + _s4() + '-' + _s4() + '-' + _s4() + '-' + _s4() + _s4() + _s4();
+// 오늘 날짜를 형식에 맞추어 포맷팅하여 반환하는 함수
+const getToday = () => {
+    const today = new Date();
+
+    var year = today.getFullYear();
+    var month = today.getMonth() + 1;
+    var day = today.getDate();
+   
+    return year + (month > 9 ? '-' : '-0') + month + (day > 9 ? '-' : '-0') + day;
 }

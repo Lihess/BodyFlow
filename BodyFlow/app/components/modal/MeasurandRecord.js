@@ -245,5 +245,5 @@ const getToday = () => {
     var month = today.getMonth() + 1;
     var day = today.getDate();
    
-    return year + (month > 8 ? '-' : '-0') + month + (day > 9 ? '-' : '-0') + day;
+    return year + (month > 9 ? '-' : '-0') + month + (day > 9 ? '-' : '-0') + day;
 }

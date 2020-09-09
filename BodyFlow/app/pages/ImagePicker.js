@@ -1,14 +1,14 @@
 import React from 'react';
 import { ImageBrowser } from 'expo-image-picker-multiple';
 import { NavigationService } from '../router/service';
-import * as Permissions from 'expo-permissions';
+import { Ionicons } from '@expo/vector-icons'; 
 import { View, TouchableOpacity, Image, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import Amplify, { Storage } from 'aws-amplify';
 // https://dingcodingco.tistory.com/14
 // https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#manual-setup-import-storage-bucket
-
+import styles from '../styles/ImagePicker/ImagePicker.Style'
+import { common } from '../styles/Common.Style';
 import { createPhoto } from '../backend/Create'
-import { readtPhotoAll } from '../backend/Read'
 
 Amplify.configure({
     Auth: {
@@ -23,32 +23,15 @@ Amplify.configure({
    }
 });
 
+// https://snack.expo.io/@monstrodev/expo-image-picker-multiple-full-example
+
 export default class ImagePicker extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        const headerTitle = navigation.getParam('headerTitle');
-        const right = navigation.getParam('headerRight');
-        const loading = navigation.getParam('loading');
-        const headerLeft =
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text>
-                Back
-            </Text>
-          </TouchableOpacity>;
-        const headerRight =
-          <TouchableOpacity title={'Done'} onPress={right}>
-            <Text>
-              Done
-            </Text>
-          </TouchableOpacity>;
-        const headerLoader = (
-          <View style={styles.headerLoader}>
-            <ActivityIndicator size="small" color={'#0580FF'}/>
-          </View>
-        );
-    
-        if (loading) return { headerTitle, headerLeft, headerRight: headerLoader };
-        return { headerTitle, headerLeft, headerRight };
-      };
+    static navigationOptions = { headerShown : false };
+
+    state = {
+        count : 0
+    }
+
     // 이미지를 s3에 저장하고 DB에 photo 객체 생성
     updateImage = async(uri) => {
         try {
@@ -71,20 +54,14 @@ export default class ImagePicker extends React.Component {
         }
     }
 
-    setImageUri = () => {
-
-    }
-
+    // 이미지 uri를 받기 위한 함수
     imagesCallback = (callback) => {    
-        const { navigation } = this.props;
-        navigation.setParams({ loading: true });
-
         callback.then(async (photos) => {
-            const photoPaths = {data : getToday(), paths : []}
+            const photoPaths = []
 
             for(let photo of photos) {
-                photoPaths.paths.push(photo.uri);
-                //this.updateImage(photo.uri)
+                photoPaths.push(photo.uri);
+                this.updateImage(photo.uri)
             }
             
             NavigationService.navigate('MainPage', {reset : true});
@@ -92,81 +69,59 @@ export default class ImagePicker extends React.Component {
         .catch((e) => console.log(e))
         .finally(() => navigation.setParams({ loading: false }));
     };
-
-    renderSelectedComponent = (number) => (
-        <View style={styles.countBadge}>
-          <Text style={styles.countBadgeText}>{number}</Text>
-        </View>
-      );
     
+    // count 올리는 함수
     updateHandler = (count, onSubmit) => {
-      this.props.navigation.setParams({
-        headerTitle: `Selected ${count} files`,
-        headerRight: onSubmit,
-      });
+        this.props.navigation.setParams({
+          headerRight: onSubmit,
+        });
+
+        this.setState({ count : count })
     };
 
     render(){
-        const emptyStayComponent = <Text style={styles.emptyStay}>Empty =(</Text>;
+        const {params} = this.props.navigation.state
+        const max = params ? ((3 - params.photoCount) > 0 ? (3 - params.photoCount) : 0) : 3
+
         return (
             <View style={[styles.flex, styles.container]}>
+                <View style={styles.header}>
+                    <View style={common.textBoxCenter}>
+                        <Ionicons name="ios-arrow-back" size={24} color="black" onPress={() => NavigationService.back()}/>
+                        <View style={common.textBoxCenter}>
+                            <Text style={styles.headerTitle}> 사진 선택 </Text>
+                            <Text style={[styles.headerCount, this.state.count > 0 ? {color : 'orange'} : {color : '#848484'}]}>{this.state.count}</Text>
+                            <Text style={styles.headerSubtitle}> / {max}</Text>
+                        </View>
+                    </View>
+                    
+                    { this.state.count > 0 ?
+                        <TouchableOpacity onPress={this.props.navigation.getParam('headerRight')}>
+                            <Text style={styles.submit}> 완료 </Text>
+                        </TouchableOpacity> : null
+                    }
+                </View>
+
                 <ImageBrowser
-                  max={4}
-                  onChange={this.updateHandler}
-                  callback={this.imagesCallback}
-                  renderSelectedComponent={this.renderSelectedComponent}
-                  emptyStayComponent={emptyStayComponent}
+                    max={max}
+                    onChange={this.updateHandler}
+                    callback={this.imagesCallback}
+                    renderSelectedComponent={(number) => {
+                        <View style={styles.countBadge}>
+                            <Text style={styles.countBadgeText}>{number}</Text>
+                        </View>
+                        }}
+                    emptyStayComponent={<Text style={styles.emptyStay}>저장된 사진이 없습니다.</Text>}
                 />
             </View>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    flex: {
-      flex: 1
-    },
-    container: {
-      position: 'relative'
-    },
-    emptyStay:{
-      textAlign: 'center',
-    },
-    countBadge: {
-      paddingHorizontal: 8.6,
-      paddingVertical: 5,
-      borderRadius: 50,
-      position: 'absolute',
-      right: 3,
-      bottom: 3,
-      justifyContent: 'center',
-      backgroundColor: '#0580FF'
-    },
-    countBadgeText: {
-      fontWeight: 'bold',
-      alignSelf: 'center',
-      padding: 'auto',
-      color: '#ffffff'
-    }
-  });
-  
-
-  
 // 파일 이름을 유니크하게 하기 위한 함수
 function guid() {
     function _s4() {
         return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
 }
 return _s4() + _s4() + '-' + _s4() + '-' + _s4() + '-' + _s4() + '-' + _s4() + _s4() + _s4();
-}
-
-// 오늘 날짜를 형식에 맞추어 포맷팅하여 반환하는 함수
-const getToday = () => {
-    const today = new Date();
-
-    var year = today.getFullYear();
-    var month = today.getMonth() + 1;
-    var day = today.getDate();
-   
-    return year + (month > 8 ? '-' : '-0') + month + (day > 9 ? '-' : '-0') + day;
 }
