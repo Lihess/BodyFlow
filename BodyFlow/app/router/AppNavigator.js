@@ -5,10 +5,12 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import MainPage from '../pages/Main';
 import ChartPage from '../pages/Chart';
+import ImagePicker from '../pages/ImagePicker';
  
 const AuthStack = createStackNavigator({
     MainPage : { screen : MainPage },
-    ChartPage : { screen : ChartPage }
+    ChartPage : { screen : ChartPage },
+    ImagePicker : { screen : ImagePicker }
 });
  
 const AppNavigator = createSwitchNavigator(

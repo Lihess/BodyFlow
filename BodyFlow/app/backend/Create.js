@@ -45,7 +45,6 @@ const createUserInfo = (height, gender) => {
 
 // insert photo. 
 const createPhoto = (path) => {
-    console.log('path : ', path)
     db.transaction(tx => {
         tx.executeSql(
             'SELECT photo_ornu FROM photo WHERE date = date(\'now\') ORDER BY date DESC, photo_ornu DESC LIMIT 1',
@@ -53,6 +52,7 @@ const createPhoto = (path) => {
             (tx, { rows }) => {
                 // 다음 순번 계산
                 const ornu = rows['_array'].length ? rows['_array'][0].photo_ornu + 1 : 1;
+                
                 db.transaction(tx => {
                     tx.executeSql(
                         'INSERT INTO photo VALUES (date(\'now\'), ?, ?)',

@@ -1,22 +1,24 @@
 import React from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import { ImageBrowser } from 'expo-image-picker-multiple';
+import { NavigationService } from '../../router/service';
 import * as Permissions from 'expo-permissions';
 import { View, TouchableOpacity, Image, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import styles from '../../styles/main/Gallery.Style'
-import {createPhoto} from '../../backend/Create'
+import Amplify, { Storage } from 'aws-amplify';
 // https://dingcodingco.tistory.com/14
 // https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#manual-setup-import-storage-bucket
-import Amplify, { Storage } from 'aws-amplify';
+import styles from '../../styles/main/Gallery.Style'
+import { createPhoto } from '../../backend/Create'
+import { readtPhotoAll } from '../../backend/Read'
 
 Amplify.configure({
     Auth: {
         identityPoolId: 'ap-northeast-2:fcc31825-3672-46c3-896c-8386f6890f03', //REQUIRED - Amazon Cognito Identity Pool ID
         region: 'ap-northeast-2', // REQUIRED - Amazon Cognito Region
     },
-
-   Storage: {
-       AWSS3: {
+    Storage: {
+        AWSS3: {
            bucket: 'body-flow', //REQUIRED - Amazon S3 bucket
            region: 'ap-northeast-2', //OPTIONAL - Amazon service region
        }
@@ -24,54 +26,66 @@ Amplify.configure({
 });
 
 export default class Gallery extends React.Component {
+    state = {
+        resetData : false,
+        photos : []
+    }
+
     componentDidMount = async() => {
+        this.getData()
         await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    }
+
+    getData = () => {
+        console.log('!')
+        readtPhotoAll(result => {
+            this.setState({ photos : result })
+        })
     }
 
     // 파일 선택
-    pickImage = async () => {
-        await Permissions.askAsync(Permissions.CAMERA_ROLL);
-        try {
-            let result = await ImagePicker.launchImageLibraryAsync({
-              allowsEditing: false
-            });
-            if (!result.cancelled) {
-              this.updateImage(result.uri);
-            }
-        } catch (E) {
-            console.log(E);
-        }
-      };
-
-    // 이미지를 s3에 저장하고 DB에 photo 객체 생성
-    updateImage = async(uri) => {
-        try {
-            const fileName = guid()
-            const fileExtension = uri.substr(uri.lastIndexOf('.') + 1)
-
-            fetch(uri).then(response => {
-                response.blob().then(blob => {
-                    Storage.put(`images/${fileName}.${fileExtension}`, blob, {
-                        contentType: `image/${fileExtension}`,
-                    })
-                    .then(() => {createPhoto(`https://body-flow.s3.ap-northeast-2.amazonaws.com/public/images/${fileName}.${fileExtension}`)})
-                    .catch(err => console.log(err))
-                })
-            })
-        } catch (err) {
-            console.log(err)
-        }
+    //pickImage = async () => {
+    //    await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    //    try {
+    //        let result = await ImagePicker.launchImageLibraryAsync({
+    //          allowsEditing: false
+    //        });
+    //        if (!result.cancelled) {
+    //          this.updateImage(result.uri);
+    //        }
+    //    } catch (E) {
+    //        console.log(E);
+    //    }
+    //};
+    onPeress = () => { 
+        NavigationService.navigate('ImagePicker', {getData : this.getData()})
     }
 
-//https://steemit.com/kr/@anpigon/react-native-flatlist-infinite-scroll-pull-down-refresh
-// 무한 스크롤
     render(){
         return (
             <View style={styles.container}>
                 <Text style={styles.placeholder}> 당신의 몸을 기록해보세요 </Text>
-                <TouchableOpacity style={styles.button} onPress={this.pickImage}>
+                <TouchableOpacity style={styles.button} onPress={this.onPeress}>
                     <MaterialCommunityIcons name="camera-plus" size={30} color="white" />
                 </TouchableOpacity> 
+ 
+            <View>
+            {this.state.photos.length ?
+                    this.state.photos.map(photo => {
+                        return (
+                            <View style={{flexDirection : 'row'}}>
+                                {photo.paths.map(photo => {
+                                    return(<Image style={{width: 50, height: 50}} source={{uri : photo}}/>)
+                                })}
+                            </View>
+                        
+                            )
+                      
+                      
+                    }) : null
+                }
+            </View>
+                
             </View>
         );
     }
