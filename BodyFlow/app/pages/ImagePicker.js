@@ -1,15 +1,18 @@
 import React from 'react';
 import { ImageBrowser } from 'expo-image-picker-multiple';
+// https://snack.expo.io/@monstrodev/expo-image-picker-multiple-full-example
 import { NavigationService } from '../router/service';
 import { Ionicons } from '@expo/vector-icons'; 
-import { View, TouchableOpacity, Image, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import Amplify, { Storage } from 'aws-amplify';
-// https://dingcodingco.tistory.com/14
-// https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#manual-setup-import-storage-bucket
 import styles from '../styles/ImagePicker/ImagePicker.Style'
 import { common } from '../styles/Common.Style';
 import { createPhoto } from '../backend/Create'
+import { readtPhotoAll } from '../backend/Read'
 
+// AWS S3와 연결하기 위함. serverless 활용
+// https://dingcodingco.tistory.com/14
+// https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#manual-setup-import-storage-bucket
 Amplify.configure({
     Auth: {
         identityPoolId: 'ap-northeast-2:fcc31825-3672-46c3-896c-8386f6890f03', //REQUIRED - Amazon Cognito Identity Pool ID
@@ -22,8 +25,6 @@ Amplify.configure({
        }
    }
 });
-
-// https://snack.expo.io/@monstrodev/expo-image-picker-multiple-full-example
 
 export default class ImagePicker extends React.Component {
     static navigationOptions = { headerShown : false };
@@ -57,17 +58,15 @@ export default class ImagePicker extends React.Component {
     // 이미지 uri를 받기 위한 함수
     imagesCallback = (callback) => {    
         callback.then(async (photos) => {
-            const photoPaths = []
+            photos.map(photo =>  this.updateImage(photo.uri))
 
-            for(let photo of photos) {
-                photoPaths.push(photo.uri);
-                this.updateImage(photo.uri)
-            }
-            
-            NavigationService.navigate('MainPage', {reset : true});
+            // 새로 선택한 사진을 업데이트 한 후, 사진 데이터를 새롭게 받아서 gallery로 넘김
+            // flag만 주고 받아서 하고 싶었으나 props가 한 번 지정된 후에는 imagepicker 에서 변경하지 않는 이상 어려워서..
+            readtPhotoAll(result => {
+                NavigationService.navigate('MainPage', { photos : result });
+            })
         })
         .catch((e) => console.log(e))
-        .finally(() => navigation.setParams({ loading: false }));
     };
     
     // count 올리는 함수
@@ -80,9 +79,10 @@ export default class ImagePicker extends React.Component {
     };
 
     render(){
-        const {params} = this.props.navigation.state
-        const max = params ? ((3 - params.photoCount) > 0 ? (3 - params.photoCount) : 0) : 3
-
+        // todayPhoto의 갯수를 이용하여 max 값 조정. 하루에 최대 3개만 가능
+        const todayPhoto = this.props.navigation.state.params ? this.props.navigation.state.params.todayPhoto : 0
+        const max = (3 - todayPhoto) >= 0 ? (3 - todayPhoto) : 0
+        
         return (
             <View style={[styles.flex, styles.container]}>
                 <View style={styles.header}>
@@ -95,10 +95,11 @@ export default class ImagePicker extends React.Component {
                         </View>
                     </View>
                     
-                    { this.state.count > 0 ?
-                        <TouchableOpacity onPress={this.props.navigation.getParam('headerRight')}>
-                            <Text style={styles.submit}> 완료 </Text>
-                        </TouchableOpacity> : null
+                    { // 1개 이상 선택한 경우!
+                        this.state.count > 0 ?
+                            <TouchableOpacity onPress={this.props.navigation.getParam('headerRight')}>
+                                <Text style={styles.submit}> 완료 </Text>
+                            </TouchableOpacity> : null
                     }
                 </View>
 

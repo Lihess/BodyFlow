@@ -9,45 +9,30 @@ import { readtPhotoAll } from '../../backend/Read'
 
 export default class Gallery extends React.Component {
     state = {
-        reset : false,
-        photos : [],
-        date : getToday()
+        resetFlag : false,
+        photos : []
     }
 
-    //static getDerivedStateFromProps = (nextProps, prevState) => {
-    //    if(nextProps.reset != prevState.reset)
-    //        return { reset : !prevState.reset }
-    //}
-
-    componentDidMount = async() => {
-        this.getData()
+    // imagePicker를 통해 받은 사진을 state에 저장
+    static getDerivedStateFromProps = (nextProps, prevState) => {
+        if(nextProps.photos && nextProps.photos != prevState.photos)
+            return { photos : nextProps.photos }
     }
 
-
-    componentDidUpdate(prevProps, prevState) {
-        if (this.state.date != getToday()){
-            this.setState({ date : getToday() })
-        }
-       //if(prevProps.reset != prevState.reset){
-       //    this.getData()
-       //    this.setState({ reset : true })
-       //}
-    }
-
-    getData = () => {
+    componentDidMount() {
         readtPhotoAll(result => {
             this.setState({ photos : result })
         })
     }
 
+    // 오늘 올린 사진의 갯수를 계산하여 imegaPicker로 넘김
     onPeress = () => { 
-        var photoCount = 0;
-console.log(this.state.photos[0].date, getToday())
-        if (this.state.photos[0].date == getToday()) {
-            photoCount = this.state.photos[0].paths.length
-        }
-        console.log(photoCount)
-        NavigationService.navigate('ImagePicker', {photoCount : photoCount})
+        var todayPhoto = 0
+
+        this.state.photos.length && this.state.photos[0].date == getToday() ?
+            todayPhoto = this.state.photos[0].paths.length : null
+            
+        NavigationService.navigate('ImagePicker', {todayPhoto : todayPhoto})
     }
 
     render(){
@@ -59,19 +44,19 @@ console.log(this.state.photos[0].date, getToday())
                 </TouchableOpacity> 
  
             <View>
-            {//this.state.photos.length ?
-             //       this.state.photos.map(photo => {
-             //           return (
-             //               <View style={{flexDirection : 'row'}}>
-             //                   {photo.paths.map(photo => {
-             //                       return(<Image style={{width: 50, height: 50}} source={{uri : photo}}/>)
-             //                   })}
-             //               </View>
-             //           
-             //               )
-             //         
-             //         
-             //       }) : null
+            {this.state.photos.length ?
+                    
+                        
+                            <View style={{flexDirection : 'row'}}>
+                                {this.state.photos[0].paths.map(photo => {
+                                    return(<Image style={{width: 50, height: 50}} source={{uri : photo}}/>)
+                                })}
+                            </View>
+                        
+                            
+                      
+                      
+                     : null
                }
             </View>
                 

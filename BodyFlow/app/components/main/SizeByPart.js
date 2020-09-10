@@ -27,7 +27,6 @@ export default class BodySize extends React.Component {
     // 데이터를 불러옴
     getData = () => {
         readSizeByPartsLatest(result => {
-            console.log(result)
             this.setState({sizeParts : result})
         })
     }

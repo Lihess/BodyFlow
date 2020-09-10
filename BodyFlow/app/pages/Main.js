@@ -14,7 +14,6 @@ export default class Main extends React.Component {
     static navigationOptions = { headerShown: false };
 
     render(){
-        console.log('this.props.navigation.state.params : ', this.props.navigation.state.params)
         return (
             <SafeAreaView style={common.container}>
                 <StatusBar backgroundColor={'#f1f1f1'} barStyle="dark-content"/>
@@ -22,7 +21,7 @@ export default class Main extends React.Component {
                 <FatProvider>
                     <Swiper style={styles.wrapper} paginationStyle={styles.dotPosition} activeDotColor={'orange'}>
                         <BodySize/>
-                        <Gallery reset={this.props.navigation.state.params ? this.props.navigation.state.params.reset : false}/>
+                        <Gallery photos={this.props.navigation.state.params ? this.props.navigation.state.params.photos : []}/>
                     </Swiper>
                     <WeightAndFat/>
                 </FatProvider>
