@@ -2,7 +2,7 @@
 // 각 부위별 차트를 보여주는 페이지
 import React from 'react';
 import { NavigationService } from '../router/service';
-import { SafeAreaView, TouchableOpacity, View, ScrollView, Text, StatusBar } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View, FlatList, Text, StatusBar } from 'react-native';
 import SwitchSelector from 'react-native-switch-selector';
 import { Ionicons } from '@expo/vector-icons'; 
 import { common } from '../styles/Common.Style';
@@ -133,23 +133,23 @@ export default class Chart extends React.Component {
 
                 <ChartByPart data={this.state.data} period={this.state.period} unit={this.state.unit}/>
                 
-                <ScrollView style={styles.dataBox}>
+                <FlatList style={styles.dataBox}>
                     {dataReverse.map((data, i) => 
-                    <DataByDate 
-                        key={i}
-                        date={data.date} 
-                        part={this.state.part}
-                        size={this.state.unit == 'cm' ? data.sizeByPart : cmToInch(data.sizeByPart)} 
-                        unit={this.state.unit}
-                        variance={i == 0 ? 
-                                    '0.00' : 
-                                    (this.state.unit == 'cm' ? 
-                                        (data.sizeByPart - this.state.data[i-1].sizeByPart).toFixed(2)
-                                        : (cmToInch(data.sizeByPart) - cmToInch(this.state.data[i-1].sizeByPart)).toFixed(2))}
-                        last={(i == this.state.length - 1 && i > 7) ? true : false}
-                        onChangeData={this.getData}                
-                        />)}
-                </ScrollView>
+                        <DataByDate 
+                            key={i}
+                            date={data.date} 
+                            part={this.state.part}
+                            size={this.state.unit == 'cm' ? data.sizeByPart : cmToInch(data.sizeByPart)} 
+                            unit={this.state.unit}
+                            variance={i == 0 ? 
+                                        '0.00' : 
+                                        (this.state.unit == 'cm' ? 
+                                            (data.sizeByPart - this.state.data[i-1].sizeByPart).toFixed(2)
+                                            : (cmToInch(data.sizeByPart) - cmToInch(this.state.data[i-1].sizeByPart)).toFixed(2))}
+                            last={(i == this.state.length - 1 && i > 7) ? true : false}
+                            onChangeData={this.getData}                
+                            />)}
+                </FlatList>
                 
                 <PartPicker 
                     visible={this.state.modalVisiable} 

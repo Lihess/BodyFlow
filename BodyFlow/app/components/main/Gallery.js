@@ -1,11 +1,13 @@
 import React from 'react';
 import { NavigationService } from '../../router/service';
-import { View, TouchableOpacity, Image, Text } from 'react-native';
+import { View, TouchableOpacity, Image, Text, Dimensions } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 // https://dingcodingco.tistory.com/14
 // https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#manual-setup-import-storage-bucket
 import styles from '../../styles/main/Gallery.Style'
 import { readtPhotoAll } from '../../backend/Read'
+import { FlatList } from 'react-native-gesture-handler';
+import { common } from '../../styles/Common.Style';
 
 export default class Gallery extends React.Component {
     state = {
@@ -14,14 +16,17 @@ export default class Gallery extends React.Component {
     }
 
     // imagePicker를 통해 받은 사진을 state에 저장
-    static getDerivedStateFromProps = (nextProps, prevState) => {
-        if(nextProps.photos && nextProps.photos != prevState.photos)
-            return { photos : nextProps.photos }
+    componentDidUpdate(prevProps) {
+        if(this.props.photos && (prevProps.photos != this.props.photos))
+           this.setState({ photos : this.props.photos })
+           
     }
 
-    componentDidMount() {
+    componentDidMount = async() => {
         readtPhotoAll(result => {
             this.setState({ photos : result })
+            console.log('result : ',  result.length)
+            console.log('this.state.photos : ', this.state.photos.length)
         })
     }
 
@@ -38,28 +43,31 @@ export default class Gallery extends React.Component {
     render(){
         return (
             <View style={styles.container}>
-                <Text style={styles.placeholder}> 당신의 몸을 기록해보세요 </Text>
-                <TouchableOpacity style={styles.button} onPress={this.onPeress}>
+                {this.state.photos.length ?
+                    <FlatList
+                        keyExtractor={item => item.date}
+                        data={this.state.photos}
+                        renderItem={({item}) => {
+                            console.log('photo : ', item);
+                                return(
+                                    <View style={styles.dateByPhotos}>
+                                        <Text style={styles.date}>{item.date.replace(/\-/g, '.')}</Text>
+                                        <View style={styles.photoBox}>
+                                            {item.paths.map(path => {
+                                                return <Image style={styles.photo} source={{uri : path}}/>
+                                            })}
+                                        </View>
+                                    </View>
+                                )
+                            }
+                        }
+                    /> 
+                    : <Text style={styles.placeholder}> 당신의 몸을 기록해보세요 </Text>
+                }
+            
+            <TouchableOpacity style={styles.button} onPress={this.onPeress}>
                     <MaterialCommunityIcons name="camera-plus" size={30} color="white" />
                 </TouchableOpacity> 
- 
-            <View>
-            {this.state.photos.length ?
-                    
-                        
-                            <View style={{flexDirection : 'row'}}>
-                                {this.state.photos[0].paths.map(photo => {
-                                    return(<Image style={{width: 50, height: 50}} source={{uri : photo}}/>)
-                                })}
-                            </View>
-                        
-                            
-                      
-                      
-                     : null
-               }
-            </View>
-                
             </View>
         );
     }

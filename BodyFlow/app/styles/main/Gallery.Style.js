@@ -13,6 +13,24 @@ const styles = StyleSheet.create({
         borderRadius : 10,
         overflow : 'hidden'
     },
+    dateByPhotos : {
+        marginBottom : 15,
+    },
+    photoBox : {
+        paddingLeft : 15,
+        flexDirection : 'row',
+        alignItems : 'center'
+    },
+    date : {
+        marginBottom : 5,
+        fontSize : normalize(15),
+        fontWeight : '700'
+    },
+    photo : {
+        width : (screenWidth - 120) / 3,
+        height : (screenWidth - 120) / 3,
+        marginRight : 5
+    },
     placeholder : {
         color : '#848484',
         fontSize : normalize(15),
