@@ -10,7 +10,7 @@ export default class CalendarModal extends React.Component{
     state = {
         visible : false,
         today : this.props.today,
-        day : null,
+        date : null,
         disableArrowRight : true
     } 
 
@@ -27,25 +27,24 @@ export default class CalendarModal extends React.Component{
             this.props.onBackdropPress()
             this.setState({
                 visible : false,
-                day : null
+                date : null
             })
         }
     }
 
     onDayPress = (selectDay) => {
-
         this.setState( {
-            day : selectDay.dateString
+            date : selectDay.dateString
         })
     }
 
     onSubmit = () => {
-        if (!this.state.day){
+        if (!this.state.date){
             this.props.onSubmit(null);
         }
         else {
             // 외부에서 보이는 날짜 포맷은 'yyyy.MM.dd'이므로 변경!
-            this.props.onSubmit(this.state.day);
+            this.props.onSubmit(this.state.date);
         }
         this.closedModal()
     }
@@ -85,7 +84,7 @@ export default class CalendarModal extends React.Component{
                         }}
                         disableArrowRight={this.state.disableArrowRight}
                         onDayPress={(day) => this.onDayPress(day)} 
-                        markedDates={{[this.state.day] : {selected: true}}}
+                        markedDates={{[this.state.date] : {selected: true}}}
                         renderHeader={(date) => this.renderHeader(date)}/>
                     </View>
                     
