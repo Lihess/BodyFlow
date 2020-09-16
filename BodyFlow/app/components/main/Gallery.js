@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from '../../styles/main/Gallery.Style'
 import { readtPhotoAll } from '../../backend/Read'
 import { FlatList } from 'react-native-gesture-handler';
-import { common } from '../../styles/Common.Style';
+import { Photo } from './Photo';
 
 export default class Gallery extends React.Component {
     state = {
@@ -17,16 +17,20 @@ export default class Gallery extends React.Component {
 
     // imagePicker를 통해 받은 사진을 state에 저장
     componentDidUpdate(prevProps) {
-        if(this.props.photos && (prevProps.photos != this.props.photos))
-           this.setState({ photos : this.props.photos })
-           
+        if(this.props.photos && (prevProps.photos != this.props.photos)){
+            let photos = this.state.photos;
+          
+            photos.length && photos[0].date == getToday() ?
+                (photos[0].paths).push(...this.props.photos) :
+                photos.unshift({date : getToday(), paths : this.props.photos})
+
+            this.setState({photos : photos})
+        }
     }
 
     componentDidMount = async() => {
         readtPhotoAll(result => {
             this.setState({ photos : result })
-            console.log('result : ',  result.length)
-            console.log('this.state.photos : ', this.state.photos.length)
         })
     }
 
@@ -46,21 +50,20 @@ export default class Gallery extends React.Component {
                 {this.state.photos.length ?
                     <FlatList
                         keyExtractor={item => item.date}
+                        style={styles.gallery}
                         data={this.state.photos}
                         renderItem={({item}) => {
-                            console.log('photo : ', item);
-                                return(
-                                    <View style={styles.dateByPhotos}>
-                                        <Text style={styles.date}>{item.date.replace(/\-/g, '.')}</Text>
-                                        <View style={styles.photoBox}>
-                                            {item.paths.map(path => {
-                                                return <Image style={styles.photo} source={{uri : path}}/>
-                                            })}
-                                        </View>
+                            return(
+                                <View style={styles.dateByPhotos}>
+                                    <Text style={styles.date}>{item.date.replace(/\-/g, '.')}</Text>
+                                    <View style={styles.photoBox}>
+                                        {item.paths.map(path => {
+                                            return <Photo path={path}/>
+                                        })}
                                     </View>
-                                )
-                            }
-                        }
+                                </View>
+                            )
+                        }}
                     /> 
                     : <Text style={styles.placeholder}> 당신의 몸을 기록해보세요 </Text>
                 }
