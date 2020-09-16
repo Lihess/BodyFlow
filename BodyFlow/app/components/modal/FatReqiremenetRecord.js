@@ -108,7 +108,8 @@ export default class FatReqirementRecord extends React.Component {
 
     // DB에 정보 저장
     onSubmit = () => {
-        createUserInfo(this.state.height, this.state.gender);
+        // 값을 입력한 경우에만 저장
+        this.state.height && this.state.gender ? createUserInfo(this.state.height, this.state.gender) : null;
         this.closedModal();
     }
 

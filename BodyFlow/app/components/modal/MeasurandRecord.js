@@ -39,8 +39,6 @@ export default class MeasurandRecord extends React.Component {
             state.visible = nextProps.visible;
         if (nextProps.day && nextProps.day != prevState.day) 
             state.day = nextProps.day;
-        if (nextProps.size && nextProps.size != prevState.size)
-            state.size = nextProps.size
         
         return state;
     }
@@ -133,8 +131,10 @@ export default class MeasurandRecord extends React.Component {
     onSubmit = () => {
         // 기본 저장 형식은 cm
         const size = this.state.unit == 'inch' ? inchToCm(this.state.size) : this.state.size;
+
         // 입력된 정보를 DB에 저장
-        createSizeByPart(this.state.day, this.props.part, size);
+        // 값을 입력한 경우에만 저장
+        this.state.size ? createSizeByPart(this.state.day, this.props.part, size) : null;
 
         this.props.onSubmit();
         this.closedModal();
@@ -193,7 +193,7 @@ export default class MeasurandRecord extends React.Component {
                         <TextInput 
                             style={styles.input} 
                             keyboardType={'numeric'}
-                            placeholder={this.state.size ? (this.state.unit == 'cm' ? `${this.state.size}` : `${cmToInch(this.state.size)}`) : '0.0'}
+                            placeholder={this.props.size ? (this.state.unit == 'cm' ? `${this.props.size}` : `${cmToInch(this.props.size)}`) : '0.0'}
                             value={String(this.state.size)}
                             onChangeText={(text) => this.onChangeText(text)}
                             onFocus={this.onFocusInput}
