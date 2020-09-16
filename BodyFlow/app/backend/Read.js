@@ -118,7 +118,7 @@ const readSizeByPartsAll = (part, callback) => {
 const readtPhotoAll = (callback) => {
     db.transaction(tx => {
         tx.executeSql(
-            'SELECT * FROM photo ORDER BY date DESC',
+            'SELECT * FROM photo ORDER BY date DESC, photo_ornu',
             [],
             (tx, {rows}) => { 
                 const photo = []

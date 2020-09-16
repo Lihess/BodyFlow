@@ -17,7 +17,7 @@ export default class Gallery extends React.Component {
     componentDidMount = async() => {
         readtPhotoAll(result => {
             this.setState({ photos : result })
-            console.log(result)
+            
         })
     }
 
@@ -45,6 +45,7 @@ export default class Gallery extends React.Component {
     }
 
     render(){
+        console.log('result :', this.state.photos)
         return (
             <View style={styles.container}>
                 {this.state.photos.length ?

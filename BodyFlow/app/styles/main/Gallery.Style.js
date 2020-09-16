@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
         marginRight : 5,
         backgroundColor : '#c4c4c4',
         borderColor : '#c4c4c4',
-        borderWidth : 1
+        borderWidth : 1,
+        overflow : 'hidden'
     },
     photo : {
         width : (screenWidth - 120) / 3,

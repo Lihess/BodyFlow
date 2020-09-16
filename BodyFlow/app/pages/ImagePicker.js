@@ -34,33 +34,37 @@ export default class ImagePicker extends React.Component {
     }
 
     // 이미지를 s3에 저장하고 DB에 photo 객체 생성
-    updateImage = (uris) => {
-        uris.map(async(uri) => {
-            try {
-                const fileName = guid() + '.' + uri.substr(uri.lastIndexOf('.') + 1)
-                const response = await fetch(uri);
-                const blob = await response.blob()
-
-                Storage.put(`images/${fileName}`, blob, {
-                    contentType: `image/${fileName}`
-                })
-                .then(() => {
-                    createPhoto(`https://body-flow.s3.ap-northeast-2.amazonaws.com/public/images/${fileName}`)
-                })
-                .catch(err => console.log(err))
-                  
-            } catch (err) {
-                console.log(err)
-            }
-        })
+    updateImage = async(uri, ornu) => {
+        try {
+            const fileName = guid() + '.' + uri.substr(uri.lastIndexOf('.') + 1)
+            const response = await fetch(uri);
+            const blob = await response.blob()
+            Storage.put(`images/${fileName}`, blob, {
+                contentType: `image/${fileName}`
+            })
+            .then(() => {
+                createPhoto(`https://body-flow.s3.ap-northeast-2.amazonaws.com/public/images/${fileName}`, ornu)
+            })
+            .catch(err => console.log(err))
+              
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     // 이미지 uri를 받기 위한 함수
     imagesCallback = (callback) => {    
         callback.then(async (photos) => {
-            const photoUris = photos.map(photo => {return photo.uri})
+            var ornu = this.props.navigation.state.params.todayPhoto
+
+            const photoUris = photos.map((photo) => {
+                ornu = ornu + 1
+                this.updateImage(photo.uri, ornu)
+                
+                return photo.uri
+            })
             
-            this.updateImage(photoUris)
+            //this.updateImage(photoUris)
             
             // 새로 선택한 사진을 업데이트 한 후, 사진 데이터를 새롭게 받아서 gallery로 넘김
             // flag만 주고 받아서 하고 싶었으나 props가 한 번 지정된 후에는 imagepicker 에서 변경하지 않는 이상 어려워서..
