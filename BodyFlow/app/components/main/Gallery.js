@@ -7,7 +7,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from '../../styles/main/Gallery.Style'
 import { readtPhotoAll } from '../../backend/Read'
 import { FlatList } from 'react-native-gesture-handler';
-import { Photo } from './Photo';
 
 export default class Gallery extends React.Component {
     state = {
@@ -57,8 +56,12 @@ export default class Gallery extends React.Component {
                                 <View style={styles.dateByPhotos}>
                                     <Text style={styles.date}>{item.date.replace(/\-/g, '.')}</Text>
                                     <View style={styles.photoBox}>
-                                        {item.paths.map(path => {
-                                            return <Photo path={path}/>
+                                        {item.paths.map((path, i) => {
+                                            return (
+                                                <TouchableOpacity key={i} style={styles.photoButton} onPress={() => NavigationService.navigate('PhotoPage', {path : path})}>
+                                                    <Image style={styles.photo} source={{uri : path}}/>
+                                                </TouchableOpacity>
+                                            )
                                         })}
                                     </View>
                                 </View>

@@ -133,23 +133,26 @@ export default class Chart extends React.Component {
 
                 <ChartByPart data={this.state.data} period={this.state.period} unit={this.state.unit}/>
                 
-                <FlatList style={styles.dataBox}>
-                    {dataReverse.map((data, i) => 
+                <FlatList 
+                    style={styles.dataBox}
+                    data={dataReverse}
+                    renderItem={({item}) => 
                         <DataByDate 
                             key={i}
-                            date={data.date} 
+                            date={item.date} 
                             part={this.state.part}
-                            size={this.state.unit == 'cm' ? data.sizeByPart : cmToInch(data.sizeByPart)} 
+                            size={this.state.unit == 'cm' ? item.sizeByPart : cmToInch(item.sizeByPart)} 
                             unit={this.state.unit}
                             variance={i == 0 ? 
                                         '0.00' : 
                                         (this.state.unit == 'cm' ? 
-                                            (data.sizeByPart - this.state.data[i-1].sizeByPart).toFixed(2)
-                                            : (cmToInch(data.sizeByPart) - cmToInch(this.state.data[i-1].sizeByPart)).toFixed(2))}
+                                            (item.sizeByPart - this.state.data[i-1].sizeByPart).toFixed(2)
+                                            : (cmToInch(item.sizeByPart) - cmToInch(this.state.data[i-1].sizeByPart)).toFixed(2))}
                             last={(i == this.state.length - 1 && i > 7) ? true : false}
                             onChangeData={this.getData}                
-                            />)}
-                </FlatList>
+                        />
+                    }
+                />
                 
                 <PartPicker 
                     visible={this.state.modalVisiable} 

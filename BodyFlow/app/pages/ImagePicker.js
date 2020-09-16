@@ -30,8 +30,7 @@ export default class ImagePicker extends React.Component {
     static navigationOptions = { headerShown : false };
 
     state = {
-        count : 0,
-        photos : []
+        count : 0
     }
 
     // 이미지를 s3에 저장하고 DB에 photo 객체 생성

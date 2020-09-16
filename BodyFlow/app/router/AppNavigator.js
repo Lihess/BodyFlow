@@ -6,11 +6,13 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import MainPage from '../pages/Main';
 import ChartPage from '../pages/Chart';
 import ImagePicker from '../pages/ImagePicker';
+import PhotoPage from '../pages/Photo';
  
 const AuthStack = createStackNavigator({
     MainPage : { screen : MainPage },
     ChartPage : { screen : ChartPage },
-    ImagePicker : { screen : ImagePicker }
+    ImagePicker : { screen : ImagePicker },
+    PhotoPage : { screen : PhotoPage } 
 });
  
 const AppNavigator = createSwitchNavigator(

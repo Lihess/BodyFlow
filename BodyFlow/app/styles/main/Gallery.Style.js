@@ -14,22 +14,32 @@ const styles = StyleSheet.create({
         overflow : 'hidden'
     },
     dateByPhotos : {
+        width : screenWidth,
         marginBottom : 15,
+        alignItems : 'flex-start',
+        justifyContent : 'flex-start'
     },
     photoBox : {
         paddingLeft : 15,
         flexDirection : 'row',
-        alignItems : 'center'
     },
     date : {
         marginBottom : 5,
         fontSize : normalize(15),
-        fontWeight : '700'
+        fontWeight : '700',
+        textAlign : 'left'
+    },
+    photoButton : {
+        width : (screenWidth - 120) / 3,
+        height : (screenWidth - 120) / 3,
+        marginRight : 5,
+        backgroundColor : '#c4c4c4',
+        borderColor : '#c4c4c4',
+        borderWidth : 1
     },
     photo : {
         width : (screenWidth - 120) / 3,
-        height : (screenWidth - 120) / 3,
-        marginRight : 5
+        height : (screenWidth - 120) / 3
     },
     placeholder : {
         color : '#848484',
