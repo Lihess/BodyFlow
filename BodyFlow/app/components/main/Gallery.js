@@ -14,6 +14,12 @@ export default class Gallery extends React.Component {
         photos : []
     }
 
+    componentDidMount = async() => {
+        readtPhotoAll(result => {
+            this.setState({ photos : result })
+        })
+    }
+
     // imagePicker를 통해 받은 사진을 state에 저장
     componentDidUpdate(prevProps) {
         if(this.props.photos && (prevProps.photos != this.props.photos)){
@@ -25,12 +31,6 @@ export default class Gallery extends React.Component {
 
             this.setState({photos : photos})
         }
-    }
-
-    componentDidMount = async() => {
-        readtPhotoAll(result => {
-            this.setState({ photos : result })
-        })
     }
 
     // 오늘 올린 사진의 갯수를 계산하여 imegaPicker로 넘김

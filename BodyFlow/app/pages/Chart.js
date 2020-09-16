@@ -84,7 +84,8 @@ export default class Chart extends React.Component {
     
     render(){
         const dataReverse = this.state.data.slice().reverse();
-        
+        const len = this.state.data.length
+
         return (
             <SafeAreaView style={common.container}>
                 <StatusBar backgroundColor={'#f1f1f1'} barStyle="dark-content"/>
@@ -133,26 +134,28 @@ export default class Chart extends React.Component {
 
                 <ChartByPart data={this.state.data} period={this.state.period} unit={this.state.unit}/>
                 
-                <FlatList 
-                    style={styles.dataBox}
-                    data={dataReverse}
-                    renderItem={({item}) => 
-                        <DataByDate 
-                            key={i}
-                            date={item.date} 
-                            part={this.state.part}
-                            size={this.state.unit == 'cm' ? item.sizeByPart : cmToInch(item.sizeByPart)} 
-                            unit={this.state.unit}
-                            variance={i == 0 ? 
-                                        '0.00' : 
-                                        (this.state.unit == 'cm' ? 
-                                            (item.sizeByPart - this.state.data[i-1].sizeByPart).toFixed(2)
-                                            : (cmToInch(item.sizeByPart) - cmToInch(this.state.data[i-1].sizeByPart)).toFixed(2))}
-                            last={(i == this.state.length - 1 && i > 7) ? true : false}
-                            onChangeData={this.getData}                
-                        />
-                    }
-                />
+                { len ?
+                    <FlatList 
+                        keyExtractor={item => item.date}
+                        style={styles.dataBox}
+                        data={dataReverse}
+                        renderItem={({item, index}) => 
+                            <DataByDate 
+                                date={item.date} 
+                                part={this.state.part}
+                                size={this.state.unit == 'cm' ? item.sizeByPart : cmToInch(item.sizeByPart)} 
+                                unit={this.state.unit}
+                                variance={index == len - 1 ? 
+                                            '0.00' : 
+                                            (this.state.unit == 'cm' ? 
+                                                (item.sizeByPart - dataReverse[index+1].sizeByPart).toFixed(2)
+                                                : (cmToInch(item.sizeByPart) - cmToInch(dataReverse[index+1].sizeByPart)).toFixed(2))}
+                                last={(index == len - 1 && index > 7) ? true : false}
+                                onChangeData={this.getData}                
+                            />
+                        }
+                    /> : null
+                }
                 
                 <PartPicker 
                     visible={this.state.modalVisiable} 
