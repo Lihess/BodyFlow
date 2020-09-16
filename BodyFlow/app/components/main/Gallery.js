@@ -17,6 +17,7 @@ export default class Gallery extends React.Component {
     componentDidMount = async() => {
         readtPhotoAll(result => {
             this.setState({ photos : result })
+            console.log(result)
         })
     }
 

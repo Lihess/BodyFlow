@@ -9,9 +9,6 @@ const db = SQLite.openDatabase('bodyFlow.db');
 const createTables = () => {
     db.transaction(tx => {
         tx.executeSql(
-            'Drop TABLE photo;'
-        )
-        tx.executeSql(
             'CREATE TABLE IF NOT EXISTS size_by_part ( date	TEXT NOT NULL, part TEXT NOT NULL, size REAL NOT NULL, PRIMARY KEY(date, part));',
         );
         tx.executeSql(

@@ -34,17 +34,18 @@ export default class ImagePicker extends React.Component {
     }
 
     // 이미지를 s3에 저장하고 DB에 photo 객체 생성
-    updateImage = (paths, uris) => {
-        paths.map(async(path, i) => {
+    updateImage = (uris) => {
+        uris.map(async(uri) => {
             try {
-                const response = await fetch(uris[i]);
+                const fileName = guid() + '.' + uri.substr(uri.lastIndexOf('.') + 1)
+                const response = await fetch(uri);
                 const blob = await response.blob()
-                
-                Storage.put(`images/${path.substr(64)}`, blob, {
-                    contentType: `image/${path.substr(path.lastIndexOf('.') + 1)}`
+
+                Storage.put(`images/${fileName}`, blob, {
+                    contentType: `image/${fileName}`
                 })
                 .then(() => {
-                    createPhoto(path)
+                    createPhoto(`https://body-flow.s3.ap-northeast-2.amazonaws.com/public/images/${fileName}`)
                 })
                 .catch(err => console.log(err))
                   
@@ -57,27 +58,13 @@ export default class ImagePicker extends React.Component {
     // 이미지 uri를 받기 위한 함수
     imagesCallback = (callback) => {    
         callback.then(async (photos) => {
-            const photoPaths = []
-            const photoUris = []
-
-            photos.map(photo => {
-                const fileName = guid() + '.' + photo.uri.substr(photo.uri.lastIndexOf('.') + 1)
-                const path = `https://body-flow.s3.ap-northeast-2.amazonaws.com/public/images/${fileName}`
-
-                photoPaths.push(path)
-                photoUris.push(photo.uri)
-            })
+            const photoUris = photos.map(photo => {return photo.uri})
             
-            this.updateImage(photoPaths, photoUris)
-            //readtPhotoAll(result => {
-            //        console.log('2')
-            //        NavigationService.navigate('MainPage', { photos : result });
-            //    })
+            this.updateImage(photoUris)
             
-           
             // 새로 선택한 사진을 업데이트 한 후, 사진 데이터를 새롭게 받아서 gallery로 넘김
             // flag만 주고 받아서 하고 싶었으나 props가 한 번 지정된 후에는 imagepicker 에서 변경하지 않는 이상 어려워서..
-            NavigationService.navigate('MainPage', { photos : photoPaths });
+            NavigationService.navigate('MainPage', { photos : photoUris });
         })
         .catch((e) => console.log(e))
     };
