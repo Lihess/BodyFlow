@@ -1,7 +1,6 @@
 // Create.js
 // Create 관련 쿼리를 모아놓은 파일.
 import * as SQLite from 'expo-sqlite';
-import { sizeByPartInsertTR, userInfoInsertTR } from './Trigger';
 
 const db = SQLite.openDatabase('bodyFlow.db');
 
@@ -22,14 +21,17 @@ const createTables = () => {
 
 // size_by_part insert
 const createSizeByPart = (date, part, size) => {
-    db.transaction(tx => {
-        tx.executeSql(
-            'INSERT OR REPLACE INTO size_by_part VALUES (?, ?, ?);', [date, part, size],
-        );
-    })
-
-    // 트리거
-    sizeByPartInsertTR(date, part, size);
+    date ? 
+        db.transaction(tx => {
+            tx.executeSql(
+                'INSERT OR REPLACE INTO size_by_part VALUES (?, ?, ?);', [date, part, size],
+            );
+        }) :
+        db.transaction(tx => {
+            tx.executeSql(
+                'INSERT OR REPLACE INTO size_by_part VALUES (date(\'now\'), ?, ?);', [part, size],
+            );
+        })
 }
 
 // user_info insert
@@ -39,8 +41,6 @@ const createUserInfo = (height, gender) => {
             'INSERT OR REPLACE INTO user_info VALUES (date(\'now\'), ?, ?);', [height, gender]
         );
     })
-
-    userInfoInsertTR(height, gender)
 }
 
 // insert photo. 
