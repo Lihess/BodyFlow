@@ -44,7 +44,7 @@ export class FatProvider extends React.Component {
         })
     }
 
-    // SQLite의 삽입 속도가 느려서.... 계산해서 출력하는걸로
+    // 계산 후 DB에 저장
     setFatPercentHG = (height, gender) => {
         if (this.state.waist) {
             const fatPercent = ((gender == 'M' ? 64 : 76) - (20 * (height / this.state.waist))).toFixed(1)
@@ -58,7 +58,7 @@ export class FatProvider extends React.Component {
         }
     }
 
-    // SQLite의 삽입 속도가 느려서.... 계산해서 출력하는걸로
+    // 계산 후 DB에 저장
     setFatPercentW = (waist) => {
         console.log('dd')
         if (this.state.height && this.state.gender){
@@ -73,7 +73,6 @@ export class FatProvider extends React.Component {
     }
 
     render(){
-        console.log(this.state)
         return(
             <FatContext.Provider value={this.state}>
                 {this.props.children}

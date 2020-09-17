@@ -17,7 +17,6 @@ export default class Gallery extends React.Component {
     componentDidMount = async() => {
         readtPhotoAll(result => {
             this.setState({ photos : result })
-            
         })
     }
 
@@ -25,27 +24,39 @@ export default class Gallery extends React.Component {
     componentDidUpdate(prevProps) {
         if(this.props.photos && (prevProps.photos != this.props.photos)){
             let photos = this.state.photos;
-          
+            
+            // 사진 데이터의 가장 최근 날짜가 오늘인지 아닌지를 판단하여, 오늘 날짜에 맞추어 prop를 state.photos에 삽입
             photos.length && photos[0].date == getToday() ?
                 (photos[0].paths).push(...this.props.photos) :
                 photos.unshift({date : getToday(), paths : this.props.photos})
 
             this.setState({photos : photos})
         }
+        
+        if(this.props.deletePhoto && (prevProps.deletePhoto != this.props.deletePhoto)){
+            readtPhotoAll(result => {
+                console.log('delet : ', result)
+                this.setState({ photos : result })
+            })
+        }
     }
 
-    // 오늘 올린 사진의 갯수를 계산하여 imegaPicker로 넘김
+    // 오늘 올린 사진의 갯수와 마지막 순번을 계산하여 imegaPicker로 넘김
     onPeress = () => { 
-        var todayPhoto = 0
+        var todayPhoto = 0;
+        var lastOrnu = 0;
 
-        this.state.photos.length && this.state.photos[0].date == getToday() ?
-            todayPhoto = this.state.photos[0].paths.length : null
-            
-        NavigationService.navigate('ImagePicker', {todayPhoto : todayPhoto})
+        if (this.state.photos.length && this.state.photos[0].date == getToday()){
+            const pathsLen = this.state.photos[0].paths.length;
+
+            todayPhoto = pathsLen
+            lastOrnu = this.state.photos[0].paths[pathsLen - 1].ornu
+        }
+        
+        NavigationService.navigate('ImagePicker', {todayPhoto : todayPhoto, lastOrnu : lastOrnu})
     }
 
     render(){
-        console.log('result :', this.state.photos)
         return (
             <View style={styles.container}>
                 {this.state.photos.length ?
@@ -60,8 +71,8 @@ export default class Gallery extends React.Component {
                                     <View style={styles.photoBox}>
                                         {item.paths.map((path, i) => {
                                             return (
-                                                <TouchableOpacity key={i} style={styles.photoButton} onPress={() => NavigationService.navigate('PhotoPage', {path : path})}>
-                                                    <Image style={styles.photo} source={{uri : path}}/>
+                                                <TouchableOpacity key={i} style={styles.photoButton} onPress={() => NavigationService.navigate('PhotoPage', {date : item.date, ornu : path.ornu, path : path.path})}>
+                                                    <Image style={styles.photo} source={{uri : path.path}}/>
                                                 </TouchableOpacity>
                                             )
                                         })}

@@ -4,27 +4,12 @@ import { ImageBrowser } from 'expo-image-picker-multiple';
 import { NavigationService } from '../router/service';
 import { Ionicons } from '@expo/vector-icons'; 
 import { View, TouchableOpacity, Text } from 'react-native';
-import Amplify, { Storage } from 'aws-amplify';
+
 import styles from '../styles/ImagePicker/ImagePicker.Style'
 import { common } from '../styles/Common.Style';
 import { createPhoto } from '../backend/Create'
-import { readtPhotoAll } from '../backend/Read'
+import { s3UploadPhoto } from '../backend/s3Service'
 
-// AWS S3와 연결하기 위함. serverless 활용
-// https://dingcodingco.tistory.com/14
-// https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#manual-setup-import-storage-bucket
-Amplify.configure({
-    Auth: {
-        identityPoolId: 'ap-northeast-2:fcc31825-3672-46c3-896c-8386f6890f03', //REQUIRED - Amazon Cognito Identity Pool ID
-        region: 'ap-northeast-2', // REQUIRED - Amazon Cognito Region
-    },
-    Storage: {
-        AWSS3: {
-           bucket: 'body-flow', //REQUIRED - Amazon S3 bucket
-           region: 'ap-northeast-2', //OPTIONAL - Amazon service region
-       }
-   }
-});
 
 export default class ImagePicker extends React.Component {
     static navigationOptions = { headerShown : false };
@@ -35,39 +20,32 @@ export default class ImagePicker extends React.Component {
 
     // 이미지를 s3에 저장하고 DB에 photo 객체 생성
     updateImage = async(uri, ornu) => {
-        try {
-            const fileName = guid() + '.' + uri.substr(uri.lastIndexOf('.') + 1)
-            const response = await fetch(uri);
-            const blob = await response.blob()
-            Storage.put(`images/${fileName}`, blob, {
-                contentType: `image/${fileName}`
-            })
+        // guid를 이용한 유니트한 이름 생성, 확장자도 같이
+        const fileName = guid() + '.' + uri.substr(uri.lastIndexOf('.') + 1)
+
+        s3UploadPhoto(uri, fileName)
             .then(() => {
+                // DB에 사진관련 데이터 저장
                 createPhoto(`https://body-flow.s3.ap-northeast-2.amazonaws.com/public/images/${fileName}`, ornu)
             })
             .catch(err => console.log(err))
-              
-        } catch (err) {
-            console.log(err)
-        }
     }
 
     // 이미지 uri를 받기 위한 함수
     imagesCallback = (callback) => {    
         callback.then(async (photos) => {
-            var ornu = this.props.navigation.state.params.todayPhoto
+            var ornu = this.props.navigation.state.params.lastOrnu
 
             const photoUris = photos.map((photo) => {
                 ornu = ornu + 1
                 this.updateImage(photo.uri, ornu)
                 
-                return photo.uri
+                return {ornu : ornu, path : photo.uri}
             })
             
-            //this.updateImage(photoUris)
-            
-            // 새로 선택한 사진을 업데이트 한 후, 사진 데이터를 새롭게 받아서 gallery로 넘김
+            // 새로 선택한 사진을 업데이트 한 후, 사진 데이터의 local uri 새롭게 받아서 gallery로 넘김
             // flag만 주고 받아서 하고 싶었으나 props가 한 번 지정된 후에는 imagepicker 에서 변경하지 않는 이상 어려워서..
+            // DB에서 read를 새로 하기에는 DB 삽입 속도가 느려..
             NavigationService.navigate('MainPage', { photos : photoUris });
         })
         .catch((e) => console.log(e))
@@ -127,6 +105,6 @@ export default class ImagePicker extends React.Component {
 function guid() {
     function _s4() {
         return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
-}
-return _s4() + _s4() + '-' + _s4() + '-' + _s4() + '-' + _s4() + '-' + _s4() + _s4() + _s4();
+    }
+    return _s4() + _s4() + '-' + _s4() + '-' + _s4() + '-' + _s4() + '-' + _s4() + _s4() + _s4();
 }

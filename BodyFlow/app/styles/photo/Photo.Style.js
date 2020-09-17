@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {normalize, screenWidth} from '../ResponsiveFontSize.js'
+import { screenWidth } from '../ResponsiveFontSize.js'
 
 const styles = StyleSheet.create({
     container : {
@@ -11,6 +11,11 @@ const styles = StyleSheet.create({
         position : "absolute",
         top : 10,
         left : 10,
+    },
+    trashIcon : {
+        position : "absolute",
+        top : 10,
+        right : 10,
     },
     photo : {
         width : screenWidth,

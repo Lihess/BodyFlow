@@ -21,7 +21,10 @@ export default class Main extends React.Component {
                 <FatProvider>
                     <Swiper style={styles.wrapper} paginationStyle={styles.dotPosition} activeDotColor={'orange'}>
                         <BodySize/>
-                        <Gallery photos={this.props.navigation.state.params ? this.props.navigation.state.params.photos : []}/>
+                        <Gallery 
+                            photos={this.props.navigation.state.params ? this.props.navigation.state.params.photos : []}
+                            deletePhoto={this.props.navigation.state.params ? this.props.navigation.state.params.deletePhoto : null}
+                        />
                     </Swiper>
                     <WeightAndFat/>
                 </FatProvider>
