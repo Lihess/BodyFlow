@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationService } from '../router/service';
-import { Image, SafeAreaView, StatusBar } from 'react-native';
+import { Image, SafeAreaView, StatusBar, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from '../styles/photo/Photo.Style';
@@ -41,9 +41,11 @@ export default class Photo extends React.Component {
             <SafeAreaView style={styles.container}>
                 <StatusBar backgroundColor={'black'} barStyle={"light-content"}/>
                 
+                <View style={styles.iconBox}/>
                 <Feather name="x" style={styles.xIcon} size={24} color="white" onPress={() => NavigationService.back()} />
                 <MaterialCommunityIcons style={styles.trashIcon} name="trash-can-outline" size={24} color="white" onPress={this.deletePhoto}/>
-                <Image style={styles.photo} resizeMode="contain" source={{uri : this.state.path}}/> 
+                
+                <Image style={styles.photo} source={{uri : this.state.path}}/> 
             </SafeAreaView>
         );
     }
