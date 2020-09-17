@@ -60,7 +60,6 @@ export class FatProvider extends React.Component {
 
     // 계산 후 DB에 저장
     setFatPercentW = (waist) => {
-        console.log('dd')
         if (this.state.height && this.state.gender){
             const fatPercent = ((this.state.gender == 'M' ? 64 : 76) - (20 * (this.state.height / waist))).toFixed(1)
             this.setState({

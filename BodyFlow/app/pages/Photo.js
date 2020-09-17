@@ -36,7 +36,7 @@ export default class Photo extends React.Component {
     }
 
     render(){
-        console.log(this.state.photo)
+
         return (
             <SafeAreaView style={styles.container}>
                 <StatusBar backgroundColor={'black'} barStyle={"light-content"}/>

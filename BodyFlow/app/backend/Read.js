@@ -122,7 +122,6 @@ const readtPhoto = (date, ornu, callback) => {
             [date, ornu],
             (tx, {rows}) => { 
                 const path = rows['_array'].length ? rows['_array'][0].path : [];
-                console.log('path : ', path)
                 callback(path); 
             }
         )

@@ -34,10 +34,7 @@ export default class Gallery extends React.Component {
         }
         
         if(this.props.deletePhoto && (prevProps.deletePhoto != this.props.deletePhoto)){
-            readtPhotoAll(result => {
-                console.log('delet : ', result)
-                this.setState({ photos : result })
-            })
+            readtPhotoAll(result => this.setState({ photos : result }))
         }
     }
 

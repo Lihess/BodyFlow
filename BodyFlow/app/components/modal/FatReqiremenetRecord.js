@@ -60,7 +60,6 @@ export default class FatReqirementRecord extends React.Component {
 
     // 입력된 값의 범위는 10.0 ~ 250.0 만 허용하기 위한 함수
     checkRange = (text) => {
-        console.log(text);
         if (text === '0' || (text < 10 && text.length > 1)) {
             this.setState({ rangeInformation : true })
             return '10.0';
