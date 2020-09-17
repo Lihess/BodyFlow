@@ -17,22 +17,22 @@ export default class Photo extends React.Component {
         path : this.props.navigation.state.params.path
     }
 
-    deletePhoto = async() => {
-        var path = this.state.path;
-        console.log('path ',path)
-        if (path.substr(0, path.lastIndexOf('/')) != 'https://body-flow.s3.ap-northeast-2.amazonaws.com/public/images' ) {
+    // 사진 삭제
+    deletePhoto = () => {
+        // path가 local uri일 경우, s3 path를 읽어들여서 삭제함
+        if (this.state.path.substr(0, this.state.path.lastIndexOf('/')) != 'https://body-flow.s3.ap-northeast-2.amazonaws.com/public/images' ) {
             readtPhoto(this.state.date, this.state.ornu, (result) => {
-                console.log('path ', result)
-                path = result
+                s3DeletePhoto(result)
+                    .then(() => deletePhoto(this.state.date, this.state.ornu))
             })
+        } 
+        else {
+            s3DeletePhoto(this.state.path)
+                .then(() => deletePhoto(this.state.date, this.state.ornu))
         }
-        
-        s3DeletePhoto(path)
-            .then(
-                () => deletePhoto(this.state.date, this.state.ornu)
-            )
 
-        NavigationService.navigate('MainPage', { deletePhoto : path });
+        // 삭제한 path를 prop로 넘겨, 데이터를 다시 불러올 수 있도록 함
+        NavigationService.navigate('MainPage', { deletePhoto : this.state.path });
     }
 
     render(){

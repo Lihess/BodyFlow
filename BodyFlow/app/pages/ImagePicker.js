@@ -1,15 +1,14 @@
 import React from 'react';
+import * as ImageManipulator from "expo-image-manipulator";
 import { ImageBrowser } from 'expo-image-picker-multiple';
 // https://snack.expo.io/@monstrodev/expo-image-picker-multiple-full-example
 import { NavigationService } from '../router/service';
 import { Ionicons } from '@expo/vector-icons'; 
 import { View, TouchableOpacity, Text } from 'react-native';
-
 import styles from '../styles/ImagePicker/ImagePicker.Style'
 import { common } from '../styles/Common.Style';
 import { createPhoto } from '../backend/Create'
 import { s3UploadPhoto } from '../backend/s3Service'
-
 
 export default class ImagePicker extends React.Component {
     static navigationOptions = { headerShown : false };
@@ -19,15 +18,23 @@ export default class ImagePicker extends React.Component {
     }
 
     // 이미지를 s3에 저장하고 DB에 photo 객체 생성
-    updateImage = async(uri, ornu) => {
+    updateImage = async(uri, width, height, ornu) => {
         // guid를 이용한 유니트한 이름 생성, 확장자도 같이
         const fileName = guid() + '.' + uri.substr(uri.lastIndexOf('.') + 1)
-
+        
+        // width, height를 비교하여 더 크기가 큰 쪽을 900으로 resize하여 파일을 압축!
+        if (width > height && width > 900) {
+            const compessPhoto = await ImageManipulator.manipulateAsync(uri, [{resize: { width : 900 }}]);
+            uri = compessPhoto.uri;
+        }
+        else if (width < height && height > 900) {
+            const compessPhoto = await ImageManipulator.manipulateAsync(uri, [{resize: { height : 900 }}]);
+            uri = compessPhoto.uri;
+        }
+        
         s3UploadPhoto(uri, fileName)
-            .then(() => {
-                // DB에 사진관련 데이터 저장
-                createPhoto(`https://body-flow.s3.ap-northeast-2.amazonaws.com/public/images/${fileName}`, ornu)
-            })
+            .then(() => 
+                createPhoto(`https://body-flow.s3.ap-northeast-2.amazonaws.com/public/images/${fileName}`, ornu))
             .catch(err => console.log(err))
     }
 
@@ -38,8 +45,8 @@ export default class ImagePicker extends React.Component {
 
             const photoUris = photos.map((photo) => {
                 ornu = ornu + 1
-                this.updateImage(photo.uri, ornu)
-                
+                this.updateImage(photo.uri, photo.width, photo.height, ornu)
+               
                 return {ornu : ornu, path : photo.uri}
             })
             
@@ -54,7 +61,7 @@ export default class ImagePicker extends React.Component {
     // count 올리는 함수
     updateHandler = (count, onSubmit) => {
         this.props.navigation.setParams({
-          headerRight: onSubmit,
+            headerRight: onSubmit,
         });
 
         this.setState({ count : count })

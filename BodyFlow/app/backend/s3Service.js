@@ -27,7 +27,7 @@ const s3UploadPhoto = async(uri, fileName) => {
             contentType: `image/${fileName}`
         })
     } catch (err) {
-            console.log(err)
+        console.log(err)
     }
 }
 
@@ -37,8 +37,6 @@ const s3DeletePhoto = async(uri) => {
         const fileName = uri.substr(uri.lastIndexOf('/') + 1)
 
         Storage.remove(`images/${fileName}`)
-            .then(result => console.log('result '))
-            .catch(err => console.log('err '));
     } catch (err) {
         console.log(err)
     }
