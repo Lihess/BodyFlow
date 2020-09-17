@@ -114,6 +114,22 @@ const readSizeByPartsAll = (part, callback) => {
     })
 } 
 
+// 사진 데이터를 반환.
+const readtPhoto = (date, ornu, callback) => {
+    db.transaction(tx => {
+        tx.executeSql(
+            'SELECT path FROM photo WHERE date=? AND photo_ornu=?',
+            [date, ornu],
+            (tx, {rows}) => { 
+                const path = rows['_array'].length ? rows['_array'][0].path : [];
+                console.log('path : ', path)
+                callback(path); 
+            }
+        )
+    })
+}
+
+
 // 모든 사진 데이터를 반환. 이때, 날짜별로 배열을 만들어 반환함
 const readtPhotoAll = (callback) => {
     db.transaction(tx => {
@@ -127,7 +143,8 @@ const readtPhotoAll = (callback) => {
                 if(rows['_array'].length){
                     rows['_array'].map((row, i) => {
                         (i == 0) || (rows['_array'][i-1].date != row.date) ?
-                            photo.push({date : row.date, paths : [row.path]}) : photo[photo.length -1].paths.push(row.path)
+                            photo.push({date : row.date, paths : [{ornu : row.photo_ornu, path :row.path}]})
+                            : photo[photo.length -1].paths.push({ornu : row.photo_ornu, path : row.path})
                         })
                 }
                 callback(photo); 
@@ -137,5 +154,5 @@ const readtPhotoAll = (callback) => {
 }
 
 export {readSizeByPartsLatest, readSizeByPartsLatestW, readSizeByPartsLatestF
-        , readUserInfoLatest, readWaistToday, readSizeByPartsLimit7, readSizeByPartsAll,
-        readtPhotoAll};
+        , readUserInfoLatest, readWaistToday, readSizeByPartsLimit7, readSizeByPartsAll
+        , readtPhoto, readtPhotoAll};
