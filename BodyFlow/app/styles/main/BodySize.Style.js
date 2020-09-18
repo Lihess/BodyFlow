@@ -12,13 +12,25 @@ const styles = StyleSheet.create({
         paddingBottom : 25,
         backgroundColor : 'white',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         borderRadius : 10,
         overflow : 'hidden'
     },
+    imageBox : {
+        width: "65%",
+        marginRight : 15
+    },
+    imageBackground : {
+        width: "100%",
+        height: "100%"
+    },
+    bodyImage : {
+        flex : 1,
+        width: "100%",
+    },
     sizesBox : {
         width:'30%',
-        justifyContent : 'center'
+        justifyContent : 'center',
     },
     switch : {
         width : '90%',
