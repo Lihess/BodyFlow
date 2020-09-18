@@ -38,7 +38,7 @@ export default class BodySize extends React.Component {
 
     // 부위별 사이즈 박스를 눌렀을때 실행되는 함수
     onPress = (part) => {
-        //this.toggleVisible();
+        this.toggleVisible();
 
         this.props.onPress(part);
         this.setState({ modalPart : part });
