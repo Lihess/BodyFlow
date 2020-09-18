@@ -1,15 +1,14 @@
 // BodySize.Style.js
 
 import {StyleSheet} from 'react-native';
-import {normalize, screenWidth} from '../ResponsiveFontSize.js'
+import {normalize} from '../ResponsiveFontSize.js'
 
 const styles = StyleSheet.create({
     container: {
-        flex : 5,
         flexDirection : 'row',
         width : '90%',
         padding : 15,
-        paddingBottom : 25,
+        paddingBottom : 35,
         backgroundColor : 'white',
         alignItems: 'center',
         justifyContent: 'center',
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
     },
     switchFont : {
         fontWeight : '700',
-        fontSize : screenWidth > 400 ? normalize(12) : normalize(14)
+        fontSize : normalize(12)
     }
 });
 

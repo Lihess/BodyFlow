@@ -1,7 +1,7 @@
 // WeightAndFat.Style.js
 
 import {StyleSheet} from 'react-native';
-import {normalize, screenWidth} from '../ResponsiveFontSize.js'
+import {normalize} from '../ResponsiveFontSize.js'
 
 const styles = StyleSheet.create({
     container : {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         color : '#848484',
     },
     title : {
-        fontSize : screenWidth > 400 ? normalize(12) : normalize(14),
+        fontSize : normalize(13),
         fontWeight : '700',
         color : '#848484',
         marginLeft : 8
@@ -31,12 +31,12 @@ const styles = StyleSheet.create({
     },
     size : {
         flex : 1,
-        fontSize : screenWidth > 400 ? normalize(20) : normalize(22),
+        fontSize : normalize(20),
         fontWeight : '700',
         textAlign : 'right'
     },
     unit : {
-        fontSize : screenWidth > 400 ? normalize(14) : normalize(16),
+        fontSize : normalize(15),
         fontWeight : '700',
         color : '#848484',
         paddingBottom : 2,

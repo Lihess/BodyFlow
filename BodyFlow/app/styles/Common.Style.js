@@ -43,7 +43,7 @@ const modal = StyleSheet.create({
     },
     title : {
         marginRight : 2,
-        fontSize : screenWidth > 400 ? normalize(18) : normalize(20),
+        fontSize : normalize(18),
         fontWeight : '700'
     },
     information : {
@@ -59,7 +59,7 @@ const modal = StyleSheet.create({
     },
     submitText : {
         color : 'white',
-        fontSize : screenWidth > 400 ? normalize(12) : normalize(15),
+        fontSize : normalize(13),
         fontWeight : '700',
         textAlign : 'center'
     }

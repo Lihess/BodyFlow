@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {normalize, screenWidth} from '../ResponsiveFontSize.js'
+import {normalize} from '../ResponsiveFontSize.js'
 
 const styles = StyleSheet.create({
     partBox : {
@@ -17,14 +17,14 @@ const styles = StyleSheet.create({
     },
     partFont : {
         color : '#b4b4b4',
-        fontSize : screenWidth > 400 ? normalize(12) : normalize(15),
+        fontSize : normalize(13),
         fontWeight : '700',
         textAlign : 'center'
     },
     selectPart : {
         padding : 2,
         color : 'black',
-        fontSize : screenWidth > 400 ? normalize(15) : normalize(18),
+        fontSize : normalize(16),
     }
 });
 

@@ -1,7 +1,7 @@
 // SizeByPart.Style.js
 
 import {StyleSheet} from 'react-native';
-import {normalize, screenWidth} from '../ResponsiveFontSize.js'
+import {normalize} from '../ResponsiveFontSize.js'
 
 const styles = StyleSheet.create({
     box : {
@@ -13,12 +13,12 @@ const styles = StyleSheet.create({
         borderWidth : 1
     },
     smallText : {
-        fontSize : screenWidth > 400 ? normalize(10) : normalize(12),
+        fontSize : normalize(10),
         fontWeight : '700',
         color : '#848484'
     },
     size : {
-        fontSize : screenWidth > 400 ? normalize(14) : normalize(16),
+        fontSize : normalize(15),
         fontWeight : '700',
     }
 });

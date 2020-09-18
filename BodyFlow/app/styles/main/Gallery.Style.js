@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     },
     dateByPhotos : {
         width : screenWidth,
-        marginBottom : 15,
+        marginBottom : 20,
         alignItems : 'flex-start',
         justifyContent : 'flex-start'
     },

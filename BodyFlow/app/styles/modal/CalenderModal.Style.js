@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         marginBottom : 20,
     },
     header : {
-        fontSize : screenWidth > 400 ? normalize(17) : normalize(19),
+        fontSize : normalize(18),
         fontWeight : '700'
     }
 });

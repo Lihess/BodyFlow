@@ -1,7 +1,7 @@
 // MeasurandRecord.Style.js
 
 import {StyleSheet} from 'react-native';
-import {normalize, screenWidth} from '../ResponsiveFontSize.js'
+import {normalize} from '../ResponsiveFontSize.js'
 
 const styles = StyleSheet.create({
     titleBox : {
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     },
     day : {
         color : 'orange',
-        fontSize : screenWidth > 400 ? normalize(12) : normalize(15),
+        fontSize : normalize(13),
         fontWeight : '700',
     },
     inputBox : {
@@ -23,16 +23,16 @@ const styles = StyleSheet.create({
     switchFont : {
         color : '#b4b4b4',
         fontWeight : '700',
-        fontSize : screenWidth > 400 ? normalize(13) : normalize(15)
+        fontSize : normalize(13)
     },
     switchSelect : {
         color : 'orange',
         fontWeight : '700',
-        fontSize : screenWidth > 400 ? normalize(13) : normalize(15)
+        fontSize : normalize(13)
     },
     input : {
         paddingVertical : 15,
-        fontSize : screenWidth > 400 ? normalize(27) : normalize(30),
+        fontSize : normalize(27),
         fontWeight : '800',
         textAlign : 'center'
     }

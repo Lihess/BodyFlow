@@ -1,7 +1,7 @@
 // MeasurandRecord.Style.js
 
 import {StyleSheet} from 'react-native';
-import {normalize, screenWidth} from '../ResponsiveFontSize.js'
+import {normalize} from '../ResponsiveFontSize.js'
 
 const styles = StyleSheet.create({
     titleBox : {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         marginRight : 5,
         width : '30%',
         fontWeight : '700',
-        fontSize : screenWidth > 400 ? normalize(13) : normalize(15),
+        fontSize : normalize(13),
         textAlign : "center",
         borderBottomWidth : 1,
     },
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         marginRight : 5,
         width : '25%',
         fontWeight : '700',
-        fontSize : screenWidth > 400 ? normalize(13) : normalize(15)
+        fontSize : normalize(13)
     },
     genderButton : {
         width : '20%',
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         borderColor : 'orange',
     },
     genderButtonText : {
-        fontSize : screenWidth > 400 ? normalize(10) : normalize(12),
+        fontSize :  normalize(11),
         textAlign : 'center',
         fontWeight : '700'
     }
