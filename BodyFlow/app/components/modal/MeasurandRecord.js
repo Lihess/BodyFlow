@@ -7,7 +7,7 @@ import React from 'react';
 import Modal from 'react-native-modal';
 // https://github.com/react-native-community/react-native-modal
 import { NavigationService } from '../../router/service';
-import { TouchableOpacity, View, TextInput, Text } from 'react-native';
+import { TouchableOpacity, View, TextInput, Text, Image } from 'react-native';
 import SwitchSelector from 'react-native-switch-selector';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { common, modal } from '../../styles/Common.Style.js';
@@ -150,6 +150,25 @@ export default class MeasurandRecord extends React.Component {
     }
 
     render(){
+        const tipImage = {
+            어깨 : require('../../assets/tip/어깨.png'),
+            윗가슴 : require('../../assets/tip/윗가슴.png'),
+            팔뚝 : require('../../assets/tip/팔뚝.png'),
+            허리 : require('../../assets/tip/허리.png'),
+            엉덩이 : require('../../assets/tip/엉덩이.png'),
+            허벅지 : require('../../assets/tip/허벅지.png'),
+            종아리 : require('../../assets/tip/종아리.png'),
+        }
+        const tipContent = {
+            어깨 : '어깨뼈 바깥 부분 사이의 거리를\n측정하세요!',
+            윗가슴 : '유두를 지나는 선에 따라\n 측정하세요!',
+            팔뚝 : '팔꿈치 위, 가장 두꺼운 부분의 둘레를\n측정하세요!',
+            허리 : '팔을 내렸을 때 팔꿈치와 동일한 위치나\n배꼽 바로 위의 둘레를 측정하세요!',
+            엉덩이 : '엉덩이에서 가장 두꺼운 부분의\n둘레를 측정하세요!',
+            허벅지 : '차렷 자세에서 가운뎃손가락 끝이 닿는\n위치를 측정하세요!',
+            종아리 : '차렷 자세에서 종아리의 가장 두꺼운 부분의\n둘레를 측정하세요!',
+        }
+
         return(
             <Modal 
             style={modal.background}
@@ -200,14 +219,16 @@ export default class MeasurandRecord extends React.Component {
                             onBlur={this.onBlurInput}/>
                     </View> 
                     
-                    {
-                        this.state.decimalInformation ?
+                    { this.state.decimalInformation ?
                             <Text style={modal.information}> 소수점 이하 2자리까지만 입력하세요. </Text> : null
-                    }{
-                        this.state.rangeInformation ?
-                            <Text style={modal.information}> 2.0 ~ 300.0 사이 값만 입력하세요. </Text> : null
-                    }
-                    <Text style={{width:200, height:200, textAlign : 'center', textAlignVertical : 'center'}}>팁이 들어갈자리. 이미지 만들면 넣자</Text>
+                    }{ this.state.rangeInformation ?
+                            <Text style={modal.information}> 2.0 ~ 300.0 사이 값만 입력하세요. </Text> : null }
+
+                    <View style={styles.tipBox}>
+                        <Image style={styles.tipImage} source={tipImage[this.props.part]}/>  
+                        <Text style={styles.tipContent}>{tipContent[this.props.part]}</Text>
+                    </View>
+                    
                     <View style={{ alignItems : 'flex-end'}}>
                         {
                             this.props.part != '허리' ?
