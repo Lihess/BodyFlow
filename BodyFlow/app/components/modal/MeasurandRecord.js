@@ -157,7 +157,7 @@ export default class MeasurandRecord extends React.Component {
             허리 : require('../../assets/tip/허리.png'),
             엉덩이 : require('../../assets/tip/엉덩이.png'),
             허벅지 : require('../../assets/tip/허벅지.png'),
-            종아리 : require('../../assets/tip/종아리.png'),
+            종아리 : require('../../assets/tip/종아리.png')
         }
         const tipContent = {
             어깨 : '어깨뼈 바깥 부분 사이의 거리를\n측정하세요!',
@@ -167,6 +167,7 @@ export default class MeasurandRecord extends React.Component {
             엉덩이 : '엉덩이에서 가장 두꺼운 부분의\n둘레를 측정하세요!',
             허벅지 : '차렷 자세에서 가운뎃손가락 끝이 닿는\n위치를 측정하세요!',
             종아리 : '차렷 자세에서 종아리의 가장 두꺼운 부분의\n둘레를 측정하세요!',
+            체중 : '기상 후 공복인 상태에서\n측정하는 것이 가장 좋습니다.\n\n이를 지키기 어렵다면\n되도록 동일한 시간대에 측정하세요!'
         }
 
         return(
@@ -225,7 +226,8 @@ export default class MeasurandRecord extends React.Component {
                             <Text style={modal.information}> 2.0 ~ 300.0 사이 값만 입력하세요. </Text> : null }
 
                     <View style={styles.tipBox}>
-                        <Image style={styles.tipImage} source={tipImage[this.props.part]}/>  
+                        { this.props.part != '체중' ?
+                            <Image style={styles.tipImage} source={tipImage[this.props.part]}/> : null}
                         <Text style={styles.tipContent}>{tipContent[this.props.part]}</Text>
                     </View>
                     
