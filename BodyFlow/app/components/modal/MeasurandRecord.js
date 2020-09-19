@@ -18,6 +18,27 @@ import { FatConsumer } from '../FatContext';
 import { cmToInch, inchToCm} from '../ChangeUnit'
 
 export default class MeasurandRecord extends React.Component {
+    tipImage = {
+        어깨 : require('../../assets/tip/어깨.png'),
+        윗가슴 : require('../../assets/tip/윗가슴.png'),
+        팔뚝 : require('../../assets/tip/팔뚝.png'),
+        허리 : require('../../assets/tip/허리.png'),
+        엉덩이 : require('../../assets/tip/엉덩이.png'),
+        허벅지 : require('../../assets/tip/허벅지.png'),
+        종아리 : require('../../assets/tip/종아리.png')
+    }
+
+    tipContent = {
+        어깨 : '어깨뼈 바깥 부분 사이의 거리를\n측정하세요!',
+        윗가슴 : '유두를 지나는 선에 따라\n 측정하세요!',
+        팔뚝 : '팔꿈치 위, 가장 두꺼운 부분의 둘레를\n측정하세요!',
+        허리 : '팔을 내렸을 때 팔꿈치와 동일한 위치나\n배꼽 바로 위의 둘레를 측정하세요!',
+        엉덩이 : '엉덩이에서 가장 두꺼운 부분의\n둘레를 측정하세요!',
+        허벅지 : '차렷 자세에서 가운뎃손가락 끝이 닿는\n위치를 측정하세요!',
+        종아리 : '차렷 자세에서 종아리의 가장 두꺼운 부분의\n둘레를 측정하세요!',
+        체중 : '기상 후 공복인 상태에서\n측정하는 것이 가장 좋습니다.\n\n이를 지키기 어렵다면\n되도록 동일한 시간대에 측정하세요!'
+    }
+
     state = {
         visible : false,
         calenderVisible : false,
@@ -150,26 +171,6 @@ export default class MeasurandRecord extends React.Component {
     }
 
     render(){
-        const tipImage = {
-            어깨 : require('../../assets/tip/어깨.png'),
-            윗가슴 : require('../../assets/tip/윗가슴.png'),
-            팔뚝 : require('../../assets/tip/팔뚝.png'),
-            허리 : require('../../assets/tip/허리.png'),
-            엉덩이 : require('../../assets/tip/엉덩이.png'),
-            허벅지 : require('../../assets/tip/허벅지.png'),
-            종아리 : require('../../assets/tip/종아리.png')
-        }
-        const tipContent = {
-            어깨 : '어깨뼈 바깥 부분 사이의 거리를\n측정하세요!',
-            윗가슴 : '유두를 지나는 선에 따라\n 측정하세요!',
-            팔뚝 : '팔꿈치 위, 가장 두꺼운 부분의 둘레를\n측정하세요!',
-            허리 : '팔을 내렸을 때 팔꿈치와 동일한 위치나\n배꼽 바로 위의 둘레를 측정하세요!',
-            엉덩이 : '엉덩이에서 가장 두꺼운 부분의\n둘레를 측정하세요!',
-            허벅지 : '차렷 자세에서 가운뎃손가락 끝이 닿는\n위치를 측정하세요!',
-            종아리 : '차렷 자세에서 종아리의 가장 두꺼운 부분의\n둘레를 측정하세요!',
-            체중 : '기상 후 공복인 상태에서\n측정하는 것이 가장 좋습니다.\n\n이를 지키기 어렵다면\n되도록 동일한 시간대에 측정하세요!'
-        }
-
         return(
             <Modal 
             style={modal.background}
@@ -177,7 +178,6 @@ export default class MeasurandRecord extends React.Component {
             onBackdropPress={this.closedModal} 
             onBackButtonPress={this.closedModal}
             backdropColor={'#1f1f1f'}>
-
            
                 <View style={modal.box}>
                     <View style={styles.titleBox}>
@@ -227,8 +227,8 @@ export default class MeasurandRecord extends React.Component {
 
                     <View style={styles.tipBox}>
                         { this.props.part != '체중' ?
-                            <Image style={styles.tipImage} source={tipImage[this.props.part]}/> : null}
-                        <Text style={styles.tipContent}>{tipContent[this.props.part]}</Text>
+                            <Image style={styles.tipImage} source={this.tipImage[this.props.part]}/> : null}
+                        <Text style={styles.tipContent}>{this.tipContent[this.props.part]}</Text>
                     </View>
                     
                     <View style={{ alignItems : 'flex-end'}}>

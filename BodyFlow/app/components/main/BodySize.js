@@ -9,18 +9,19 @@ import SizeByPart from './SizeByPart.js';
 import styles from '../../styles/main/BodySize.Style.js';
 
 export default class BodySize extends React.Component {
+    image = {
+        어깨 : require('../../assets/body/어깨.png'),
+        윗가슴 : require('../../assets/body/윗가슴.png'),
+        팔뚝 : require('../../assets/body/팔뚝.png'),
+        허리 : require('../../assets/body/허리.png'),
+        엉덩이 : require('../../assets/body/엉덩이.png'),
+        허벅지 : require('../../assets/body/허벅지.png'),
+        종아리 : require('../../assets/body/종아리.png'),
+    }
+    
     state = {
         unit : 'cm',
-        part : null,
-        image : {
-            어깨 : require('../../assets/body/어깨.png'),
-            윗가슴 : require('../../assets/body/윗가슴.png'),
-            팔뚝 : require('../../assets/body/팔뚝.png'),
-            허리 : require('../../assets/body/허리.png'),
-            엉덩이 : require('../../assets/body/엉덩이.png'),
-            허벅지 : require('../../assets/body/허벅지.png'),
-            종아리 : require('../../assets/body/종아리.png'),
-        }
+        part : null
     }
 
     // 단위 선택 시, 해당 단위로 state 값 변경
@@ -36,7 +37,7 @@ export default class BodySize extends React.Component {
                     {/* 안내선이 없는 전신 이미지를 배경이미지로 두어, 이미지 로딩 시 발생하는 깜박임 방지 */}
                     <ImageBackground style={styles.imageBackground} resizeMode='contain' source={require('../../assets/body/전신.png')} >
                         { this.state.part ?
-                            <Image style={styles.bodyImage} resizeMode='contain' source={this.state.image[this.state.part]}/>
+                            <Image style={styles.bodyImage} resizeMode='contain' source={this.image[this.state.part]}/>
                             : <Image style={styles.bodyImage}  resizeMode='contain'source={require('../../assets/body/전신_선.png')}/>} 
                     </ImageBackground>
                 </TouchableOpacity>     

@@ -6,14 +6,22 @@ import React from 'react';
 import Modal from 'react-native-modal';
 // https://github.com/react-native-community/react-native-modal
 import { NavigationService } from '../../router/service';
-import { View, TextInput, Text, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, Image } from 'react-native';
+import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { common, modal } from '../../styles/Common.Style';
-import styles from '../../styles/modal/FatReqiremenetRecord.Style';
+import { styles, table } from '../../styles/modal/FatReqiremenetRecord.Style';
 import { createUserInfo } from '../../backend/Create';
 import { FatConsumer } from '../FatContext';
 
 export default class FatReqirementRecord extends React.Component {
+    fatPercent = [
+        ['< 20%', '< 15%'],
+        ['20 - 25%', '15 - 20%'],
+        ['25 - 30%', '20 - 25%'],
+        ['30% >', '25% >']
+    ]
+    
     state = {
         visible : false,
         decimalInformation : false,
@@ -169,7 +177,22 @@ export default class FatReqirementRecord extends React.Component {
                         this.state.rangeInformation ?
                             <Text style={modal.information}> 10.0 ~ 250.0 사이 값만 입력하세요. </Text> : null
                     }
-                    <Text style={{width:200, height:200, textAlign : 'center', textAlignVertical : 'center'}}>팁이 들어갈자리. 이미지 만들면 넣자</Text>   
+                    
+                    
+                    <View style={styles.tipBox}>
+                        <Text style={styles.tableTitle}>* 체지방률 범위</Text>
+                        <Table borderStyle={table.border} style={table.container} >
+                            <Row data={[null, '여성', '남성']} flexArr={[1, 1, 1]} style={table.header} textStyle={table.text}/>
+                            <TableWrapper style={common.textBoxCenter}>
+                                <Col data={['마름','보통','경도비만','비만']} style={table.title} textStyle={table.text}/>
+                                <Rows style={table.rows} flexArr={[1, 1]} data={this.fatPercent} textStyle={table.percentText}/>
+                            </TableWrapper>
+                        </Table>
+                        <Text style={styles.tipContent}>
+                            {'본 앱에서는 키와 허리둘레를 기반으로 한\nRFM(Relative Fat Mess)을 이용하여\n체지방률을 계산합니다.'}
+                        </Text>
+                    </View>
+
                     <View style={{ alignItems : 'flex-end'}}>
                         <FatConsumer>
                             {({setFatPercentHG}) => 
