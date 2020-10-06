@@ -14,15 +14,15 @@ export default class FatPercentage extends React.Component {
         modalVisible : false
     }
 
-    // requirementsVisiable 값 변경
-    toggleVisiable = () => {
+    // requirementsVisible 값 변경
+    toggleVisible = () => {
         this.setState({modalVisible : !this.state.modalVisible})
     }
 
     render(){
         return(
             <View style={styles.box}>
-                <TouchableOpacity onPress={this.toggleVisiable}>
+                <TouchableOpacity onPress={this.toggleVisible}>
                     <View style={common.textBoxCenter}>
                         <Ionicons style={styles.icon} name={"md-body"} size={22}/>
                         <Text style={styles.title}>체지방률</Text>
@@ -42,7 +42,7 @@ export default class FatPercentage extends React.Component {
 
                 <FatReiremenetRecord 
                     visible={this.state.modalVisible} 
-                    onBackdropPress={this.toggleVisiable}/>
+                    onBackdropPress={this.toggleVisible}/>
             </View>
         );
     }

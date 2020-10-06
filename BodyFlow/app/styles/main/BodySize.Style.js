@@ -34,15 +34,19 @@ const styles = StyleSheet.create({
     switch : {
         width : '90%',
         borderRadius : 7,
-        borderColor : '#c4c4c4',
-        borderWidth : 1,
-        padding : 3,
         margin : 5,
         overflow : 'hidden'
     },
     switchFont : {
+        color : '#b4b4b4',
         fontWeight : '700',
-        fontSize : normalize(12)
+        fontSize : normalize(13)
+    },
+    selectedFont : {
+        color : 'white',
+        fontWeight : '700',
+        fontSize : normalize(14),
+      
     }
 });
 

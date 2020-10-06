@@ -13,7 +13,7 @@ export default class BodySize extends React.Component {
     state = {
         sizeParts : {'어깨' : null, '윗가슴' : null, '팔뚝' : null, '허리' : null,
                      '엉덩이' : null, '허벅지' : null, '종아리' : null},
-        modalVisiable : false,
+        modalVisible : false,
         modalPart : null
     }
 
@@ -33,7 +33,7 @@ export default class BodySize extends React.Component {
 
     // visible 값 변경
     toggleVisible = () => {
-        this.setState({modalVisiable : !this.state.modalVisiable})
+        this.setState({modalVisible : !this.state.modalVisible})
     }
 
     // 부위별 사이즈 박스를 눌렀을때 실행되는 함수
@@ -56,7 +56,7 @@ export default class BodySize extends React.Component {
             <View>
                 { parts.map((part, i) => {
                     return (
-                        <TouchableOpacity style={styles.box} key={i} onPress={() => this.onPress(part)}>
+                        <TouchableOpacity style={this.state.modalPart == part ? styles.selectedBox : styles.box} key={i} onPress={() => this.onPress(part)}>
                             {/* Record.js에 part를 넘기기 위해서 */}
                             <Text style={styles.smallText}>{part}</Text>
                             <View style={common.textBoxEnd}>
@@ -76,7 +76,7 @@ export default class BodySize extends React.Component {
                 })}
                 
                 <Record 
-                    visible={this.state.modalVisiable} 
+                    visible={this.state.modalVisible} 
                     part={this.state.modalPart} 
                     onBackdropPress={this.toggleVisible}
                     onSubmit={this.onChangeSize}/>

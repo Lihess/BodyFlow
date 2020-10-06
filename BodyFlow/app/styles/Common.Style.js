@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {normalize, screenWidth} from './ResponsiveFontSize.js'
+import {normalize } from './ResponsiveFontSize.js'
 
 const common = StyleSheet.create({
     container: {
@@ -47,7 +47,7 @@ const modal = StyleSheet.create({
         fontWeight : '700'
     },
     information : {
-        color : "orange",
+        color : '#FF824A',
         fontWeight : '700',
         textAlign : 'right'
     },
@@ -55,7 +55,7 @@ const modal = StyleSheet.create({
         width : '100%',
         padding : 5,
         borderRadius : 5,
-        backgroundColor : 'orange'
+        backgroundColor : '#FF824A'
     },
     submitText : {
         color : 'white',

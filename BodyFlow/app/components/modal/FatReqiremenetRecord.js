@@ -132,7 +132,7 @@ export default class FatReqirementRecord extends React.Component {
                 <View style={modal.box}>
                     <View style={styles.titleBox}>
                         <Text style={modal.title}> 체지방률 </Text>
-                        <MaterialCommunityIcons name="chart-bar" size={27} color={'orange'} onPress={this.onPressIcon}/>
+                        <MaterialCommunityIcons name="chart-bar" size={27} color={'#FF824A'} onPress={this.onPressIcon}/>
                     </View>
                     <View style={ styles.inputBox}>
                         {/* 성별 입력란 */}
@@ -189,7 +189,7 @@ export default class FatReqirementRecord extends React.Component {
                             </TableWrapper>
                         </Table>
                         <Text style={styles.tipContent}>
-                            {'본 앱에서는 키와 허리둘레를 기반으로 한\nRFM(Relative Fat Mess)을 이용하여\n체지방률을 계산합니다.'}
+                            {'본 앱에서는 키와 허리둘레를 기반으로 한\nRFM(Relative Fat Mess) 공식을 이용하여\n체지방률을 계산합니다.'}
                         </Text>
                     </View>
 

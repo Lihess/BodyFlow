@@ -19,7 +19,7 @@ export default class Main extends React.Component {
                 <StatusBar backgroundColor={'#f1f1f1'} barStyle="dark-content"/>
                 {/* state를 공유하는 컴포넌트 전체를 감싸야 함!! */}
                 <FatProvider>
-                    <Swiper style={styles.wrapper} paginationStyle={styles.dotPosition} activeDotColor={'orange'}>
+                    <Swiper style={styles.wrapper} paginationStyle={styles.dotPosition} activeDotColor={'#FF824A'}>
                         <BodySize/>
                         <Gallery 
                             photos={this.props.navigation.state.params ? this.props.navigation.state.params.photos : []}

@@ -51,12 +51,13 @@ export default class BodySize extends React.Component {
                             {label : 'inch', value : '1'}
                         ]} 
                         initial={0} 
-                        buttonColor={'#c4c4c4'}
-                        borderRadius={5.5}
+                        backgroundColor={'#e4e4e4'}
+                        buttonColor={'#FF824A'}
+                        borderRadius={0}
                         height={30}
                         alignItems={'center'}
                         textStyle={styles.switchFont}
-                        selectedTextStyle={styles.switchFont}
+                        selectedTextStyle={styles.selectedFont}
                         onPress={value => this.onSelectUnit(value)} />
                     {/* 부위별 사이즈 */}
                     <SizeByPart unit={this.state.unit} onPress={(part) => this.setState({ part : part })}/>

@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
         borderRadius : 5
     },
     genderSelect : {
-        backgroundColor : 'orange',
-        borderColor : 'orange',
+        backgroundColor : '#FF824A',
+        borderColor : '#FF824A',
     },
     genderButtonText : {
         fontSize :  normalize(11),
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
         borderRadius : 10,
     },
     tableTitle : {
+        color : '#545454',
         marginTop : 15,
         marginLeft : 10,
         marginBottom : 5,
@@ -81,7 +82,8 @@ const table =  StyleSheet.create({
         backgroundColor: '#e5e5e5'
     },
     title : {
-        flex: 1, backgroundColor: '#e5e5e5'
+        flex: 1,
+        backgroundColor: '#e5e5e5'
     },
     rows : {
         height: 28

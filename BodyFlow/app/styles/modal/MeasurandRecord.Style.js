@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         justifyContent : 'space-between'
     },
     day : {
-        color : 'orange',
+        color : '#FF824A',
         fontSize : normalize(13),
         fontWeight : '700',
     },
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         fontSize : normalize(13)
     },
     switchSelect : {
-        color : 'orange',
+        color : '#FF824A',
         fontWeight : '700',
         fontSize : normalize(13)
     },

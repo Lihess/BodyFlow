@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         left : 0,
         width : screenWidth,
         height : 45,
-        backgroundColor : 'rgba(0,0,0,0.5)',
+        backgroundColor : 'rgba(0,0,0,0.8)',
         zIndex : 2
     },
     xIcon : {
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         borderWidth : 1
     },
     confirm : {
-        backgroundColor : 'orange'
+        backgroundColor : '#FF824A'
     },
     buttonText : {
         fontSize : normalize(13)

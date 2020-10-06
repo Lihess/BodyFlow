@@ -5,6 +5,7 @@ import { NavigationService } from '../router/service';
 import { SafeAreaView, TouchableOpacity, View, FlatList, Text, StatusBar } from 'react-native';
 import SwitchSelector from 'react-native-switch-selector';
 import { Ionicons } from '@expo/vector-icons'; 
+import { FatProvider } from '../components/FatContext';
 import { common } from '../styles/Common.Style';
 import styles from '../styles/chart/Chart.style';
 import PartPicker from '../components/modal/PartPicker';
@@ -43,7 +44,7 @@ export default class Chart extends React.Component {
 
     // visible 값 변경
     toggleVisible = () => {
-        this.setState({modalVisiable : !this.state.modalVisiable})
+        this.setState({modalVisible : !this.state.modalVisible})
     }
 
     // part 변경
@@ -133,7 +134,7 @@ export default class Chart extends React.Component {
                 </View>
 
                 <ChartByPart data={this.state.data} period={this.state.period} unit={this.state.unit}/>
-                
+                <FatProvider>
                 { len ?
                     <FlatList 
                         keyExtractor={item => item.date}
@@ -156,9 +157,9 @@ export default class Chart extends React.Component {
                         }
                     /> : null
                 }
-                
+                </FatProvider>
                 <PartPicker 
-                    visible={this.state.modalVisiable} 
+                    visible={this.state.modalVisible} 
                     part={this.state.part} 
                     onBackdropPress={this.toggleVisible}
                     onSubmit={(part) => this.onChangPart(part)}/>

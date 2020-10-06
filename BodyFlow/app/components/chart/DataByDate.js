@@ -1,18 +1,18 @@
 import React from 'react';
 import { TouchableOpacity, View, Text } from "react-native";
-import Record from '../modal/MeasurandRecord';
+import MeasurandRecord from '../modal/MeasurandRecord';
+import FatReqiremenetRecord from '../modal/FatReqiremenetRecord';
 import styles from '../../styles/chart/DataByDate.Style'
 import { common } from '../../styles/Common.Style'
 
 export default class DataByDate extends React.Component {
     state = {
-        modalVisiable : false,
-        modalPart : null
+        modalVisible : false
     }
 
     // visible 값 변경
     toggleVisible = () => {
-        this.setState({modalVisiable : !this.state.modalVisiable})
+        this.setState({modalVisible : !this.state.modalVisible})
     }
 
     onChangeSize = () => {
@@ -26,23 +26,29 @@ export default class DataByDate extends React.Component {
                     <Text style={styles.date}>{this.props.date.replace(/\-/g, '.')}</Text>
                     <View style={styles.sizeBox}>
                         <Text style={styles.size}>{this.props.size}</Text>
-                        <Text style={styles.unit}> {this.props.unit}</Text>
+                        { this.props.part == '체지방률' ? 
+                            <Text style={styles.unit}>  %</Text> 
+                            : <Text style={styles.unit}>  {this.props.unit}</Text> 
+                        }
                     </View>
                     <Text 
                         style={[styles.variance, 
-                            this.props.variance < 0 ? {color : 'green'} 
-                                : ( this.props.variance != 0 ? {color : 'red'} : null )]}>
+                            this.props.variance < 0 ? {color : '#10B3A2'} 
+                                : ( this.props.variance != 0 ? {color : '#FF2601'} : null )]}>
                         {this.props.variance}
                     </Text>
                 </TouchableOpacity>
 
-                <Record 
-                    visible={this.state.modalVisiable} 
-                    part={this.props.part} 
-                    day={this.props.date}
-                    size={this.props.size}
-                    onBackdropPress={this.toggleVisible}
-                    onSubmit={this.onChangeSize}/>
+                { this.props.part == '체지방률' ? 
+                    <FatReqiremenetRecord visible={this.state.modalVisible} onBackdropPress={this.toggleVisible}/>
+                    : <MeasurandRecord
+                        visible={this.state.modalVisible} 
+                        part={this.props.part} 
+                        day={this.props.date}
+                        size={this.props.size}
+                        onBackdropPress={this.toggleVisible}
+                        onSubmit={this.onChangeSize}/>
+                }
             </View>
         );
     }

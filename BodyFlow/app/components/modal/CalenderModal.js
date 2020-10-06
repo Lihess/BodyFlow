@@ -76,11 +76,10 @@ export default class CalendarModal extends React.Component{
                         maxDate={this.state.today}
                         style={styles.calender}
                         theme={{
-                            selectedDayBackgroundColor: 'orange',
+                            selectedDayBackgroundColor: '#FF824A',
                             selectedDayTextColor: '#ffffff',
-                            textSectionTitleDisabledColor: '#d9e1e8',
-                            todayTextColor: 'orange',
-                            arrowColor: 'orange',
+                            todayTextColor: '#FF2601',
+                            arrowColor: '#FF824A',
                         }}
                         disableArrowRight={this.state.disableArrowRight}
                         onDayPress={(day) => this.onDayPress(day)} 
@@ -95,7 +94,6 @@ export default class CalendarModal extends React.Component{
                     </View>
                 </View>
             </Modal>
-            
         );
     }
 }

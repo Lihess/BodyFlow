@@ -79,7 +79,7 @@ export default class ImagePicker extends React.Component {
                         <Ionicons name="ios-arrow-back" size={24} color="black" onPress={() => NavigationService.back()}/>
                         <View style={common.textBoxCenter}>
                             <Text style={styles.headerTitle}> 사진 선택 </Text>
-                            <Text style={[styles.headerCount, this.state.count > 0 ? {color : 'orange'} : {color : '#848484'}]}>{this.state.count}</Text>
+                            <Text style={[styles.headerCount, this.state.count > 0 ? {color : '#FF824A'} : {color : '#848484'}]}>{this.state.count}</Text>
                             <Text style={styles.headerSubtitle}> / {max}</Text>
                         </View>
                     </View>

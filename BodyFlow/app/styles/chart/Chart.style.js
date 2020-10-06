@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
     switchFont : {
         color : '#b4b4b4',
         fontWeight : '700',
-        fontSize : screenWidth > 400 ? normalize(12) : normalize(14)
+        fontSize : normalize(12)
     },
     switchSelect : {
         color : 'black',
         fontWeight : '700',
-        fontSize : screenWidth > 400 ? normalize(13) : normalize(15)
+        fontSize : normalize(14)
     },
     dataBox : {
         width : '100%',

@@ -34,7 +34,7 @@ export default class MeasurandRecord extends React.Component {
         팔뚝 : '팔꿈치 위, 가장 두꺼운 부분의 둘레를\n측정하세요!',
         허리 : '팔을 내렸을 때 팔꿈치와 동일한 위치나\n배꼽 바로 위의 둘레를 측정하세요!',
         엉덩이 : '엉덩이에서 가장 두꺼운 부분의\n둘레를 측정하세요!',
-        허벅지 : '차렷 자세에서 가운뎃손가락 끝이 닿는\n위치를 측정하세요!',
+        허벅지 : '차렷 자세에서 손가락 끝이 닿는 위치를\n측정하세요!',
         종아리 : '차렷 자세에서 종아리의 가장 두꺼운 부분의\n둘레를 측정하세요!',
         체중 : '기상 후 공복인 상태에서\n측정하는 것이 가장 좋습니다.\n\n이를 지키기 어렵다면\n되도록 동일한 시간대에 측정하세요!'
     }
@@ -138,7 +138,7 @@ export default class MeasurandRecord extends React.Component {
     // 입력 시 색상 변경 이벤트
     onFocusInput = () => {
         this.setState({
-            foucsColor : "orange"
+            foucsColor : '#FF824A'
         })
     }
 
@@ -183,7 +183,7 @@ export default class MeasurandRecord extends React.Component {
                     <View style={styles.titleBox}>
                         <View style={common.textBoxCenter}>
                             <Text style={modal.title}> {this.props.part} </Text>
-                            <MaterialCommunityIcons name="chart-bar" size={27} color={'orange'} onPress={this.onPressIcon}/>
+                            <MaterialCommunityIcons name="chart-bar" size={27} color={'#FF824A'} onPress={this.onPressIcon}/>
                         </View>
                         {/* 날짜를 클릭하면 캘린더가 나와서 원하는 날짜를 지정할 수 있도록. */}
                         <Text style={styles.day} onPress={this.props.day ? null : this.toggleCalenderVisible}>
@@ -240,7 +240,11 @@ export default class MeasurandRecord extends React.Component {
                                 : <FatConsumer>
                                     {
                                         ({setFatPercentW}) => 
-                                        <TouchableOpacity style={modal.submit} onPress={() => {this.onSubmit(); setFatPercentW(this.state.size)}}> 
+                                        <TouchableOpacity style={modal.submit} onPress={() => {
+                                            this.onSubmit(); 
+                                            console.log('!' , this.state.day == getToday())
+                                            this.state.day == getToday() ? setFatPercentW(this.state.size) : null
+                                        }}> 
                                             <Text style={modal.submitText}>완료</Text>    
                                         </TouchableOpacity>
                                     }

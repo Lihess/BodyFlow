@@ -27,20 +27,20 @@ export default class Weight extends React.Component {
         })
     }
 
-    // requirementsVisiable 값 변경
-    toggleVisiable = () => {
+    // requirementsVisible 값 변경
+    toggleVisible = () => {
         this.setState({modalVisible : !this.state.modalVisible})
     }
  
     // 체중 값 변경
-    onChangeWeight = (newWeight) => {
+    onChangeWeight = () => {
         this.getData()
     }    
 
     render(){
         return(
             <View style={styles.box}>
-                <TouchableOpacity onPress={this.toggleVisiable}>
+                <TouchableOpacity onPress={this.toggleVisible}>
                     <View style={common.textBoxCenter}>
                         <FontAwesome5 style={styles.icon} name={'weight'} size={16}/>
                         <Text style={styles.title}>체중</Text>
@@ -56,7 +56,7 @@ export default class Weight extends React.Component {
                 <Record 
                     visible={this.state.modalVisible} 
                     part={'체중'} 
-                    onBackdropPress={this.toggleVisiable}
+                    onBackdropPress={this.toggleVisible}
                     onSubmit={this.onChangeWeight}/>
             </View>
         );

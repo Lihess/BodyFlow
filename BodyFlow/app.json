@@ -20,7 +20,7 @@
       "supportsTablet": true
     },
     "web": {
-      "favicon": "./app/assets/favicon.png"
+      "favicon": "./app/assets/icon.ico"
     }
   }
 }
