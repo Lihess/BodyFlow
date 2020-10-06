@@ -4,7 +4,8 @@ import {normalize, screenWidth} from '../ResponsiveFontSize.js'
 const styles = StyleSheet.create({
     box : {
         width : '100%',
-        padding : 10,
+        paddingVertical : 10,
+        paddingHorizontal : 15,
         flexDirection : 'row',
         alignItems : 'center',
         justifyContent : 'space-between',
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
         marginLeft : 60,
         flexDirection : 'row',
         alignItems : 'flex-end',
-        justifyContent : 'center'
+        justifyContent : 'flex-end'
     },
     size : {
         fontSize : screenWidth > 400 ? normalize(20) : normalize(22),
