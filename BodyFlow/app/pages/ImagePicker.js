@@ -43,17 +43,15 @@ export default class ImagePicker extends React.Component {
         callback.then(async (photos) => {
             var ornu = this.props.navigation.state.params.lastOrnu
 
-            const photoUris = photos.map((photo) => {
+            photos.map((photo) => {
                 ornu = ornu + 1
                 this.updateImage(photo.uri, photo.width, photo.height, ornu)
                
                 return {ornu : ornu, path : photo.uri}
             })
             
-            // 새로 선택한 사진을 업데이트 한 후, 사진 데이터의 local uri 새롭게 받아서 gallery로 넘김
-            // flag만 주고 받아서 하고 싶었으나 props가 한 번 지정된 후에는 imagepicker 에서 변경하지 않는 이상 어려워서..
-            // DB에서 read를 새로 하기에는 DB 삽입 속도가 느려..
-            NavigationService.navigate('MainPage', { photos : photoUris });
+            // localurl을 이용하지 않는 대신 업로드 속도때문에 조금 느림..
+            NavigationService.back();
         })
         .catch((e) => console.log(e))
     };

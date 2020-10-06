@@ -10,6 +10,7 @@ import { FatProvider } from '../components/FatContext';
 import { common } from '../styles/Common.Style';
 import styles from '../styles/main/Main.Style'
 import Gallery from '../components/main/Gallery.js';
+
 export default class Main extends React.Component {
     static navigationOptions = { headerShown: false };
 
@@ -21,10 +22,7 @@ export default class Main extends React.Component {
                 <FatProvider>
                     <Swiper style={styles.wrapper} paginationStyle={styles.dotPosition} activeDotColor={'#FF824A'}>
                         <BodySize/>
-                        <Gallery 
-                            photos={this.props.navigation.state.params ? this.props.navigation.state.params.photos : []}
-                            deletePhoto={this.props.navigation.state.params ? this.props.navigation.state.params.deletePhoto : null}
-                        />
+                        <Gallery/>
                     </Swiper>
                     <WeightAndFat/>
                 </FatProvider>

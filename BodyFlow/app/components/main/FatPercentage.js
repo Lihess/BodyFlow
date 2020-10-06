@@ -8,6 +8,7 @@ import FatReiremenetRecord from '../modal/FatReqiremenetRecord.js';
 import { FatConsumer } from '../FatContext.js';
 import styles from '../../styles/main/WeightAndFat.Style.js';
 import {common} from '../../styles/Common.Style.js';
+import { NavigationEvents } from 'react-navigation';
 
 export default class FatPercentage extends React.Component {
     state = {
@@ -22,6 +23,10 @@ export default class FatPercentage extends React.Component {
     render(){
         return(
             <View style={styles.box}>
+                <FatConsumer>{
+                    ({setFatPercent}) => <NavigationEvents onDidFocus={setFatPercent}/>
+                }</FatConsumer>
+
                 <TouchableOpacity onPress={this.toggleVisible}>
                     <View style={common.textBoxCenter}>
                         <Ionicons style={styles.icon} name={"md-body"} size={22}/>

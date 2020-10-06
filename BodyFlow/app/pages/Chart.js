@@ -5,7 +5,6 @@ import { NavigationService } from '../router/service';
 import { SafeAreaView, TouchableOpacity, View, FlatList, Text, StatusBar } from 'react-native';
 import SwitchSelector from 'react-native-switch-selector';
 import { Ionicons } from '@expo/vector-icons'; 
-import { FatProvider } from '../components/FatContext';
 import { common } from '../styles/Common.Style';
 import styles from '../styles/chart/Chart.style';
 import PartPicker from '../components/modal/PartPicker';
@@ -134,10 +133,11 @@ export default class Chart extends React.Component {
                 </View>
 
                 <ChartByPart data={this.state.data} period={this.state.period} unit={this.state.unit}/>
-                <FatProvider>
+
                 { len ?
                     <FlatList 
                         keyExtractor={item => item.date}
+                        removeClippedSubviews={false}
                         style={styles.dataBox}
                         data={dataReverse}
                         renderItem={({item, index}) => 
@@ -157,7 +157,7 @@ export default class Chart extends React.Component {
                         }
                     /> : null
                 }
-                </FatProvider>
+           
                 <PartPicker 
                     visible={this.state.modalVisible} 
                     part={this.state.part} 

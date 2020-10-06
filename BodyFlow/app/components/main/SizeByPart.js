@@ -8,6 +8,7 @@ import Record from '../modal/MeasurandRecord.js';
 import styles from '../../styles/main/SizeByPart.Style.js';
 import { common } from '../../styles/Common.Style.js';
 import { cmToInch } from '../ChangeUnit'
+import { NavigationEvents } from 'react-navigation';
 
 export default class BodySize extends React.Component {
     state = {
@@ -54,6 +55,8 @@ export default class BodySize extends React.Component {
         
         return(
             <View>
+                <NavigationEvents onDidFocus={this.getData}/>
+                
                 { parts.map((part, i) => {
                     return (
                         <TouchableOpacity style={this.state.modalPart == part ? styles.selectedBox : styles.box} key={i} onPress={() => this.onPress(part)}>

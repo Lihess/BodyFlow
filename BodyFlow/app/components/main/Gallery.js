@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from '../../styles/main/Gallery.Style'
 import { readtPhotoAll } from '../../backend/Read'
 import { FlatList } from 'react-native-gesture-handler';
+import { NavigationEvents } from 'react-navigation';
 
 export default class Gallery extends React.Component {
     state = {
@@ -15,27 +16,13 @@ export default class Gallery extends React.Component {
     }
 
     componentDidMount = async() => {
+        this.getData()
+    }
+
+    getData = () => {
         readtPhotoAll(result => {
             this.setState({ photos : result })
         })
-    }
-
-    // imagePicker를 통해 받은 사진을 state에 저장
-    componentDidUpdate(prevProps) {
-        if(this.props.photos && (prevProps.photos != this.props.photos)){
-            let photos = this.state.photos;
-            
-            // 사진 데이터의 가장 최근 날짜가 오늘인지 아닌지를 판단하여, 오늘 날짜에 맞추어 prop를 state.photos에 삽입
-            photos.length && photos[0].date == getToday() ?
-                (photos[0].paths).push(...this.props.photos) :
-                photos.unshift({date : getToday(), paths : this.props.photos})
-
-            this.setState({photos : photos})
-        }
-        
-        if(this.props.deletePhoto && (prevProps.deletePhoto != this.props.deletePhoto)){
-            readtPhotoAll(result => this.setState({ photos : result }))
-        }
     }
 
     // 오늘 올린 사진의 갯수와 마지막 순번을 계산하여 imegaPicker로 넘김
@@ -56,6 +43,8 @@ export default class Gallery extends React.Component {
     render(){
         return (
             <View style={styles.container}>
+                <NavigationEvents onDidFocus={this.getData}/>
+
                 {this.state.photos.length ?
                     <FlatList
                         keyExtractor={item => item.date}
