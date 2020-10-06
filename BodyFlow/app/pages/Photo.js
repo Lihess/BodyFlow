@@ -29,7 +29,6 @@ export default class Photo extends React.Component {
             .then(() => deletePhoto(this.state.date, this.state.ornu))
 
         this.toggleVisible()
-        // 삭제한 path를 prop로 넘겨, 데이터를 다시 불러올 수 있도록 함
         NavigationService.back();
     }
 

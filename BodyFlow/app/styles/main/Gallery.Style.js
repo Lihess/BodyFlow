@@ -4,7 +4,7 @@ import {normalize, screenWidth} from '../ResponsiveFontSize.js'
 const styles = StyleSheet.create({
     container: {
         flex : 5,
-        width : '90%',
+        width : '95%',
         padding : 15,
         paddingBottom : 25,
         backgroundColor : 'white',
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
         textAlign : 'left'
     },
     photoButton : {
-        width : (screenWidth - 120) / 3,
-        height : (screenWidth - 120) / 3,
+        width : (screenWidth * 0.75) / 3,
+        height : (screenWidth * 0.75) / 3,
         marginRight : 5,
         backgroundColor : '#c4c4c4',
         borderColor : '#c4c4c4',
@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
         overflow : 'hidden'
     },
     photo : {
-        width : (screenWidth - 120) / 3,
-        height : (screenWidth - 120) / 3
+        width : (screenWidth * 0.75) / 3,
+        height : (screenWidth * 0.75) / 3
     },
     placeholder : {
         color : '#848484',

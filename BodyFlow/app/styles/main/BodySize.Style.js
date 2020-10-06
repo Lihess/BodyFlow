@@ -6,7 +6,7 @@ import {normalize} from '../ResponsiveFontSize.js'
 const styles = StyleSheet.create({
     container: {
         flexDirection : 'row',
-        width : '90%',
+        width : '95%',
         padding : 15,
         paddingBottom : 35,
         backgroundColor : 'white',
