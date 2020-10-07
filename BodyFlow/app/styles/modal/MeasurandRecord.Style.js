@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
         height : screenWidth * 0.38
     }, 
     tipContent : {
+        color : '#545454',
+        fontSize : normalize(13),
         textAlign : 'center',
         fontWeight : '700'
     }

@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         borderWidth : 2,
     },
     smallText : {
-        fontSize : normalize(10),
+        fontSize : normalize(12),
         fontWeight : '700',
         color : '#848484'
     },

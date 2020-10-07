@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "DietApp",
-    "slug": "DietApp",
+    "name": "BodyFlow",
+    "slug": "BodyFlow",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
@@ -16,6 +16,9 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android" : {
+      "package" : "com.lihess.bodyflow"
+    },
     "ios": {
       "supportsTablet": true
     },

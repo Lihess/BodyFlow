@@ -94,11 +94,6 @@ export default class ImagePicker extends React.Component {
                     max={max}
                     onChange={this.updateHandler}
                     callback={this.imagesCallback}
-                    renderSelectedComponent={(number) => {
-                        <View style={styles.countBadge}>
-                            <Text style={styles.countBadgeText}>{number}</Text>
-                        </View>
-                        }}
                     emptyStayComponent={<Text style={styles.emptyStay}>저장된 사진이 없습니다.</Text>}
                 />
             </View>

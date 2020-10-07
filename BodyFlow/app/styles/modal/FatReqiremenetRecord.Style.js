@@ -61,6 +61,8 @@ const styles = StyleSheet.create({
         fontWeight : '700'
     },
     tipContent : {
+        color : '#545454',
+        fontSize : normalize(13),
         marginVertical : 15,
         textAlign : 'center',
         fontWeight : '700'
