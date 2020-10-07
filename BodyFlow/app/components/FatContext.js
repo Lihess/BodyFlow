@@ -65,26 +65,26 @@ export class FatProvider extends React.Component {
 
     // 계산 후 DB에 저장
     setFatPercentHG = (height, gender) => {
+        console.log(height, gender)
+        this.setState({
+            height : height,
+            gender : gender
+        })
+
         if (this.state.waist) {
             const fatPercent = ((gender == 'M' ? 64 : 76) - (20 * (height / this.state.waist))).toFixed(1)
-            this.setState({
-                fatPercent : fatPercent,
-                height : height,
-                gender : gender
-            })
-
+            this.setState({ fatPercent : fatPercent })
             createSizeByPart(null, '체지방률', fatPercent);
         }
     }
 
     // 계산 후 DB에 저장
     setFatPercentW = (waist) => {
+        this.setState({ waist : waist })
+
         if (this.state.height && this.state.gender){
             const fatPercent = ((this.state.gender == 'M' ? 64 : 76) - (20 * (this.state.height / waist))).toFixed(1)
-            this.setState({
-                fatPercent : fatPercent,
-                waist : waist
-            })
+            this.setState({ fatPercent : fatPercent })
 
             createSizeByPart(null, '체지방률', fatPercent);
         }
