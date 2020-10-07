@@ -16,6 +16,7 @@ import CalendarModal from './CalenderModal.js';
 import { createSizeByPart } from '../../backend/Create';
 import { FatConsumer } from '../FatContext';
 import { cmToInch, inchToCm} from '../ChangeUnit'
+import getToday from '../GetToday'
 
 export default class MeasurandRecord extends React.Component {
     tipImage = {
@@ -255,22 +256,11 @@ export default class MeasurandRecord extends React.Component {
 
                 { /* 날짜 선택시 해당 modal이 보이도록! */ }
                 <CalendarModal
-                    today={getToday()} 
+                    selectDay={this.state.day} 
                     visible={this.state.calenderVisible} 
                     onBackdropPress={this.toggleCalenderVisible} 
                     onSubmit={(day) => this.selectDay(day)}/> 
             </Modal>
         );
     }
-}
-
-// 오늘 날짜를 형식에 맞추어 포맷팅하여 반환하는 함수
-const getToday = () => {
-    const today = new Date();
-
-    var year = today.getFullYear();
-    var month = today.getMonth() + 1;
-    var day = today.getDate();
-   
-    return year + (month > 9 ? '-' : '-0') + month + (day > 9 ? '-' : '-0') + day;
 }

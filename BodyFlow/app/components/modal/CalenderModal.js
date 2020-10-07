@@ -5,12 +5,12 @@ import { Calendar } from 'react-native-calendars';
 // https://www.npmjs.com/package/react-native-calendars
 import {  modal } from '../../styles/Common.Style.js';
 import styles from '../../styles/modal/CalenderModal.Style.js';
+import getToday from '../GetToday'
 
 export default class CalendarModal extends React.Component{
     state = {
         visible : false,
-        today : this.props.today,
-        date : null,
+        date : this.props.selectDay,
         disableArrowRight : true
     } 
 
@@ -26,16 +26,17 @@ export default class CalendarModal extends React.Component{
         if (this.state.visible) { 
             this.props.onBackdropPress()
             this.setState({
-                visible : false,
-                date : null
+                visible : false
             })
         }
     }
 
     onDayPress = (selectDay) => {
+        console.log(selectDay)
         this.setState( {
             date : selectDay.dateString
         })
+        console.log(this.state.date)
     }
 
     onSubmit = () => {
@@ -50,7 +51,9 @@ export default class CalendarModal extends React.Component{
     }
 
     renderHeader = (date) => {
-        if ( (date.getFullYear() == this.state.today.substring(0,4)) && (date.getMonth() + 1 == this.state.today.substring(5,7))) 
+        const today = getToday()
+
+        if ( (date.getFullYear() == today.substring(0,4)) && (date.getMonth() + 1 == today.substring(5,7))) 
             this.setState( { disableArrowRight : true } )
         else this.setState( { disableArrowRight : false } )
 
@@ -73,7 +76,7 @@ export default class CalendarModal extends React.Component{
                 <View style={modal.box}>
                     <View style={styles.calenderBox}>
                     <Calendar 
-                        maxDate={this.state.today}
+                        maxDate={getToday()}
                         style={styles.calender}
                         theme={{
                             selectedDayBackgroundColor: '#FF824A',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationService } from '../../router/service';
-import { View, TouchableOpacity, Image, Text, Dimensions } from 'react-native';
+import { View, TouchableOpacity, Image, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 // https://dingcodingco.tistory.com/14
 // https://docs.amplify.aws/lib/storage/getting-started/q/platform/js#manual-setup-import-storage-bucket
@@ -8,6 +8,7 @@ import styles from '../../styles/main/Gallery.Style'
 import { readtPhotoAll } from '../../backend/Read'
 import { FlatList } from 'react-native-gesture-handler';
 import { NavigationEvents } from 'react-navigation';
+import getToday from '../GetToday'
 
 export default class Gallery extends React.Component {
     state = {
@@ -76,15 +77,4 @@ export default class Gallery extends React.Component {
             </View>
         );
     }
-}
-
-// 오늘 날짜를 형식에 맞추어 포맷팅하여 반환하는 함수
-const getToday = () => {
-    const today = new Date();
-
-    var year = today.getFullYear();
-    var month = today.getMonth() + 1;
-    var day = today.getDate();
-   
-    return year + (month > 9 ? '-' : '-0') + month + (day > 9 ? '-' : '-0') + day;
 }
