@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
         textAlign : 'left'
     },
     photoButton : {
-        width : (screenWidth * 0.75) / 3,
-        height : (screenWidth * 0.75) / 3,
+        width : (screenWidth * 0.24),
+        height : (screenWidth * 0.24),
         marginRight : 5,
         backgroundColor : '#c4c4c4',
         borderColor : '#c4c4c4',
@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
         overflow : 'hidden'
     },
     photo : {
-        width : (screenWidth * 0.75) / 3,
-        height : (screenWidth * 0.75) / 3
+        width : '100%',
+        height : '100%'
     },
     placeholder : {
         color : '#848484',

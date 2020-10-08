@@ -55,7 +55,7 @@ const ChartByPart = ({data, period, unit}) => {
                 {/* 선 차트 */}
                 <VictoryLine 
                     style={{
-                        data: { stroke: '#FF824A', strokeWidth: 3 },
+                        data: { stroke: '#FF2601', strokeWidth: 3 },
                     }} 
                     data={dataLen ? data : []}
                     x={"date"}
@@ -64,8 +64,8 @@ const ChartByPart = ({data, period, unit}) => {
                 {/* 선 차트에서 각 데이터를 표시하는 점 */}
                 <VictoryScatter 
                     style = {{
-                        data : {stroke : '#FF824A',strokeWidth: 3, fill : '#FF824A'},
-                        labels : {fill : '#FF2601', fontWeight : '800'}
+                        data : { stroke: '#FF2601', strokeWidth: 2, fill : '#FF2601'},
+                        labels : {fill : '#FF824A', fontWeight : '800'}
                     }} 
                     size = {5} 
                     data={/* total일때 처음과 마지막 날짜만 표기 */

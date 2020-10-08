@@ -39,15 +39,14 @@ export default class DataByDate extends React.Component {
                     </Text>
                 </TouchableOpacity>
 
-                { this.props.part == '체지방률' ? 
-                    <FatReqiremenetRecord visible={this.state.modalVisible} onBackdropPress={this.toggleVisible}/>
-                    : <MeasurandRecord
+                { this.props.part != '체지방률' ? 
+                    <MeasurandRecord
                         visible={this.state.modalVisible} 
                         part={this.props.part} 
-                        day={this.props.date}
+                        date={this.props.date}
                         size={this.props.size}
                         onBackdropPress={this.toggleVisible}
-                        onSubmit={this.onChangeSize}/>
+                        onSubmit={this.onChangeSize}/> : null
                 }
             </View>
         );

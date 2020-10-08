@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         justifyContent : 'space-between',
     },
     bottomLine : {
-        borderBottomColor : '#c4c4c4',
+        borderBottomColor : '#e4e4e4',
         borderBottomWidth : 1,
     },
     date : {

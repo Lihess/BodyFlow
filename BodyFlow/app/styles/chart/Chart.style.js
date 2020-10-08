@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         width : '100%',
         marginTop : 20,
         backgroundColor : 'white',
-        borderColor : '#c4c4c4',
+        borderColor : '#e4e4e4',
         borderWidth : 1,
         borderRadius : 10,
         overflow : 'hidden',
