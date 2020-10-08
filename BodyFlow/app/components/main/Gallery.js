@@ -26,7 +26,7 @@ export default class Gallery extends React.Component {
         })
     }
 
-    // 오늘 올린 사진의 갯수와 마지막 순번을 계산하여 imegaPicker로 넘김
+    // 오늘 올린 사진의 갯수와 마지막 순번을 imegaPicker로 넘김
     onPeress = () => { 
         var todayPhoto = 0;
         var lastOrnu = 0;
@@ -71,7 +71,7 @@ export default class Gallery extends React.Component {
                     : <Text style={styles.placeholder}> 당신의 몸을 기록해보세요 </Text>
                 }
             
-            <TouchableOpacity style={styles.button} onPress={this.onPeress}>
+                <TouchableOpacity style={styles.button} onPress={this.onPeress}>
                     <MaterialCommunityIcons name="camera-plus" size={30} color="white" />
                 </TouchableOpacity> 
             </View>
