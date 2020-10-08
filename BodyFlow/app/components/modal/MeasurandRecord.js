@@ -43,7 +43,7 @@ export default class MeasurandRecord extends React.Component {
     state = {
         visible : false,
         calenderVisible : false,
-        day : getToday(),
+        date : getToday(),
         unit : 'cm',
         decimalInformation : false, // 소수점 관련 안내문구의 표기 여부
         rangeInformation : false, // 입력범위 관련 안내문구의 표기 여부
@@ -59,8 +59,8 @@ export default class MeasurandRecord extends React.Component {
    
         if(nextProps.visible != prevState.visible)
             state.visible = nextProps.visible;
-        if (nextProps.day && nextProps.day != prevState.day) 
-            state.day = nextProps.day;
+        if (nextProps.date && nextProps.date != prevState.date) 
+            state.date = nextProps.date;
         
         return state;
     }
@@ -72,7 +72,7 @@ export default class MeasurandRecord extends React.Component {
             this.setState({
                 visible : false,
                 calenderVisible : false,
-                day : getToday(),
+                date : getToday(),
                 unit : 'cm',
                 decimalInformation : false,
                 rangeInformation : false,
@@ -156,19 +156,19 @@ export default class MeasurandRecord extends React.Component {
 
         // 입력된 정보를 DB에 저장
         // 값을 입력한 경우에만 저장
-        this.state.size ? createSizeByPart(this.state.day, this.props.part, size) : null;
+        this.state.size ? createSizeByPart(this.state.date, this.props.part, size) : null;
 
         this.props.onSubmit();
         this.closedModal();
     }
 
     // 선택 날짜로 재지정
-    selectDay = (selectDay) => {
-        if (!selectDay) {
-            this.setState({ day : getToday() })
+    selectDay = (selectDate) => {
+        if (!selectDate) {
+            this.setState({ date : getToday() })
         }
         else
-            this.setState({ day : selectDay })
+            this.setState({ date : selectDate })
     }
 
     render(){
@@ -187,8 +187,8 @@ export default class MeasurandRecord extends React.Component {
                             <MaterialCommunityIcons name="chart-bar" size={27} color={'#FF824A'} onPress={this.onPressIcon}/>
                         </View>
                         {/* 날짜를 클릭하면 캘린더가 나와서 원하는 날짜를 지정할 수 있도록. */}
-                        <Text style={styles.day} onPress={this.props.day ? null : this.toggleCalenderVisible}>
-                            {this.state.day.replace(/\-/g, '.')}
+                        <Text style={styles.date} onPress={this.props.date ? null : this.toggleCalenderVisible}>
+                            {this.state.date.replace(/\-/g, '.')}
                         </Text>
                     </View>
                     
@@ -243,8 +243,7 @@ export default class MeasurandRecord extends React.Component {
                                         ({setFatPercentW}) => 
                                         <TouchableOpacity style={modal.submit} onPress={() => {
                                             this.onSubmit(); 
-                                            console.log('!' , this.state.day == getToday())
-                                            this.state.day == getToday() ? setFatPercentW(this.state.size) : null
+                                            this.state.date == getToday() ? setFatPercentW(this.state.size) : null
                                         }}> 
                                             <Text style={modal.submitText}>완료</Text>    
                                         </TouchableOpacity>
@@ -256,10 +255,10 @@ export default class MeasurandRecord extends React.Component {
 
                 { /* 날짜 선택시 해당 modal이 보이도록! */ }
                 <CalendarModal
-                    selectDay={this.state.day} 
+                    selectDate={this.state.date} 
                     visible={this.state.calenderVisible} 
                     onBackdropPress={this.toggleCalenderVisible} 
-                    onSubmit={(day) => this.selectDay(day)}/> 
+                    onSubmit={(date) => this.selectDay(date)}/> 
             </Modal>
         );
     }

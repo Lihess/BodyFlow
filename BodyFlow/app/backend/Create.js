@@ -2,13 +2,13 @@
 // Create 관련 쿼리를 모아놓은 파일.
 import * as SQLite from 'expo-sqlite';
 
-const db = SQLite.openDatabase('bodyFlow.db');
+const db = SQLite.openDatabase('bodyflow.db');
 
 // 앱을 킬때 모두 생성해야 하므로~!
-const createTables = () => {
+const createTables = async() => {
     db.transaction(tx => {
         tx.executeSql(
-            'CREATE TABLE IF NOT EXISTS size_by_part ( date	TEXT NOT NULL, part TEXT NOT NULL, size REAL NOT NULL, PRIMARY KEY(date, part));',
+            'CREATE TABLE IF NOT EXISTS size_by_part ( date	TEXT NOT NULL, part TEXT NOT NULL, size REAL NOT NULL, PRIMARY KEY(date, part));'
         );
         tx.executeSql(
             'CREATE TABLE IF NOT EXISTS user_info ( date TEXT NOT NULL, height REAL NOT NULL, gender TEXT NOT NULL, PRIMARY KEY(date));'
@@ -20,6 +20,7 @@ const createTables = () => {
 }
 
 // size_by_part insert
+// 주어진 날짜가 없는 경우, 오늘 날짜로!
 const createSizeByPart = (date, part, size) => {
     date ? 
         db.transaction(tx => {

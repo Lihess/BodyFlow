@@ -4,7 +4,7 @@ import { NavigationService } from './router/service';
 import { createTables } from './backend/Create'
 
 class App extends React.Component {
-    componentDidMount(){
+    UNSAFE_componentWillMount(){
         createTables()
     }
 

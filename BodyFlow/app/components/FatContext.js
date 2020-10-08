@@ -15,23 +15,16 @@ const FatContext = React.createContext({
 })
 
 export class FatProvider extends React.Component {
-    state = {
-        fatPercent : null,
-        height : null,
-        gender : null,
-        waist : null,
-        setFatPercent : this.setFatPercent,
-        setFatPercentHG : this.setFatPercentHG,
-        setFatPercentW : this.setFatPercentW
-    }
-
     componentDidMount(){
+       //this.setState({
+       //    setFatPercent : this.setFatPercent,
+       //    setFatPercentHG : this.setFatPercentHG,
+       //    setFatPercentW : this.setFatPercentW
+       //})
+        
         readSizeByPartsLatestF(result => {
             this.setState({ 
-                fatPercent : result,
-                setFatPercent : this.setFatPercent,
-                setFatPercentHG : this.setFatPercentHG,
-                setFatPercentW : this.setFatPercentW
+                fatPercent : result
             })   
         })
         readUserInfoLatest(result => {
@@ -65,7 +58,6 @@ export class FatProvider extends React.Component {
 
     // 계산 후 DB에 저장
     setFatPercentHG = (height, gender) => {
-        console.log(height, gender)
         this.setState({
             height : height,
             gender : gender
@@ -88,6 +80,16 @@ export class FatProvider extends React.Component {
 
             createSizeByPart(null, '체지방률', fatPercent);
         }
+    }
+
+    state = {
+        fatPercent : null,
+        height : null,
+        gender : null,
+        waist : null,
+        setFatPercent :  this.setFatPercent,
+        setFatPercentHG :  this.setFatPercentHG,
+        setFatPercentW : this.setFatPercentW
     }
 
     render(){

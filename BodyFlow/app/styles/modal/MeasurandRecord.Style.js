@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         alignItems : 'flex-end',
         justifyContent : 'space-between'
     },
-    day : {
+    date : {
         color : '#FF824A',
         fontSize : normalize(13),
         fontWeight : '700',

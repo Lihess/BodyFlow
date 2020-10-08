@@ -10,7 +10,7 @@ import getToday from '../GetToday'
 export default class CalendarModal extends React.Component{
     state = {
         visible : false,
-        date : this.props.selectDay,
+        selectDate : this.props.selectDate,
         disableArrowRight : true
     } 
 
@@ -31,21 +31,17 @@ export default class CalendarModal extends React.Component{
         }
     }
 
-    onDayPress = (selectDay) => {
-        console.log(selectDay)
-        this.setState( {
-            date : selectDay.dateString
-        })
-        console.log(this.state.date)
+    onDayPress = (selectDate) => {
+        this.setState({ selectDate : selectDate.dateString })
     }
 
     onSubmit = () => {
-        if (!this.state.date){
+        if (!this.state.selectDate){
             this.props.onSubmit(null);
         }
         else {
             // 외부에서 보이는 날짜 포맷은 'yyyy.MM.dd'이므로 변경!
-            this.props.onSubmit(this.state.date);
+            this.props.onSubmit(this.state.selectDate);
         }
         this.closedModal()
     }
@@ -86,7 +82,7 @@ export default class CalendarModal extends React.Component{
                         }}
                         disableArrowRight={this.state.disableArrowRight}
                         onDayPress={(day) => this.onDayPress(day)} 
-                        markedDates={{[this.state.date] : {selected: true}}}
+                        markedDates={{[this.state.selectDate] : {selected: true}}}
                         renderHeader={(date) => this.renderHeader(date)}/>
                     </View>
                     

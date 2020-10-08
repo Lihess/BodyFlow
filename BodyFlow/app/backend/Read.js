@@ -2,27 +2,25 @@
 // Read 관련 쿼리를 모아놓은 파일.
 import * as SQLite from 'expo-sqlite';
 
-const db = SQLite.openDatabase('bodyFlow.db');
+const db = SQLite.openDatabase('bodyflow.db');
 
 // 가장 최근 날짜에 기록된 size 반환
 const readSizeByPartsLatest = (callback) => {
-        db.transaction(tx => {
-            tx.executeSql(
-                'SELECT part, size FROM (SELECT * FROM size_by_part ORDER BY date DESC) GROUP BY part',
-                [],
-                (tx, {rows}) => { 
-                    const sizeParts = {'어깨' : null, '윗가슴' : null, '팔뚝' : null,
-                                        '허리' : null, '엉덩이' : null, '허벅지' : null, '종아리' : null}
-                   
-                    if (rows['_array'].length)
-                        rows['_array'].map(row =>
-                            sizeParts[row.part] = row.size
-                        )
-
-                    callback(sizeParts)
-                },
-                (tx, err) => { console.log('err: ', err) }
-            )
+    db.transaction(tx => {
+        tx.executeSql(
+            'SELECT part, size FROM (SELECT * FROM size_by_part ORDER BY date DESC) GROUP BY part',
+            [],
+            (tx, {rows}) => { 
+                const sizeParts = {'어깨' : null, '윗가슴' : null, '팔뚝' : null,
+                                    '허리' : null, '엉덩이' : null, '허벅지' : null, '종아리' : null}
+               
+                if (rows['_array'].length)
+                    rows['_array'].map(row =>
+                        sizeParts[row.part] = row.size
+                    )
+                callback(sizeParts)
+            }
+        )
     })
 }
 
@@ -35,8 +33,7 @@ const readSizeByPartsLatestW = (callback) => {
             (tx, {rows}) =>  {
                 const size = rows['_array'].length ? rows['_array'][0].size : null;
                 callback(size);
-            },
-            (tx, err) => { console.log('err: ', err) }
+            }
         )
     })
 }
@@ -50,8 +47,7 @@ const readSizeByPartsLatestF = (callback) => {
             (tx, {rows}) => { 
                 const size = rows['_array'].length ? rows['_array'][0].size : null;
                 callback(size); 
-            },
-            (tx, err) => { console.log('err: ', err) }
+            }
         )
     })
 }
@@ -93,8 +89,7 @@ const readSizeByPartsLimit7 = (part, callback) => {
             (tx, {rows}) => { 
                 const size = rows['_array'].length ? rows['_array'].reverse() : [];
                 callback(size); 
-            },
-            (tx, err) => { console.log('err: ', err) }
+            }
         )
     })
 } 
@@ -108,8 +103,7 @@ const readSizeByPartsAll = (part, callback) => {
             (tx, {rows}) => { 
                 const size = rows['_array'].length ? rows['_array'].reverse() : [];
                 callback(size); 
-            },
-            (tx, err) => { console.log('err: ', err) }
+            }
         )
     })
 } 

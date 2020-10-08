@@ -2,7 +2,7 @@
 // Delete 관련 쿼리를 모아놓은 파일.
 import * as SQLite from 'expo-sqlite';
 
-const db = SQLite.openDatabase('bodyFlow.db');
+const db = SQLite.openDatabase('bodyflow.db');
 
 const deletePhoto = async(date, ornu) => {
     db.transaction(tx => {
