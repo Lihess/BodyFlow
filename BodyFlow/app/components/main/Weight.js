@@ -8,6 +8,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import Record from '../modal/MeasurandRecord.js';
 import styles from '../../styles/main/WeightAndFat.Style.js';
 import { common } from '../../styles/Common.Style.js';
+import { NavigationEvents } from 'react-navigation';
 
 export default class Weight extends React.Component {
     state = {
@@ -40,6 +41,9 @@ export default class Weight extends React.Component {
     render(){
         return(
             <View style={styles.box}>
+                {/* main화면으로 다시 넘어온 경우, 데이터를 다시 읽어옴 */}
+                <NavigationEvents onDidFocus={this.getData}/>
+                
                 <TouchableOpacity onPress={this.toggleVisible}>
                     <View style={common.textBoxCenter}>
                         <FontAwesome5 style={styles.icon} name={'weight'} size={16}/>

@@ -8,8 +8,7 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import styles from '../styles/ImagePicker/ImagePicker.Style'
 import { common } from '../styles/Common.Style';
 import { createPhoto } from '../backend/Create'
-import { s3UploadPhoto } from '../backend/s3Service'
-
+import * as FileSystem from 'expo-file-system';
 export default class ImagePicker extends React.Component {
     static navigationOptions = { headerShown : false };
 
@@ -17,12 +16,20 @@ export default class ImagePicker extends React.Component {
         count : 0
     }
 
+    // 사진을 저장할 디렉토리가 존재하는 지 확인하고, 없다면 생성
+    async componentDidMount(){
+        const folderInfo = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'photos'); 
+
+        if(!folderInfo)
+            await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'photos')
+    }
+
     // 이미지를 s3에 저장하고 DB에 photo 객체 생성
     updateImage = async(uri, width, height, ornu) => {
         // guid를 이용한 유니트한 이름 생성, 확장자도 같이
         const fileName = guid() + '.' + uri.substr(uri.lastIndexOf('.') + 1)
         
-        // width, height를 비교하여 더 크기가 큰 쪽을 900으로 resize하여 파일을 압축!
+        // width, height를 비교하여 더 크기가 큰 쪽을 900으로 resize!
         if (width > height && width > 900) {
             const compessPhoto = await ImageManipulator.manipulateAsync(uri, [{resize: { width : 900 }}]);
             uri = compessPhoto.uri;
@@ -31,11 +38,13 @@ export default class ImagePicker extends React.Component {
             const compessPhoto = await ImageManipulator.manipulateAsync(uri, [{resize: { height : 900 }}]);
             uri = compessPhoto.uri;
         }
-        
-        s3UploadPhoto(uri, fileName)
-            .then(() => 
-                createPhoto(`https://body-flow.s3.ap-northeast-2.amazonaws.com/public/images/${fileName}`, ornu))
-            .catch(err => console.log(err))
+
+        // resize된 파일을 해당 디렉토리에 copy
+        await FileSystem.copyAsync({
+            from  : uri,
+            to : FileSystem.documentDirectory + 'photos/'+ fileName
+        })
+        createPhoto(FileSystem.documentDirectory + 'photos/' + fileName, ornu)
     }
 
     // 이미지 uri를 받기 위한 함수
@@ -43,14 +52,11 @@ export default class ImagePicker extends React.Component {
         callback.then(async (photos) => {
             var ornu = this.props.navigation.state.params.lastOrnu
 
-            photos.map((photo) => {
+            photos.map(async(photo) => {
                 ornu = ornu + 1
                 this.updateImage(photo.uri, photo.width, photo.height, ornu)
-               
-                return {ornu : ornu, path : photo.uri}
             })
             
-            // localurl을 이용하지 않는 대신 업로드 속도때문에 조금 느림..
             NavigationService.back();
         })
         .catch((e) => console.log(e))

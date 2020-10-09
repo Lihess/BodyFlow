@@ -7,8 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { modal } from '../styles/Common.Style';
 import styles from '../styles/photo/Photo.Style';
 import { deletePhoto } from '../backend/Delete'
-import { s3DeletePhoto } from '../backend/s3Service'
-
+import * as FileSystem from 'expo-file-system';
 export default class Photo extends React.Component {
     static navigationOptions = { headerShown : false };
 
@@ -24,9 +23,9 @@ export default class Photo extends React.Component {
     }
 
     // 사진 삭제
-    deletePhoto = () => {
-        s3DeletePhoto(this.state.path)
-            .then(() => deletePhoto(this.state.date, this.state.ornu))
+    deletePhoto = async() => {
+        await FileSystem.deleteAsync(this.state.path)
+        deletePhoto(this.state.date, this.state.ornu)
 
         this.toggleVisible()
         NavigationService.back();

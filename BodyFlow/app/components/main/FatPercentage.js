@@ -24,6 +24,7 @@ export default class FatPercentage extends React.Component {
         return(
             <View style={styles.box}>
                 <FatConsumer>{
+                    // main 화면으로 다시 넘어온 경우 데이터를 읽어옴.
                     ({setFatPercent}) => <NavigationEvents onDidFocus={setFatPercent}/>
                 }</FatConsumer>
 

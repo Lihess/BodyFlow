@@ -10,8 +10,6 @@
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/netinfo": "^5.9.6",
-    "aws-amplify": "^3.0.25",
-    "aws-amplify-react-native": "^4.2.5",
     "expo": "~38.0.8",
     "expo-image-manipulator": "~8.2.1",
     "expo-image-picker-multiple": "^1.2.1",
@@ -33,7 +31,8 @@
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.4.0",
     "react-navigation-stack": "^2.8.2",
-    "victory-native": "^35.0.1"
+    "victory-native": "^35.0.1",
+    "expo-file-system": "~9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

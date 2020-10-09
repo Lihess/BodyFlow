@@ -55,6 +55,7 @@ export default class BodySize extends React.Component {
         
         return(
             <View>
+                {/* main화면으로 다시 넘어온 경우, 데이터를 다시 읽어옴 */}
                 <NavigationEvents onDidFocus={this.getData}/>
                 
                 { parts.map((part, i) => {

@@ -16,12 +16,6 @@ const FatContext = React.createContext({
 
 export class FatProvider extends React.Component {
     componentDidMount(){
-       //this.setState({
-       //    setFatPercent : this.setFatPercent,
-       //    setFatPercentHG : this.setFatPercentHG,
-       //    setFatPercentW : this.setFatPercentW
-       //})
-        
         readSizeByPartsLatestF(result => {
             this.setState({ 
                 fatPercent : result
@@ -40,6 +34,7 @@ export class FatProvider extends React.Component {
         })
     }
 
+    // 체지방률을 다시 set. 이때, chart page에서 허리사이즈를 수정했을 수도 있으므로 새로 계산함
     setFatPercent = () => {
         if (this.state.height && this.state.gender){
             readWaistToday(result => {
