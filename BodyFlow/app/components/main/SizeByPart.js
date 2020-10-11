@@ -2,13 +2,14 @@
 // 부위별 사이즈를 위한 컴포넌트로, 각 단위에 맞춰 변환된 값으로 렌더링.
 
 import React from 'react';
-import { TouchableOpacity, View, Text } from 'react-native';
+import { TouchableOpacity, ScrollView, View, Text } from 'react-native';
 import { readSizeByPartsLatest } from '../../backend/Read';
 import Record from '../modal/MeasurandRecord.js';
 import styles from '../../styles/main/SizeByPart.Style.js';
 import { common } from '../../styles/Common.Style.js';
 import { cmToInch } from '../ChangeUnit'
 import { NavigationEvents } from 'react-navigation';
+
 
 export default class BodySize extends React.Component {
     state = {
@@ -54,7 +55,7 @@ export default class BodySize extends React.Component {
         const parts = ['어깨', '윗가슴', '팔뚝', '허리', '엉덩이', '허벅지', '종아리']
         
         return(
-            <View>
+            <ScrollView>
                 {/* main화면으로 다시 넘어온 경우, 데이터를 다시 읽어옴 */}
                 <NavigationEvents onDidFocus={this.getData}/>
                 
@@ -84,7 +85,7 @@ export default class BodySize extends React.Component {
                     part={this.state.modalPart} 
                     onBackdropPress={this.toggleVisible}
                     onSubmit={this.onChangeSize}/>
-            </View>
+            </ScrollView>
         )
     }
 }

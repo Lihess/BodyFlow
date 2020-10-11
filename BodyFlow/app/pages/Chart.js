@@ -12,6 +12,7 @@ import ChartByPart from '../components/chart/ChartByPart';
 import DataByDate from '../components/chart/DataByDate'
 import { readSizeByPartsLimit7, readSizeByPartsAll } from '../backend/Read';
 import { cmToInch } from '../components/ChangeUnit'
+import Banner from '../components/Banner.js';
 
 export default class Chart extends React.Component {
     static navigationOptions = { headerShown : false };
@@ -157,7 +158,7 @@ export default class Chart extends React.Component {
                         }
                     /> : null
                 }
-           
+                <Banner datalen={len}/>
                 <PartPicker 
                     visible={this.state.modalVisible} 
                     part={this.state.part} 

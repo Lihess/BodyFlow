@@ -4,7 +4,8 @@ import {normalize } from './ResponsiveFontSize.js'
 const common = StyleSheet.create({
     container: {
         flex : 1,
-        padding : 10,
+        paddingHorizontal : 10,
+        paddingTop : 10,
         backgroundColor: '#f1f1f1',
         alignItems: 'center',
         justifyContent: 'flex-start',

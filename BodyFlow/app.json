@@ -8,7 +8,7 @@
     "splash": {
       "image": "./app/assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FF824A"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -20,7 +20,10 @@
       "package" : "com.lihess.bodyflow"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-6871296937188132~2232507015"
+      }
     },
     "web": {
       "favicon": "./app/assets/icon.ico"

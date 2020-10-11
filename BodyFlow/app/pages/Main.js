@@ -10,7 +10,7 @@ import { FatProvider } from '../components/FatContext';
 import { common } from '../styles/Common.Style';
 import styles from '../styles/main/Main.Style'
 import Gallery from '../components/main/Gallery.js';
-
+import Banner from '../components/Banner.js';
 export default class Main extends React.Component {
     static navigationOptions = { headerShown: false };
 
@@ -25,7 +25,8 @@ export default class Main extends React.Component {
                         <Gallery/>
                     </Swiper>
                     <WeightAndFat/>
-                </FatProvider>
+                </FatProvider>  
+                <Banner/>
             </SafeAreaView>
         );
     }

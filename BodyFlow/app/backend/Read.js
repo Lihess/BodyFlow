@@ -18,7 +18,6 @@ const readSizeByPartsLatest = (callback) => {
                     rows['_array'].map(row =>
                         sizeParts[row.part] = row.size
                     )
-                console.log(rows)
                 callback(sizeParts)
             }
         )
