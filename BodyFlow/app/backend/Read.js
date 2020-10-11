@@ -8,23 +8,24 @@ const db = SQLite.openDatabase('bodyflow.db');
 const readSizeByPartsLatest = (callback) => {
     db.transaction(tx => {
         tx.executeSql(
-            'SELECT part, size FROM (SELECT * FROM size_by_part ORDER BY date DESC) GROUP BY part',
+            'SELECT part, size, max(date) FROM size_by_part GROUP BY part',
             [],
             (tx, {rows}) => { 
                 const sizeParts = {'어깨' : null, '윗가슴' : null, '팔뚝' : null,
                                     '허리' : null, '엉덩이' : null, '허벅지' : null, '종아리' : null}
-               
+                
                 if (rows['_array'].length)
                     rows['_array'].map(row =>
                         sizeParts[row.part] = row.size
                     )
+                console.log(rows)
                 callback(sizeParts)
             }
         )
     })
 }
 
-// 가장 최근 날짜에 기록된 size 중  체중만 반환
+// 가장 최근 날짜에 기록된 size 중 체중만 반환
 const readSizeByPartsLatestW = (callback) => {
     db.transaction(tx => {
         tx.executeSql(
