@@ -150,9 +150,13 @@ export default class MeasurandRecord extends React.Component {
         })
     }
 
-    onSubmit = () => {
+    onSubmit = (setFatPercentW) => {
         // 기본 저장 형식은 cm
         const size = this.state.unit == 'inch' ? inchToCm(this.state.size) : this.state.size;
+
+        // 허리 치수일 경우, 체지방률을 다시 설정함
+        if(this.props.part == '허리')
+            setFatPercentW(size)
 
         // 입력된 정보를 DB에 저장
         // 값을 입력한 경우에만 저장
@@ -161,6 +165,8 @@ export default class MeasurandRecord extends React.Component {
         this.props.onSubmit();
         this.closedModal();
     }
+
+    setFat = (setFatPercentW) => {setFatPercentW(45)}
 
     // 선택 날짜로 재지정
     selectDay = (selectDate) => {
@@ -231,26 +237,13 @@ export default class MeasurandRecord extends React.Component {
                             <Image style={styles.tipImage} source={this.tipImage[this.props.part]}/> : null}
                         <Text style={styles.tipContent}>{this.tipContent[this.props.part]}</Text>
                     </View>
-                    
-                    <View style={{ alignItems : 'flex-end'}}>
-                        {
-                            this.props.part != '허리' ?
-                                <TouchableOpacity style={modal.submit} onPress={this.onSubmit}> 
-                                    <Text style={modal.submitText}>완료</Text>    
-                                </TouchableOpacity>
-                                : <FatConsumer>
-                                    {
-                                        ({setFatPercentW}) => 
-                                        <TouchableOpacity style={modal.submit} onPress={() => {
-                                            this.onSubmit(); 
-                                            this.state.date == getToday() ? setFatPercentW(this.state.size) : null
-                                        }}> 
-                                            <Text style={modal.submitText}>완료</Text>    
-                                        </TouchableOpacity>
-                                    }
-                                </FatConsumer>
-                            }      
-                    </View>
+                    <FatConsumer>
+                        { ({setFatPercentW}) => 
+                            <TouchableOpacity style={modal.submit} onPress={() => {
+                                this.onSubmit(setFatPercentW)}}> 
+                                <Text style={modal.submitText}>완료</Text>    
+                            </TouchableOpacity> }
+                    </FatConsumer>           
                 </View>
 
                 { /* 날짜 선택시 해당 modal이 보이도록! */ }
