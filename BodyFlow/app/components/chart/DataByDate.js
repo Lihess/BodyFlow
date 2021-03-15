@@ -26,7 +26,7 @@ export default class DataByDate extends React.Component {
                         <Text style={styles.date}>{this.props.date.replace(/\-/g, '.')}</Text>
                         <View style={styles.sizeBox}>
                             <Text style={styles.size}>{this.props.size}</Text>
-                            <Text style={styles.unit}>  {this.props.unit}</Text> 
+                            <Text style={styles.unit}>  {this.props.part == '체중' ? ' kg' : this.props.unit}</Text> 
                         </View>
                         <Text style={[styles.variance, this.props.variance < 0 ? {color : '#10B3A2'} : ( this.props.variance != 0 ? {color : '#FF2601'} : null )]}>
                             {this.props.variance}

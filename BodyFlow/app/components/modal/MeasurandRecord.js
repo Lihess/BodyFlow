@@ -154,20 +154,20 @@ export default class MeasurandRecord extends React.Component {
         // 기본 저장 형식은 cm
         const size = this.state.unit == 'inch' ? inchToCm(this.state.size) : this.state.size;
 
-        // 허리 치수일 경우, 체지방률을 다시 설정함
-        if(this.props.part == '허리')
-            setFatPercentW(size)
-
         // 입력된 정보를 DB에 저장
         // 값을 입력한 경우에만 저장
-        this.state.size ? createSizeByPart(this.state.date, this.props.part, size) : null;
-
+        if(this.state.size) {
+            // 허리 치수일 경우, 체지방률을 다시 설정함
+            if (this.props.part == '허리')
+                setFatPercentW(size)
+            
+            createSizeByPart(this.state.date, this.props.part, size)    
+        }
+    
         this.props.onSubmit();
         this.closedModal();
     }
-
-    setFat = (setFatPercentW) => {setFatPercentW(45)}
-
+    
     // 선택 날짜로 재지정
     selectDay = (selectDate) => {
         if (!selectDate) {
