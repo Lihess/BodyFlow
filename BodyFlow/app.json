@@ -2,7 +2,7 @@
   "expo": {
     "name": "BodyFlow",
     "slug": "BodyFlow",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "splash": {
@@ -17,8 +17,9 @@
       "**/*"
     ],
     "android" : {
+      "permissions" : ["READ_EXTERNAL_STORAGE", "READ_INTERNAL_STORAGE", "WRITE_INTERNAL_STORAGE"],
       "package" : "com.lihess.bodyflow",
-      "versionCode": 3
+      "versionCode": 5
     },
     "ios": {
       "supportsTablet": true,
