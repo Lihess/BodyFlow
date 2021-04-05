@@ -149,7 +149,7 @@ export default class Chart extends React.Component {
                                 unit={this.state.unit}
                                 variance={index == len - 1 ? 
                                             '0.00' : 
-                                            (this.state.unit == 'cm' && this.state.part != '체중' ? 
+                                            (this.state.unit == 'cm' ? 
                                                 (item.sizeByPart - dataReverse[index+1].sizeByPart).toFixed(2)
                                                 : (cmToInch(item.sizeByPart) - cmToInch(dataReverse[index+1].sizeByPart)).toFixed(2))}
                                 last={(index == len - 1 && index > 7) ? true : false}
